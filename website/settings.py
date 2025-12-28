@@ -204,6 +204,7 @@ HAYSTACK_CONNECTIONS = {
         # 'INCLUDE_SPELLING': True,
     },
 }
+HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
 
 # Configuración de estados de órdenes en Oscar
 OSCAR_INITIAL_ORDER_STATUS = 'Pending'
