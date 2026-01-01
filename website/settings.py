@@ -175,7 +175,7 @@ STATIC_URL = 'static/'
 
 # Media files (User-uploaded content)
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'images')
+MEDIA_ROOT = MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
@@ -187,6 +187,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Configuración básica de Oscar
 OSCAR_SHOP_NAME = 'XYZ Studio'
 OSCAR_SHOP_TAGLINE = 'Decoración e Impresión 3D'
+OSCAR_DEFAULT_CURRENCY = 'PEN'  # Sol Peruano
+
 
 # Autenticación (Oscar usa Email como usuario por defecto, muy moderno)
 AUTHENTICATION_BACKENDS = (
