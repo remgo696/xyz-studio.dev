@@ -52,7 +52,8 @@ INSTALLED_APPS = [
     'oscar.apps.catalogue.reviews.apps.CatalogueReviewsConfig',
     'oscar.apps.communication.apps.CommunicationConfig',
     'oscar.apps.partner.apps.PartnerConfig',
-    'oscar.apps.basket.apps.BasketConfig',
+    'apps.basket.apps.BasketConfig', # My custom basket app
+    # 'oscar.apps.basket.apps.BasketConfig', # Original basket app
     'oscar.apps.payment.apps.PaymentConfig',
     'oscar.apps.offer.apps.OfferConfig',
     'oscar.apps.order.apps.OrderConfig',
@@ -175,7 +176,7 @@ STATIC_URL = 'static/'
 
 # Media files (User-uploaded content)
 MEDIA_URL = '/media/'
-MEDIA_ROOT = MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
