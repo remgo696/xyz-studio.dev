@@ -1,0 +1,31 @@
+{% load reviews_tags %}
+{% load i18n %}
+
+<article class="border-b border-xyz-charcoal/10 pb-6 mb-6 last:border-0">
+    <header class="flex items-center justify-between mb-2">
+        <h3 class="font-squada text-lg text-xyz-charcoal">
+            {{ review.title }}
+        </h3>
+        <div class="text-xyz-clay text-xs">
+            {% for i in "12345" %}
+                {% if forloop.counter <= review.score %}
+                    <i class="fas fa-star"></i>
+                {% else %}
+                    <i class="far fa-star text-gray-300"></i>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </header>
+
+    <div class="text-sm font-roboto text-xyz-charcoal/80 mb-3 leading-relaxed">
+        {{ review.body|linebreaks }}
+    </div>
+
+    <footer class="text-[10px] font-mono text-xyz-charcoal/40 uppercase tracking-wider flex gap-2">
+        <span>
+            {% if review.user == user %}TÚ{% else %}{{ review.reviewer_name|default:"Anónimo" }}{% endif %}
+        </span>
+        <span>•</span>
+        <time>{{ review.date_created|date:"d M Y" }}</time>
+    </footer>
+</article>

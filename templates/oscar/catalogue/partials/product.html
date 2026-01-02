@@ -1,0 +1,60 @@
+{% load display_tags %}
+{% load i18n %}
+{% load image_tags %}
+{% load reviews_tags %}
+{% load currency_filters %}
+
+{% block product %}
+<article class="group relative flex flex-col h-full bg-white rounded-lg border border-xyz-charcoal/5 hover:shadow-lg transition-all duration-300 ease-tech overflow-hidden">
+    
+    {% block product_image %}
+    <div class="aspect-square bg-gray-100 relative overflow-hidden">
+        {% with image=product.primary_image %}
+            {% oscar_thumbnail image.original "400x400" upscale=False as thumb %}
+            <a href="{{ product.get_absolute_url }}" class="block h-full w-full">
+                <img src="{{ thumb.url }}" alt="{{ product.get_title }}" class="h-full w-full object-cover object-center group-hover:scale-105 transition-transform duration-700 mix-blend-multiply">
+            </a>
+        {% endwith %}
+        
+        <div class="absolute inset-0 border-2 border-xyz-sage opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
+    </div>
+    {% endblock %}
+
+    <div class="p-4 flex flex-col flex-1">
+        {% block product_title %}
+        <h3 class="font-squada text-lg text-xyz-charcoal leading-tight mb-2">
+            <a href="{{ product.get_absolute_url }}" title="{{ product.get_title }}">
+                {{ product.get_title|truncatewords:8 }}
+            </a>
+        </h3>
+        {% endblock %}
+
+        {% block product_review %}
+            {% iffeature "reviews" %}
+                {% if product.rating %}
+                    <div class="flex items-center mb-2 text-xyz-clay text-xs">
+                        <i class="fas fa-star"></i>
+                        <span class="ml-1 text-xyz-charcoal/60 font-mono">{{ product.rating|floatformat:1 }}</span>
+                    </div>
+                {% endif %}
+            {% endiffeature %}
+        {% endblock %}
+
+        <div class="mt-auto">
+            {% block product_price %}
+                <div class="flex items-end justify-between mb-3">
+                    {% include "oscar/catalogue/partials/stock_record.html" %}
+                </div>
+            {% endblock %}
+
+            {% if not product.is_parent %}
+                {% include "oscar/catalogue/partials/add_to_basket_form_compact.html" %}
+            {% else %}
+                <a href="{{ product.get_absolute_url }}" class="btn w-full btn-sm border border-xyz-charcoal/20 text-xyz-charcoal hover:bg-xyz-charcoal hover:text-white">
+                    Ver Opciones
+                </a>
+            {% endif %}
+        </div>
+    </div>
+</article>
+{% endblock %}

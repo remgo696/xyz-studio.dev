@@ -1,0 +1,272 @@
+{% extends "oscar/layout.html" %}
+{% load static %}
+
+{% block title %}Sobre Nosotros | XYZ Studio{% endblock %}
+
+{% block layout %}
+
+{# === HERO SECTION === #}
+<section class="relative bg-xyz-charcoal text-xyz-offwhite overflow-hidden">
+    <div class="absolute inset-0 opacity-10">
+        <div class="absolute inset-0" style="background-image: url('data:image/svg+xml,%3Csvg width=&quot;60&quot; height=&quot;60&quot; viewBox=&quot;0 0 60 60&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;%3E%3Cg fill=&quot;none&quot; fill-rule=&quot;evenodd&quot;%3E%3Cg fill=&quot;%23F0EAD6&quot; fill-opacity=&quot;0.4&quot;%3E%3Cpath d=&quot;M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z&quot;/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');"></div>
+    </div>
+    
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-32">
+        <div class="grid lg:grid-cols-2 gap-12 items-center">
+            <div>
+                <span class="inline-block font-mono text-xs tracking-[0.3em] text-xyz-sage uppercase mb-4">
+                    // MANUFACTURA DIGITAL
+                </span>
+                <h1 class="font-squada text-5xl lg:text-7xl leading-tight mb-6">
+                    DISEÑO QUE SE<br>
+                    <span class="text-xyz-sage">ADAPTA A TI</span>
+                </h1>
+                <p class="text-lg text-xyz-offwhite/80 leading-relaxed max-w-xl">
+                    Somos un estudio de diseño paramétrico en Lima, Perú. Creamos objetos únicos 
+                    mediante impresión 3D que se personalizan según tus necesidades exactas.
+                </p>
+            </div>
+            
+            <div class="relative">
+                <div class="aspect-square bg-xyz-sage/20 rounded-lg flex items-center justify-center">
+                    <div class="text-center">
+                        <div class="w-32 h-32 mx-auto border-4 border-xyz-sage transform rotate-45 flex items-center justify-center mb-6">
+                            <span class="font-squada text-6xl text-xyz-sage transform -rotate-45">XYZ</span>
+                        </div>
+                        <p class="font-mono text-xs tracking-widest text-xyz-offwhite/60">EST. 2025 • LIMA, PERÚ</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{# === FILOSOFÍA === #}
+<section class="bg-xyz-offwhite py-20 lg:py-28">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-3xl mx-auto text-center mb-16">
+            <span class="font-mono text-xs tracking-[0.3em] text-xyz-sage uppercase">// NUESTRA FILOSOFÍA</span>
+            <h2 class="font-squada text-4xl lg:text-5xl text-xyz-charcoal mt-4 mb-6">
+                ERRADICAMOS LO ESTÁNDAR
+            </h2>
+            <p class="text-lg text-xyz-charcoal/70 leading-relaxed">
+                En un mundo de producción masiva, nosotros apostamos por lo único. 
+                Cada pieza que sale de nuestro estudio es el resultado de algoritmos 
+                paramétricos que generan geometrías irrepetibles.
+            </p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-8">
+            {# Pilar 1 #}
+            <div class="bg-white p-8 border-l-4 border-xyz-sage hover:shadow-lg transition-shadow">
+                <div class="w-12 h-12 bg-xyz-sage/10 rounded-full flex items-center justify-center mb-6">
+                    <i class="fas fa-cube text-xyz-sage text-xl"></i>
+                </div>
+                <h3 class="font-squada text-2xl text-xyz-charcoal mb-3">DISEÑO PARAMÉTRICO</h3>
+                <p class="text-xyz-charcoal/70 text-sm leading-relaxed">
+                    Usamos algoritmos matemáticos para crear formas orgánicas inspiradas 
+                    en la naturaleza. Patrones Voronoi, estructuras geodésicas y geometrías 
+                    que desafían lo convencional.
+                </p>
+            </div>
+
+            {# Pilar 2 #}
+            <div class="bg-white p-8 border-l-4 border-xyz-clay hover:shadow-lg transition-shadow">
+                <div class="w-12 h-12 bg-xyz-clay/10 rounded-full flex items-center justify-center mb-6">
+                    <i class="fas fa-cog text-xyz-clay text-xl"></i>
+                </div>
+                <h3 class="font-squada text-2xl text-xyz-charcoal mb-3">PERSONALIZACIÓN REAL</h3>
+                <p class="text-xyz-charcoal/70 text-sm leading-relaxed">
+                    No hablamos de elegir un color. Hablamos de ajustar dimensiones, 
+                    densidades, patrones y funcionalidad. Tu lámpara, tu soporte, 
+                    tu objeto — diseñado para tu espacio específico.
+                </p>
+            </div>
+
+            {# Pilar 3 #}
+            <div class="bg-white p-8 border-l-4 border-xyz-charcoal hover:shadow-lg transition-shadow">
+                <div class="w-12 h-12 bg-xyz-charcoal/10 rounded-full flex items-center justify-center mb-6">
+                    <i class="fas fa-leaf text-xyz-charcoal text-xl"></i>
+                </div>
+                <h3 class="font-squada text-2xl text-xyz-charcoal mb-3">PRODUCCIÓN LOCAL</h3>
+                <p class="text-xyz-charcoal/70 text-sm leading-relaxed">
+                    Fabricamos bajo demanda en Lima. Sin inventario masivo, 
+                    sin desperdicio. Cada pieza se imprime cuando la pides, 
+                    reduciendo nuestra huella ambiental.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+{# === PROCESO === #}
+<section class="bg-white py-20 lg:py-28 border-y border-xyz-charcoal/10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <span class="font-mono text-xs tracking-[0.3em] text-xyz-sage uppercase">// NUESTRO PROCESO</span>
+            <h2 class="font-squada text-4xl lg:text-5xl text-xyz-charcoal mt-4">
+                DE LA IDEA AL OBJETO
+            </h2>
+        </div>
+
+        <div class="grid md:grid-cols-4 gap-8">
+            {# Paso 1 #}
+            <div class="text-center group">
+                <div class="relative mb-6">
+                    <div class="w-20 h-20 mx-auto bg-xyz-offwhite border-2 border-xyz-charcoal rounded-full flex items-center justify-center group-hover:bg-xyz-sage group-hover:border-xyz-sage transition-all">
+                        <span class="font-squada text-3xl text-xyz-charcoal group-hover:text-white transition-colors">01</span>
+                    </div>
+                    <div class="hidden md:block absolute top-1/2 left-full w-full h-0.5 bg-xyz-charcoal/20 -translate-y-1/2"></div>
+                </div>
+                <h3 class="font-squada text-xl text-xyz-charcoal mb-2">CONFIGURA</h3>
+                <p class="text-sm text-xyz-charcoal/60">Elige dimensiones, colores y opciones en nuestro configurador.</p>
+            </div>
+
+            {# Paso 2 #}
+            <div class="text-center group">
+                <div class="relative mb-6">
+                    <div class="w-20 h-20 mx-auto bg-xyz-offwhite border-2 border-xyz-charcoal rounded-full flex items-center justify-center group-hover:bg-xyz-sage group-hover:border-xyz-sage transition-all">
+                        <span class="font-squada text-3xl text-xyz-charcoal group-hover:text-white transition-colors">02</span>
+                    </div>
+                    <div class="hidden md:block absolute top-1/2 left-full w-full h-0.5 bg-xyz-charcoal/20 -translate-y-1/2"></div>
+                </div>
+                <h3 class="font-squada text-xl text-xyz-charcoal mb-2">GENERAMOS</h3>
+                <p class="text-sm text-xyz-charcoal/60">Nuestros algoritmos crean tu diseño único en tiempo real.</p>
+            </div>
+
+            {# Paso 3 #}
+            <div class="text-center group">
+                <div class="relative mb-6">
+                    <div class="w-20 h-20 mx-auto bg-xyz-offwhite border-2 border-xyz-charcoal rounded-full flex items-center justify-center group-hover:bg-xyz-sage group-hover:border-xyz-sage transition-all">
+                        <span class="font-squada text-3xl text-xyz-charcoal group-hover:text-white transition-colors">03</span>
+                    </div>
+                    <div class="hidden md:block absolute top-1/2 left-full w-full h-0.5 bg-xyz-charcoal/20 -translate-y-1/2"></div>
+                </div>
+                <h3 class="font-squada text-xl text-xyz-charcoal mb-2">FABRICAMOS</h3>
+                <p class="text-sm text-xyz-charcoal/60">Imprimimos tu pieza en nuestro taller con tecnología FDM.</p>
+            </div>
+
+            {# Paso 4 #}
+            <div class="text-center group">
+                <div class="relative mb-6">
+                    <div class="w-20 h-20 mx-auto bg-xyz-offwhite border-2 border-xyz-charcoal rounded-full flex items-center justify-center group-hover:bg-xyz-sage group-hover:border-xyz-sage transition-all">
+                        <span class="font-squada text-3xl text-xyz-charcoal group-hover:text-white transition-colors">04</span>
+                    </div>
+                </div>
+                <h3 class="font-squada text-xl text-xyz-charcoal mb-2">ENTREGAMOS</h3>
+                <p class="text-sm text-xyz-charcoal/60">Recibe tu objeto único en la puerta de tu casa.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+{# === TECNOLOGÍA === #}
+<section class="bg-xyz-charcoal text-xyz-offwhite py-20 lg:py-28">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid lg:grid-cols-2 gap-16 items-center">
+            <div>
+                <span class="font-mono text-xs tracking-[0.3em] text-xyz-sage uppercase">// TECNOLOGÍA</span>
+                <h2 class="font-squada text-4xl lg:text-5xl mt-4 mb-6">
+                    IMPRESIÓN 3D<br>
+                    <span class="text-xyz-clay">DE ALTA CALIDAD</span>
+                </h2>
+                <p class="text-xyz-offwhite/70 leading-relaxed mb-8">
+                    Utilizamos impresoras de deposición de filamento fundido (FDM) 
+                    con PLA de alta calidad. Este material biodegradable derivado 
+                    del almidón de maíz ofrece excelente detalle y durabilidad.
+                </p>
+
+                <div class="grid grid-cols-2 gap-6">
+                    <div class="border border-xyz-offwhite/20 p-4">
+                        <span class="font-squada text-3xl text-xyz-sage">0.2mm</span>
+                        <p class="text-xs text-xyz-offwhite/60 mt-1">Resolución de capa</p>
+                    </div>
+                    <div class="border border-xyz-offwhite/20 p-4">
+                        <span class="font-squada text-3xl text-xyz-sage">PLA+</span>
+                        <p class="text-xs text-xyz-offwhite/60 mt-1">Material premium</p>
+                    </div>
+                    <div class="border border-xyz-offwhite/20 p-4">
+                        <span class="font-squada text-3xl text-xyz-sage">48h</span>
+                        <p class="text-xs text-xyz-offwhite/60 mt-1">Tiempo promedio</p>
+                    </div>
+                    <div class="border border-xyz-offwhite/20 p-4">
+                        <span class="font-squada text-3xl text-xyz-sage">100%</span>
+                        <p class="text-xs text-xyz-offwhite/60 mt-1">Hecho en Perú</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="relative">
+                <div class="aspect-square bg-xyz-sage/10 rounded-lg p-8 flex items-center justify-center">
+                    <div class="text-center">
+                        <i class="fas fa-print text-6xl text-xyz-sage mb-6"></i>
+                        <p class="font-mono text-sm text-xyz-offwhite/60">
+                            Tecnología FDM<br>
+                            Precisión industrial
+                        </p>
+                    </div>
+                </div>
+                <div class="absolute -bottom-4 -right-4 w-24 h-24 border-2 border-xyz-clay"></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{# === EQUIPO === #}
+<section class="bg-xyz-offwhite py-20 lg:py-28">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <span class="font-mono text-xs tracking-[0.3em] text-xyz-sage uppercase">// EL EQUIPO</span>
+            <h2 class="font-squada text-4xl lg:text-5xl text-xyz-charcoal mt-4">
+                INGENIEROS + DISEÑADORES
+            </h2>
+            <p class="text-xyz-charcoal/60 mt-4 max-w-2xl mx-auto">
+                Un equipo multidisciplinario que combina ingeniería mecánica, 
+                diseño industrial y desarrollo de software para crear productos innovadores.
+            </p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+            <div class="text-center">
+                <div class="w-32 h-32 mx-auto bg-xyz-charcoal rounded-full flex items-center justify-center mb-4">
+                    <i class="fas fa-code text-xyz-sage text-3xl"></i>
+                </div>
+                <h3 class="font-squada text-xl text-xyz-charcoal">DESARROLLO</h3>
+                <p class="text-sm text-xyz-charcoal/60 mt-2">Algoritmos paramétricos y plataforma web</p>
+            </div>
+
+            <div class="text-center">
+                <div class="w-32 h-32 mx-auto bg-xyz-charcoal rounded-full flex items-center justify-center mb-4">
+                    <i class="fas fa-drafting-compass text-xyz-clay text-3xl"></i>
+                </div>
+                <h3 class="font-squada text-xl text-xyz-charcoal">DISEÑO</h3>
+                <p class="text-sm text-xyz-charcoal/60 mt-2">Modelado 3D y diseño de producto</p>
+            </div>
+
+            <div class="text-center">
+                <div class="w-32 h-32 mx-auto bg-xyz-charcoal rounded-full flex items-center justify-center mb-4">
+                    <i class="fas fa-cogs text-xyz-offwhite text-3xl"></i>
+                </div>
+                <h3 class="font-squada text-xl text-xyz-charcoal">PRODUCCIÓN</h3>
+                <p class="text-sm text-xyz-charcoal/60 mt-2">Fabricación y control de calidad</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+{# === CTA === #}
+<section class="bg-xyz-sage py-16">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 class="font-squada text-3xl lg:text-4xl text-white mb-4">
+            ¿LISTO PARA ALGO ÚNICO?
+        </h2>
+        <p class="text-white/80 mb-8">
+            Explora nuestra colección de diseños paramétricos personalizables.
+        </p>
+        <a href="/catalogue/" class="inline-block bg-xyz-charcoal text-white font-squada text-sm tracking-widest uppercase px-8 py-4 hover:bg-xyz-clay transition-colors">
+            VER CATÁLOGO <i class="fas fa-arrow-right ml-2"></i>
+        </a>
+    </div>
+</section>
+
+{% endblock %}

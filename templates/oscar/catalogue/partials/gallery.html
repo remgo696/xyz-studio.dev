@@ -1,0 +1,25 @@
+{% load i18n %}
+{% load image_tags %}
+
+{% with all_images=product.get_all_images %}
+    <div class="flex flex-col gap-4">
+        <div class="aspect-square w-full bg-white rounded-lg overflow-hidden border border-xyz-charcoal/10 relative group">
+            {% with image=product.primary_image %}
+                {% oscar_thumbnail image.original "800x800" upscale=False as thumb %}
+                <img src="{{ thumb.url }}" alt="{{ product.get_title }}" class="w-full h-full object-contain object-center">
+            {% endwith %}
+            <div class="absolute top-2 left-2 text-[10px] font-mono text-xyz-charcoal/30">FIG. 01</div>
+        </div>
+
+        {% if all_images|length > 1 %}
+            <div class="grid grid-cols-4 gap-2">
+                {% for image in all_images %}
+                    <div class="aspect-square bg-white rounded border border-xyz-charcoal/10 overflow-hidden hover:border-xyz-sage cursor-pointer transition-colors">
+                        {% oscar_thumbnail image.original "150x150" crop="center" as thumb %}
+                        <img src="{{ thumb.url }}" alt="Vista {{ forloop.counter }}" class="w-full h-full object-cover">
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+{% endwith %}

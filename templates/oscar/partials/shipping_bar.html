@@ -3,7 +3,7 @@
 {% load shipping_tags %}
 {% load l10n %}
 
-{% calculate_shipping_progress request.basket threshold=490 as shipping %}
+{% calculate_shipping_progress request.basket as shipping %}
 
 <div class="bg-xyz-offwhite border-b border-xyz-charcoal/10 py-3 shadow-sm relative z-40">
     <div class="max-w-2xl mx-auto px-6">

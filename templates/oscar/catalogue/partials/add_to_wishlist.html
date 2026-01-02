@@ -1,0 +1,41 @@
+{% load i18n %}
+{% load wishlist_tags %}
+
+{% if user.is_authenticated %}
+    <div class="mt-4 pt-4 border-t border-xyz-charcoal/10">
+        {% with wishlists=user.wishlists.all %}
+            {# Verificamos si el producto ya está en alguna lista #}
+            {% wishlists_containing_product wishlists product as product_wishlists %}
+            
+            {% if product_wishlists %}
+                {# CASO 1: YA ESTÁ GUARDADO -> Botón Eliminar #}
+                {# Tomamos la primera lista donde esté (simplificación) #}
+                <form action="{% url 'customer:wishlists-remove-product' key=product_wishlists.0.key product_pk=product.id %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="w-full group flex items-center justify-center gap-2 text-xs font-bold uppercase tracking-widest text-xyz-clay transition-colors hover:text-red-500" data-loading-text="{% trans 'Removing...' %}">
+                        <i class="fas fa-heart text-sm"></i> 
+                        <span>Guardado en Favoritos (Eliminar)</span>
+                    </button>
+                </form>
+
+            {% else %}
+                {# CASO 2: NO ESTÁ GUARDADO -> Botón Añadir #}
+                <form action="{% url 'customer:wishlists-add-product' product_pk=product.pk %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="w-full group flex items-center justify-center gap-2 text-xs font-bold uppercase tracking-widest text-xyz-charcoal/50 transition-colors hover:text-xyz-clay" data-loading-text="{% trans 'Adding...' %}">
+                        <i class="far fa-heart text-sm group-hover:scale-110 transition-transform"></i> 
+                        <span>Añadir a Favoritos</span>
+                    </button>
+                </form>
+            {% endif %}
+        {% endwith %}
+    </div>
+
+{% else %}
+    {# CASO 3: INVITADO (No logueado) #}
+    <div class="mt-4 pt-4 border-t border-xyz-charcoal/10 text-center">
+        <a href="{% url 'customer:login' %}?next={{ request.path }}" class="text-[10px] text-xyz-charcoal/40 font-mono hover:text-xyz-charcoal transition-colors">
+            INICIA SESIÓN PARA GUARDAR
+        </a>
+    </div>
+{% endif %}

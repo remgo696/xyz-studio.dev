@@ -5,10 +5,6 @@
 @plugin "@tailwindcss/typography";
 @plugin "@tailwindcss/aspect-ratio";
 
-/* DaisyUI (Opcional, vino con la plantilla, puedes dejarlo o quitarlo) 
-  Lo desactivo temporalmente por ahora para tener control total
-@plugin "daisyui";
-*/
 @source "../../../**/*.{html,py,js}";
 
 /* CONFIGURACIÓN (Colores y Fuentes) */
@@ -81,53 +77,129 @@ textarea:focus {
   --tw-ring-color: var(--color-xyz-sage) !important;
 }
 
-/* Color Swatch List - Estilo especial para selectores de color */
-.color-swatch-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
-}
-
-.color-swatch-list label {
-  display: flex;
-  align-items: center;
-  padding: 0.5rem 1rem;
-  border: 2px solid var(--color-xyz-charcoal);
-  border-radius: 0.25rem;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  font-size: 0.875rem;
-}
-
-.color-swatch-list label:hover {
-  border-color: var(--color-xyz-sage);
-  background-color: rgba(138, 154, 91, 0.1);
-}
-
-.color-swatch-list input[type="radio"]:checked + label,
-.color-swatch-list label:has(input[type="radio"]:checked) {
-  border-color: var(--color-xyz-sage);
-  background-color: var(--color-xyz-sage);
-  color: white;
-}
-
-/* File Dropzone */
-.file-dropzone {
-  border: 2px dashed var(--color-xyz-charcoal);
-  border-radius: 0.5rem;
-  padding: 2rem;
-  text-align: center;
-  transition: all 0.3s ease;
-  cursor: pointer;
-}
-
-.file-dropzone:hover,
-.file-dropzone:focus {
-  border-color: var(--color-xyz-sage);
-  background-color: rgba(138, 154, 91, 0.05);
-}
-
 /* Accent color global override */
 :root {
   accent-color: var(--color-xyz-sage);
+}
+
+/* ============================================
+   COMPONENTES - NORDIC TECH PARAMÉTRICO
+   ============================================ */
+
+@layer components {
+    /* === 1. ZONA DE CARGA (Dropzone) === */
+    .file-dropzone {
+        @apply block w-full text-sm text-xyz-charcoal
+        file:mr-4 file:py-2 file:px-4
+        file:rounded-none file:border-0
+        file:text-xs file:font-mono file:uppercase file:tracking-widest
+        file:bg-xyz-charcoal file:text-xyz-offwhite
+        file:cursor-pointer hover:file:bg-xyz-sage
+        border-2 border-dashed border-xyz-charcoal/30
+        rounded-lg p-8 text-center cursor-pointer
+        hover:border-xyz-sage transition-colors bg-white/50;
+    }
+
+    /* === 2. SELECTORES DE COLOR (Swatches) === */
+    /* Contenedor del Radio Button */
+    .color-swatch-list {
+        @apply flex gap-4 mt-2;
+    }
+    
+    .color-swatch-list li {
+        @apply list-none inline-block;
+    }
+
+    /* Ocultamos el radio nativo */
+    .color-swatch-list input[type="radio"] {
+        @apply sr-only;
+    }
+
+    /* El Label se convierte en el Círculo */
+    .color-swatch-list label {
+        @apply w-10 h-10 rounded-full cursor-pointer border-2 border-transparent transition-all duration-300 relative block shadow-sm text-[0px] overflow-hidden bg-gray-200;
+    }
+
+    /* Estado Seleccionado: Anillo doble */
+    .color-swatch-list input[type="radio"]:checked + label {
+        @apply ring-2 ring-offset-2 ring-xyz-charcoal scale-110 border-white;
+    }
+    
+    /* Estado Hover */
+    .color-swatch-list label:hover {
+        @apply scale-110 shadow-md;
+    }
+
+    /* === MAPEO DE COLORES (Ingeniería de Frontend) === */
+    /* Aquí conectamos el TEXTO de la opción con el COLOR visual */
+    
+    /* Terracota / Clay */
+    .color-swatch-list input[value*="Terracota"] + label,
+    .color-swatch-list input[value*="Clay"] + label {
+        background-color: var(--color-xyz-clay);
+    }
+
+    /* Verde / Sage */
+    .color-swatch-list input[value*="Verde"] + label,
+    .color-swatch-list input[value*="Sage"] + label {
+        background-color: var(--color-xyz-sage);
+    }
+
+    /* Blanco / Hueso */
+    .color-swatch-list input[value*="Blanco"] + label,
+    .color-swatch-list input[value*="Hueso"] + label {
+        background-color: var(--color-xyz-offwhite);
+        border: 1px solid #d1d5db; /* Borde gris sutil para que se vea */
+    }
+
+    /* Negro / Antracita */
+    .color-swatch-list input[value*="Negro"] + label,
+    .color-swatch-list input[value*="Antracita"] + label,
+    .color-swatch-list input[value*="Gris"] + label {
+        background-color: var(--color-xyz-charcoal);
+    }
+
+    /* === 3. BOTONES (Compatibilidad Bootstrap -> Nordic Tech) === */
+    
+    /* Estilo Base del Botón (.btn) */
+    .btn {
+        @apply inline-flex items-center justify-center px-6 py-3 border-2 border-transparent 
+               text-sm font-bold font-squada tracking-widest uppercase 
+               transition-all duration-300 ease-tech cursor-pointer
+               focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-xyz-sage 
+               disabled:opacity-50 disabled:cursor-not-allowed;
+    }
+
+    /* Botón Primario (.btn-primary) -> El de "Añadir al Carrito" */
+    .btn-primary {
+        @apply bg-xyz-charcoal text-white border-xyz-charcoal 
+               hover:bg-xyz-sage hover:border-xyz-sage hover:text-white
+               shadow-md hover:shadow-lg hover:-translate-y-0.5;
+    }
+
+    /* Botón Wishlist (El que está dentro del form .btn-wishlist) */
+    .btn-wishlist .btn, 
+    .btn-default {
+        @apply bg-transparent text-xyz-charcoal/60 border-xyz-charcoal/20 
+               hover:border-xyz-clay hover:text-xyz-clay hover:bg-white;
+    }
+
+    /* Tamaños (.btn-lg) */
+    .btn-lg {
+        @apply text-lg px-8 py-4;
+    }
+    
+    .btn-sm {
+        @apply text-xs px-3 py-1.5;
+    }
+
+    /* Utilidad de Ancho (.w-100) */
+    .w-100 {
+        @apply w-full;
+    }
+    
+    /* Alineación (.align-bottom) que usa Oscar a veces */
+    .align-bottom {
+        @apply align-bottom;
+    }
 }

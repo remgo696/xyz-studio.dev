@@ -1,0 +1,21 @@
+{% load basket_tags %}
+{% load i18n %}
+{% load purchase_info_tags %}
+
+{% purchase_info_for_product request product as session %}
+
+{% if session.availability.is_available_to_buy and session.price.exists %}
+    {# Formulario Simplificado #}
+    <form action="{% url 'basket:add' pk=product.pk %}" method="post" class="w-full">
+        {% csrf_token %}
+        <input type="hidden" name="quantity" value="1">
+        
+        <button type="submit" class="w-full bg-xyz-charcoal text-white font-squada text-sm uppercase tracking-widest py-2 hover:bg-xyz-sage transition-colors" data-loading-text="{% trans 'Adding...' %}">
+            <i class="fas fa-plus mr-1"></i> {% trans "Add" %}
+        </button>
+    </form>
+{% else %}
+    <span class="block w-full text-center text-xs font-mono border border-gray-200 text-gray-400 py-2 cursor-not-allowed">
+        {% trans "Unavailable" %}
+    </span>
+{% endif %}

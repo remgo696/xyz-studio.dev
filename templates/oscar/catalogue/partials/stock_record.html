@@ -1,0 +1,28 @@
+{% load currency_filters %}
+{% load i18n %}
+{% load purchase_info_tags %}
+
+{% purchase_info_for_product request product as session %}
+
+<div class="w-full flex items-baseline justify-between">
+    {% if session.price.exists %}
+        <span class="font-squada text-xl text-xyz-charcoal font-bold">
+            {% if session.price.is_tax_known %}
+                {{ session.price.incl_tax|currency:session.price.currency }}
+            {% else %}
+                {{ session.price.excl_tax|currency:session.price.currency }}
+            {% endif %}
+        </span>
+    {% else %}
+        <span class="font-mono text-sm text-gray-400">&nbsp;</span>
+    {% endif %}
+
+    <span class="text-[10px] font-mono uppercase tracking-widest 
+        {% if session.availability.is_available_to_buy %}text-xyz-sage{% else %}text-red-400{% endif %}">
+        {% if session.availability.is_available_to_buy %}
+            En Stock
+        {% else %}
+            Agotado
+        {% endif %}
+    </span>
+</div>

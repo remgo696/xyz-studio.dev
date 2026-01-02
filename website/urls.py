@@ -24,6 +24,8 @@ from django.views.generic import TemplateView
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', TemplateView.as_view(template_name='oscar/promotions/home.html'), name='home'),
+    path('sobre-xyz/', TemplateView.as_view(template_name='oscar/pages/sobre_xyz.html'), name='sobre-xyz'),
+    path('politica-de-envios/', TemplateView.as_view(template_name='oscar/pages/politica_envios.html'), name='politica-envios'),
     path('', include(apps.get_app_config('oscar').urls[0])),
 ]
 

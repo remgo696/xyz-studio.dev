@@ -1,0 +1,53 @@
+{% load basket_tags %}
+{% load display_tags %}
+{% load i18n %}
+{% load purchase_info_tags %}
+
+{% purchase_info_for_product request product as session %}
+
+{% if session.availability.is_available_to_buy and session.price.exists %}
+    
+    {# 1. Creamos el formulario #}
+    {% basket_form request product as basket_form %}
+    
+    {# 2. Formulario con ENCTYPE (Vital para subir archivos) #}
+    <form id="add_to_basket_form" action="{% url 'basket:add' pk=product.pk %}" method="post" class="add-to-basket mb-0" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        {# 3. Renderizamos los campos (Usando nuestra plantilla form_fields.html que arreglamos antes) #}
+        {% include "oscar/partials/form_fields.html" with form=basket_form %}
+
+        {# 4. Botón de Acción (Las clases btn btn-primary se estilizan en styles.css) #}
+        <button type="submit" class="btn btn-lg btn-primary w-100 mt-4 shadow-lg" value="{% trans "Add to basket" %}" data-loading-text="{% trans 'Adding...' %}">
+            <i class="fas fa-shopping-cart mr-2"></i> {% trans "Add to basket" %}
+        </button>
+    </form>
+
+    {# 5. Wishlist (Lista de Deseos) #}
+    {% iffeature "wishlists" %}
+        <div class="mt-4 text-center">
+            {% include "oscar/catalogue/partials/add_to_wishlist.html" %}
+        </div>
+    {% endiffeature %}
+
+{% else %}
+    {# Bloque para productos sin stock / Alertas #}
+    {% if has_active_alert %}
+        <div class="p-4 bg-xyz-charcoal/5 rounded text-sm mb-4">
+            {% trans "You have an active stock alert for this product." %}
+        </div>
+    {% else %}
+        <form id="alert_form" method="post" action="{% url 'customer:alert-create' pk=product.id %}" class="add-to-basket mb-0">
+            {% csrf_token %}
+            <p class="text-sm mb-2">{% trans "You can get an email alert when this product is back in stock." %}</p>
+            {% include "oscar/partials/form_fields.html" with form=alert_form %}
+            <button type="submit" class="btn btn-lg btn-default w-100">{% trans "Notify me" %}</button>
+        </form>
+    {% endif %}
+    
+    {% iffeature "wishlists" %}
+        <div class="mt-4 text-center">
+            {% include "oscar/catalogue/partials/add_to_wishlist.html" %}
+        </div>
+    {% endiffeature %}
+{% endif %}

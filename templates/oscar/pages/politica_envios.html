@@ -1,0 +1,483 @@
+{% extends "oscar/layout.html" %}
+{% load static %}
+
+{% block title %}Políticas de Envíos | XYZ Studio{% endblock %}
+
+{% block layout %}
+
+{# === HERO SECTION === #}
+<section class="relative bg-xyz-charcoal text-xyz-offwhite overflow-hidden">
+    <div class="absolute inset-0 opacity-10">
+        <div class="absolute inset-0" style="background-image: url('data:image/svg+xml,%3Csvg width=&quot;60&quot; height=&quot;60&quot; viewBox=&quot;0 0 60 60&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;%3E%3Cg fill=&quot;none&quot; fill-rule=&quot;evenodd&quot;%3E%3Cg fill=&quot;%23F0EAD6&quot; fill-opacity=&quot;0.4&quot;%3E%3Cpath d=&quot;M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z&quot;/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');"></div>
+    </div>
+    
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28">
+        <div class="max-w-3xl">
+            <span class="inline-block font-mono text-xs tracking-[0.3em] text-xyz-sage uppercase mb-4">
+                // LOGÍSTICA
+            </span>
+            <h1 class="font-squada text-5xl lg:text-6xl leading-tight mb-6">
+                POLÍTICAS DE<br>
+                <span class="text-xyz-sage">ENVÍOS</span>
+            </h1>
+            <p class="text-lg text-xyz-offwhite/80 leading-relaxed max-w-xl">
+                Entregamos tus piezas únicas a todo el Perú. Trabajamos con 
+                <strong class="text-xyz-clay">Olva Courier</strong> para garantizar 
+                que tu diseño paramétrico llegue en perfectas condiciones.
+            </p>
+        </div>
+    </div>
+</section>
+
+{# === RESUMEN DE ENVÍOS === #}
+<section class="bg-xyz-offwhite py-12 border-b border-xyz-charcoal/10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid md:grid-cols-4 gap-6">
+            {# Lima Normal #}
+            <div class="bg-white p-6 border-l-4 border-xyz-sage flex items-center gap-4">
+                <div class="w-14 h-14 bg-xyz-sage/10 rounded-full flex items-center justify-center flex-shrink-0">
+                    <i class="fas fa-truck text-xyz-sage text-xl"></i>
+                </div>
+                <div>
+                    <span class="font-squada text-2xl text-xyz-charcoal">S/9.90</span>
+                    <p class="text-xs text-xyz-charcoal/60">Lima Normal</p>
+                </div>
+            </div>
+
+            {# Lima Urgente #}
+            <div class="bg-white p-6 border-l-4 border-xyz-clay flex items-center gap-4">
+                <div class="w-14 h-14 bg-xyz-clay/10 rounded-full flex items-center justify-center flex-shrink-0">
+                    <i class="fas fa-bolt text-xyz-clay text-xl"></i>
+                </div>
+                <div>
+                    <span class="font-squada text-2xl text-xyz-charcoal">S/7 - S/35</span>
+                    <p class="text-xs text-xyz-charcoal/60">Lima Urgente</p>
+                </div>
+            </div>
+
+            {# Provincias #}
+            <div class="bg-white p-6 border-l-4 border-xyz-charcoal flex items-center gap-4">
+                <div class="w-14 h-14 bg-xyz-charcoal/10 rounded-full flex items-center justify-center flex-shrink-0">
+                    <i class="fas fa-plane text-xyz-charcoal text-xl"></i>
+                </div>
+                <div>
+                    <span class="font-squada text-2xl text-xyz-charcoal">S/16.90</span>
+                    <p class="text-xs text-xyz-charcoal/60">Provincias</p>
+                </div>
+            </div>
+
+            {# Gratis #}
+            <div class="bg-white p-6 border-l-4 border-xyz-sage flex items-center gap-4">
+                <div class="w-14 h-14 bg-xyz-sage/10 rounded-full flex items-center justify-center flex-shrink-0">
+                    <i class="fas fa-gift text-xyz-sage text-xl"></i>
+                </div>
+                <div>
+                    <span class="font-squada text-2xl text-xyz-sage">GRATIS</span>
+                    <p class="text-xs text-xyz-charcoal/60">Lima Normal +S/490</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{# === ENVÍOS LIMA === #}
+<section class="bg-white py-16 lg:py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center gap-4 mb-10">
+            <div class="w-12 h-12 bg-xyz-sage rounded-full flex items-center justify-center">
+                <i class="fas fa-map-marker-alt text-white"></i>
+            </div>
+            <div>
+                <span class="font-mono text-xs tracking-[0.3em] text-xyz-sage uppercase">// ZONA 01</span>
+                <h2 class="font-squada text-3xl lg:text-4xl text-xyz-charcoal">LIMA METROPOLITANA</h2>
+            </div>
+        </div>
+
+        <div class="grid lg:grid-cols-3 gap-8">
+            {# Opción 1: Envío Normal #}
+            <div class="bg-xyz-offwhite p-8 relative overflow-hidden">
+                <div class="absolute top-0 right-0 bg-xyz-sage text-white font-mono text-xs px-4 py-2">
+                    RECOMENDADO
+                </div>
+                
+                <div class="flex items-start justify-between mb-6">
+                    <div>
+                        <h3 class="font-squada text-2xl text-xyz-charcoal mb-1">ENVÍO ESTÁNDAR</h3>
+                        <p class="text-sm text-xyz-charcoal/60">Entrega a domicilio</p>
+                    </div>
+                    <div class="text-right">
+                        <span class="font-squada text-3xl text-xyz-sage">S/9.90</span>
+                    </div>
+                </div>
+
+                <div class="space-y-4 text-sm text-xyz-charcoal/80">
+                    <div class="flex items-start gap-3">
+                        <i class="fas fa-clock text-xyz-sage mt-0.5"></i>
+                        <div>
+                            <strong class="text-xyz-charcoal">Tiempo total estimado:</strong>
+                            <p>Fabricación (8-48h) + Envío (1-2 días hábiles)</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start gap-3">
+                        <i class="fas fa-box text-xyz-sage mt-0.5"></i>
+                        <div>
+                            <strong class="text-xyz-charcoal">Despacho:</strong>
+                            <p>Tu pedido se entrega a Olva Courier en un plazo de 4 a 24 horas hábiles después de finalizar la fabricación.</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start gap-3">
+                        <i class="fas fa-calendar-alt text-xyz-sage mt-0.5"></i>
+                        <div>
+                            <strong class="text-xyz-charcoal">Horario de entrega:</strong>
+                            <p>Lunes a Viernes: 8am - 6pm<br>Sábados: 8am - 1pm</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start gap-3">
+                        <i class="fas fa-map text-xyz-sage mt-0.5"></i>
+                        <div>
+                            <strong class="text-xyz-charcoal">Cobertura:</strong>
+                            <p>Toda Lima Metropolitana.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-6 pt-6 border-t border-xyz-charcoal/10">
+                    <div class="flex items-center gap-2 text-xyz-sage">
+                        <i class="fas fa-check-circle"></i>
+                        <span class="text-sm font-medium">Envío GRATIS en pedidos desde S/490</span>
+                    </div>
+                </div>
+            </div>
+
+            {# Opción 2: Envío Urgente #}
+            <div class="bg-xyz-offwhite p-8 relative overflow-hidden border-2 border-xyz-clay/30">
+                <div class="absolute top-0 right-0 bg-xyz-clay text-white font-mono text-xs px-4 py-2">
+                    MISMO DÍA
+                </div>
+                
+                <div class="flex items-start justify-between mb-6">
+                    <div>
+                        <h3 class="font-squada text-2xl text-xyz-charcoal mb-1">ENVÍO URGENTE</h3>
+                        <p class="text-sm text-xyz-charcoal/60">Entrega el mismo día</p>
+                    </div>
+                    <div class="text-right">
+                        <span class="font-squada text-3xl text-xyz-clay">S/7 - S/35</span>
+                    </div>
+                </div>
+
+                <div class="space-y-4 text-sm text-xyz-charcoal/80">
+                    <div class="flex items-start gap-3">
+                        <i class="fas fa-bolt text-xyz-clay mt-0.5"></i>
+                        <div>
+                            <strong class="text-xyz-charcoal">Entrega:</strong>
+                            <p>El mismo día que finaliza la fabricación de tu pieza (si termina antes de las 6pm).</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start gap-3">
+                        <i class="fas fa-stopwatch text-xyz-clay mt-0.5"></i>
+                        <div>
+                            <strong class="text-xyz-charcoal">Tiempo de entrega:</strong>
+                            <p>1 - 3 horas aproximadamente después del despacho.</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start gap-3">
+                        <i class="fas fa-motorcycle text-xyz-clay mt-0.5"></i>
+                        <div>
+                            <strong class="text-xyz-charcoal">Servicio:</strong>
+                            <p>Delivery por motorizado. El costo varía según la distancia.</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start gap-3">
+                        <i class="fas fa-calendar-alt text-xyz-clay mt-0.5"></i>
+                        <div>
+                            <strong class="text-xyz-charcoal">Disponibilidad:</strong>
+                            <p>Lunes a Sábado: 10am - 9pm</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start gap-3">
+                        <i class="fas fa-credit-card text-xyz-clay mt-0.5"></i>
+                        <div>
+                            <strong class="text-xyz-charcoal">Pago contra-entrega:</strong>
+                            <p>Disponible con recargo adicional.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-6 pt-6 border-t border-xyz-charcoal/10">
+                    <div class="flex items-center gap-2 text-xyz-clay">
+                        <i class="fas fa-info-circle"></i>
+                        <span class="text-sm">No aplica envío gratis</span>
+                    </div>
+                </div>
+            </div>
+
+            {# Opción 3: Recojo en Taller #}
+            <div class="bg-xyz-offwhite p-8">
+                <div class="flex items-start justify-between mb-6">
+                    <div>
+                        <h3 class="font-squada text-2xl text-xyz-charcoal mb-1">RECOJO EN TALLER</h3>
+                        <p class="text-sm text-xyz-charcoal/60">Previa coordinación</p>
+                    </div>
+                    <div class="text-right">
+                        <span class="font-squada text-3xl text-xyz-sage">GRATIS</span>
+                    </div>
+                </div>
+
+                <div class="space-y-4 text-sm text-xyz-charcoal/80">
+                    <div class="flex items-start gap-3">
+                        <i class="fas fa-store text-xyz-charcoal mt-0.5"></i>
+                        <div>
+                            <strong class="text-xyz-charcoal">Ubicación:</strong>
+                            <p>Zárate, San Juan de Lurigancho. La dirección exacta se coordina al confirmar el recojo.</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start gap-3">
+                        <i class="fas fa-calendar-check text-xyz-charcoal mt-0.5"></i>
+                        <div>
+                            <strong class="text-xyz-charcoal">Coordinación:</strong>
+                            <p>La fecha y hora de recojo debe coordinarse previamente por WhatsApp.</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start gap-3">
+                        <i class="fas fa-clock text-xyz-charcoal mt-0.5"></i>
+                        <div>
+                            <strong class="text-xyz-charcoal">Horario disponible:</strong>
+                            <p>Lunes a Sábado: 10am - 6pm</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start gap-3">
+                        <i class="fas fa-hourglass-half text-xyz-charcoal mt-0.5"></i>
+                        <div>
+                            <strong class="text-xyz-charcoal">Tiempo de fabricación:</strong>
+                            <p>8 - 48 horas según el producto.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-6 pt-6 border-t border-xyz-charcoal/10">
+                    <a href="https://wa.me/51XXXXXXXXX?text=Hola!%20Quiero%20coordinar%20el%20recojo%20de%20mi%20pedido" 
+                       target="_blank"
+                       class="inline-flex items-center gap-2 text-xyz-sage hover:text-xyz-clay transition-colors">
+                        <i class="fab fa-whatsapp text-lg"></i>
+                        <span class="text-sm font-medium">Coordinar por WhatsApp</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        {# Nota sobre dimensiones #}
+        <div class="mt-8 bg-xyz-clay/10 border border-xyz-clay/20 p-4 flex items-start gap-3">
+            <i class="fas fa-ruler-combined text-xyz-clay mt-0.5"></i>
+            <div class="text-sm">
+                <strong class="text-xyz-clay">Importante sobre dimensiones:</strong>
+                <p class="text-xyz-charcoal/70">
+                    Los pedidos que excedan 2kg de peso (real o volumétrico) o dimensiones mayores a 40x40x40cm 
+                    tendrán un recargo adicional en el costo de envío. Te contactaremos antes de procesar el pedido si aplica.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+{# === ENVÍOS PROVINCIAS === #}
+<section class="bg-xyz-charcoal text-xyz-offwhite py-16 lg:py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center gap-4 mb-10">
+            <div class="w-12 h-12 bg-xyz-clay rounded-full flex items-center justify-center">
+                <i class="fas fa-globe-americas text-white"></i>
+            </div>
+            <div>
+                <span class="font-mono text-xs tracking-[0.3em] text-xyz-clay uppercase">// ZONA 02</span>
+                <h2 class="font-squada text-3xl lg:text-4xl">ENVÍOS A PROVINCIAS</h2>
+            </div>
+        </div>
+
+        <div class="grid lg:grid-cols-3 gap-8">
+            {# Info Principal #}
+            <div class="lg:col-span-2 space-y-6">
+                <div class="bg-xyz-offwhite/10 p-6 border border-xyz-offwhite/20">
+                    <div class="flex items-start justify-between mb-4">
+                        <h3 class="font-squada text-2xl">ENVÍO POR COURIER</h3>
+                        <span class="font-squada text-3xl text-xyz-clay">S/16.90</span>
+                    </div>
+                    
+                    <p class="text-xyz-offwhite/70 mb-6">
+                        Enviamos a todo el Perú mediante <strong class="text-xyz-offwhite">Olva Courier</strong>. 
+                        Tu pieza paramétrica llegará empacada de forma segura a la dirección que indiques.
+                    </p>
+
+                    <div class="grid sm:grid-cols-2 gap-4 text-sm">
+                        <div class="flex items-start gap-3">
+                            <i class="fas fa-print text-xyz-clay mt-0.5"></i>
+                            <div>
+                                <strong>Tiempo de fabricación:</strong>
+                                <p class="text-xyz-offwhite/60">8 - 48 horas según producto</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-3">
+                            <i class="fas fa-clock text-xyz-clay mt-0.5"></i>
+                            <div>
+                                <strong>Tiempo de envío:</strong>
+                                <p class="text-xyz-offwhite/60">1 - 3 días hábiles (ciudades principales)</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-3">
+                            <i class="fas fa-calendar-alt text-xyz-clay mt-0.5"></i>
+                            <div>
+                                <strong>Horario de entrega:</strong>
+                                <p class="text-xyz-offwhite/60">Lun-Vie: 8am-6pm / Sáb: 8am-1pm</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-3">
+                            <i class="fas fa-home text-xyz-clay mt-0.5"></i>
+                            <div>
+                                <strong>Modalidad:</strong>
+                                <p class="text-xyz-offwhite/60">A domicilio o recojo en agencia</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {# Nota importante #}
+                <div class="bg-xyz-clay/20 border border-xyz-clay/30 p-4 flex items-start gap-3">
+                    <i class="fas fa-exclamation-triangle text-xyz-clay mt-0.5"></i>
+                    <div class="text-sm">
+                        <strong class="text-xyz-clay">Zonas remotas:</strong>
+                        <p class="text-xyz-offwhite/70">
+                            Los envíos a Loreto, Moquegua, Puno, San Martín y zonas fuera de ciudades principales 
+                            pueden tener un recargo adicional y mayor tiempo de entrega.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            {# Ciudades principales #}
+            <div class="bg-xyz-offwhite/5 p-6 border border-xyz-offwhite/10">
+                <h4 class="font-squada text-lg mb-4 flex items-center gap-2">
+                    <i class="fas fa-map-marked-alt text-xyz-sage"></i>
+                    CIUDADES PRINCIPALES
+                </h4>
+                <p class="text-xs text-xyz-offwhite/50 mb-4">Entrega en 1-2 días hábiles:</p>
+                <div class="flex flex-wrap gap-2">
+                    {% for ciudad in "Arequipa,Trujillo,Chiclayo,Piura,Cusco,Huancayo,Iquitos,Tacna,Ica,Cajamarca,Pucallpa,Chimbote,Ayacucho,Tarapoto"|make_list %}
+                    {% endfor %}
+                    <span class="bg-xyz-offwhite/10 text-xs px-2 py-1">Arequipa</span>
+                    <span class="bg-xyz-offwhite/10 text-xs px-2 py-1">Trujillo</span>
+                    <span class="bg-xyz-offwhite/10 text-xs px-2 py-1">Chiclayo</span>
+                    <span class="bg-xyz-offwhite/10 text-xs px-2 py-1">Piura</span>
+                    <span class="bg-xyz-offwhite/10 text-xs px-2 py-1">Cusco</span>
+                    <span class="bg-xyz-offwhite/10 text-xs px-2 py-1">Huancayo</span>
+                    <span class="bg-xyz-offwhite/10 text-xs px-2 py-1">Iquitos</span>
+                    <span class="bg-xyz-offwhite/10 text-xs px-2 py-1">Tacna</span>
+                    <span class="bg-xyz-offwhite/10 text-xs px-2 py-1">Ica</span>
+                    <span class="bg-xyz-offwhite/10 text-xs px-2 py-1">Cajamarca</span>
+                    <span class="bg-xyz-offwhite/10 text-xs px-2 py-1">Pucallpa</span>
+                    <span class="bg-xyz-offwhite/10 text-xs px-2 py-1">Chimbote</span>
+                    <span class="bg-xyz-offwhite/10 text-xs px-2 py-1">Ayacucho</span>
+                    <span class="bg-xyz-offwhite/10 text-xs px-2 py-1">Tarapoto</span>
+                </div>
+                <p class="text-xs text-xyz-offwhite/40 mt-4">
+                    Y todas las capitales de departamento.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+{# === INFORMACIÓN ADICIONAL === #}
+<section class="bg-xyz-offwhite py-16 lg:py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <span class="font-mono text-xs tracking-[0.3em] text-xyz-sage uppercase">// INFORMACIÓN IMPORTANTE</span>
+            <h2 class="font-squada text-3xl lg:text-4xl text-xyz-charcoal mt-4">LO QUE DEBES SABER</h2>
+        </div>
+
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {# Tiempo de fabricación #}
+            <div class="bg-white p-6 text-center hover:shadow-lg transition-shadow">
+                <div class="w-16 h-16 mx-auto bg-xyz-sage/10 rounded-full flex items-center justify-center mb-4">
+                    <i class="fas fa-print text-xyz-sage text-2xl"></i>
+                </div>
+                <h3 class="font-squada text-lg text-xyz-charcoal mb-2">TIEMPO DE FABRICACIÓN</h3>
+                <p class="text-sm text-xyz-charcoal/60">
+                    Cada pieza se fabrica al momento del pedido. El tiempo de impresión 
+                    varía según el producto (8-48h).
+                </p>
+            </div>
+
+            {# Seguimiento #}
+            <div class="bg-white p-6 text-center hover:shadow-lg transition-shadow">
+                <div class="w-16 h-16 mx-auto bg-xyz-clay/10 rounded-full flex items-center justify-center mb-4">
+                    <i class="fas fa-search-location text-xyz-clay text-2xl"></i>
+                </div>
+                <h3 class="font-squada text-lg text-xyz-charcoal mb-2">SEGUIMIENTO</h3>
+                <p class="text-sm text-xyz-charcoal/60">
+                    Recibirás un código de seguimiento de Olva Courier 
+                    para rastrear tu pedido en tiempo real.
+                </p>
+            </div>
+
+            {# Empaque #}
+            <div class="bg-white p-6 text-center hover:shadow-lg transition-shadow">
+                <div class="w-16 h-16 mx-auto bg-xyz-charcoal/10 rounded-full flex items-center justify-center mb-4">
+                    <i class="fas fa-box-open text-xyz-charcoal text-2xl"></i>
+                </div>
+                <h3 class="font-squada text-lg text-xyz-charcoal mb-2">EMPAQUE SEGURO</h3>
+                <p class="text-sm text-xyz-charcoal/60">
+                    Protegemos cada pieza con materiales de embalaje 
+                    para garantizar que llegue en perfectas condiciones.
+                </p>
+            </div>
+
+            {# Soporte #}
+            <div class="bg-white p-6 text-center hover:shadow-lg transition-shadow">
+                <div class="w-16 h-16 mx-auto bg-xyz-sage/10 rounded-full flex items-center justify-center mb-4">
+                    <i class="fab fa-whatsapp text-xyz-sage text-2xl"></i>
+                </div>
+                <h3 class="font-squada text-lg text-xyz-charcoal mb-2">SOPORTE DIRECTO</h3>
+                <p class="text-sm text-xyz-charcoal/60">
+                    ¿Dudas sobre tu envío? Escríbenos por WhatsApp 
+                    y te ayudamos al instante.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+{# === CTA === #}
+<section class="bg-xyz-sage py-16">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 class="font-squada text-3xl lg:text-4xl text-white mb-4">
+            ¿TIENES ALGUNA DUDA?
+        </h2>
+        <p class="text-white/80 mb-8">
+            Estamos aquí para ayudarte con cualquier consulta sobre envíos.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <a href="https://wa.me/51XXXXXXXXX?text=Hola!%20Tengo%20una%20consulta%20sobre%20envíos" 
+               target="_blank"
+               class="inline-flex items-center justify-center gap-2 bg-white text-xyz-charcoal font-squada text-sm tracking-widest uppercase px-8 py-4 hover:bg-xyz-offwhite transition-colors">
+                <i class="fab fa-whatsapp text-lg"></i>
+                ESCRÍBENOS
+            </a>
+            <a href="/catalogue/" class="inline-flex items-center justify-center gap-2 bg-xyz-charcoal text-white font-squada text-sm tracking-widest uppercase px-8 py-4 hover:bg-xyz-clay transition-colors">
+                VER CATÁLOGO <i class="fas fa-arrow-right ml-2"></i>
+            </a>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
