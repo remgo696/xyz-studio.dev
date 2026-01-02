@@ -1,0 +1,178 @@
+{% extends "oscar/layout.html" %}
+{% load basket_tags %}
+{% load category_tags %}
+{% load product_tags %}
+{% load i18n %}
+{% load image_tags %}
+{% load currency_filters %}
+{% load purchase_info_tags %}
+
+{% block title %}
+    {% if summary %}{{ summary }} |{% endif %} {{ shop_name }}
+{% endblock %}
+
+{% block layout %}
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 min-h-screen">
+
+    <header class="mb-12 border-b border-xyz-charcoal/10 pb-8">
+        <nav class="text-[10px] font-mono tracking-widest uppercase text-xyz-charcoal/50 mb-4">
+            <a href="/" class="hover:text-xyz-sage transition-colors">HOME</a>
+            <span class="mx-2">/</span>
+            {% if category %}
+                <span class="text-xyz-charcoal font-bold">{{ category.name }}</span>
+            {% else %}
+                <span class="text-xyz-charcoal font-bold">CATÁLOGO GENERAL</span>
+            {% endif %}
+        </nav>
+
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+            <div>
+                <h1 class="font-squada text-5xl text-xyz-charcoal mb-2">
+                    {% if category %}{{ category.name }}{% else %}EXPLORAR{% endif %}
+                </h1>
+                {% if category.description %}
+                    <div class="font-roboto font-light text-xyz-charcoal/70 max-w-2xl text-sm leading-relaxed">
+                        {{ category.description|safe }}
+                    </div>
+                {% endif %}
+            </div>
+            
+            <div class="font-mono text-xs text-xyz-sage border border-xyz-sage/30 px-3 py-1 rounded-full bg-xyz-sage/5">
+                {{ paginator.count }} RESULTADOS ENCONTRADOS
+            </div>
+        </div>
+    </header>
+
+    <div class="lg:grid lg:grid-cols-4 lg:gap-x-12">
+        
+        <aside class="hidden lg:block lg:col-span-1 space-y-8">
+            {% if has_facets %}
+                <div class="bg-white p-6 rounded-lg border border-xyz-charcoal/5 shadow-sm">
+                    <h3 class="font-squada text-lg text-xyz-charcoal mb-4 flex items-center gap-2">
+                        <i class="fas fa-filter text-xyz-clay text-sm"></i> PARÁMETROS
+                    </h3>
+                    
+                    {% for field, data in facet_data.items %}
+                        {% if data.results %}
+                            <div class="mb-6 last:mb-0">
+                                <h4 class="font-mono text-xs font-bold uppercase tracking-widest text-xyz-charcoal/60 mb-3 border-b border-xyz-charcoal/10 pb-1">
+                                    {{ field }}
+                                </h4>
+                                <ul class="space-y-2">
+                                    {% for item in data.results %}
+                                        <li>
+                                            <a href="{{ item.select_url }}" class="group flex items-center justify-between text-sm text-xyz-charcoal/80 hover:text-xyz-sage transition-colors">
+                                                <span>{{ item.name }}</span>
+                                                <span class="text-[10px] bg-gray-100 text-gray-500 px-1.5 rounded group-hover:bg-xyz-sage group-hover:text-white transition-colors">
+                                                    {{ item.count }}
+                                                </span>
+                                            </a>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <div class="bg-xyz-charcoal text-xyz-offwhite p-6 rounded-lg text-center relative overflow-hidden">
+                <div class="absolute inset-0 border border-white/10 m-2 pointer-events-none"></div>
+                <i class="fas fa-cube text-3xl text-xyz-clay mb-3"></i>
+                <h4 class="font-squada text-xl mb-2">DISEÑO A MEDIDA</h4>
+                <p class="text-xs font-light opacity-70 mb-4">¿Necesitas algo específico? Imprimimos tu idea.</p>
+                <a href="#" class="inline-block text-[10px] font-bold font-mono border-b border-xyz-clay text-xyz-clay hover:text-white transition-colors">CONTACTAR STUDIO</a>
+            </div>
+        </aside>
+
+        <section class="mt-6 lg:mt-0 lg:col-span-3">
+            
+            {% if products %}
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-10 gap-x-8">
+                    {% for product in products %}
+                        
+                        <div class="group relative flex flex-col h-full">
+                            <div class="relative aspect-square overflow-hidden rounded-lg bg-gray-100 group-hover:shadow-md transition-shadow duration-300">
+                                {% with image=product.primary_image %}
+                                    {% oscar_thumbnail image.original "600x600" upscale=False as thumb %}
+                                    <img src="{{ thumb.url }}" 
+                                         alt="{{ product.get_title }}" 
+                                         class="h-full w-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-tech mix-blend-multiply opacity-95 group-hover:opacity-100">
+                                {% endwith %}
+                                
+                                <div class="absolute inset-0 border-2 border-xyz-sage opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+                                    <div class="absolute top-0 right-0 bg-xyz-sage text-white text-[10px] font-mono px-2 py-1">VIEW_ID: {{ product.upc|default:"00" }}</div>
+                                </div>
+
+                                <div class="absolute bottom-4 left-0 right-0 flex justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 translate-y-2 group-hover:translate-y-0">
+                                    <form action="{% url 'basket:add' pk=product.id %}" method="post">
+                                        {% csrf_token %}
+                                        <a href="{{ product.get_absolute_url }}" class="bg-xyz-charcoal text-white text-xs font-bold tracking-widest uppercase px-6 py-2 rounded-full hover:bg-xyz-sage transition-colors shadow-lg">
+                                            Configurar
+                                        </a>
+                                    </form>
+                                </div>
+                            </div>
+
+                            <div class="mt-4 flex flex-col flex-1">
+                                <h3 class="text-lg font-squada text-xyz-charcoal group-hover:text-xyz-clay transition-colors leading-tight">
+                                    <a href="{{ product.get_absolute_url }}">
+                                        <span aria-hidden="true" class="absolute inset-0"></span>
+                                        {{ product.get_title }}
+                                    </a>
+                                </h3>
+                                
+                                <div class="flex justify-between items-end mt-2">
+                                    {% purchase_info_for_product request product as session %}
+                                    {% if session.price.exists %}
+                                        <p class="text-xl font-bold font-squada text-xyz-charcoal">
+                                            {{ session.price.incl_tax|currency:session.price.currency }}
+                                        </p>
+                                    {% else %}
+                                        <p class="text-sm text-gray-500">No disponible</p>
+                                    {% endif %}
+
+                                    <span class="h-1 w-1 bg-xyz-charcoal rounded-full group-hover:bg-xyz-sage transition-colors mb-2"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                    {% endfor %}
+                </div>
+
+                {% if page_obj.has_other_pages %}
+                    <nav class="border-t border-xyz-charcoal/10 px-4 flex items-center justify-between sm:px-0 mt-16">
+                        <div class="-mt-px w-0 flex-1 flex">
+                            {% if page_obj.has_previous %}
+                                <a href="?page={{ page_obj.previous_page_number }}" class="border-t-2 border-transparent pt-4 pr-1 inline-flex items-center text-sm font-medium text-gray-500 hover:text-xyz-charcoal hover:border-xyz-charcoal">
+                                    <i class="fas fa-arrow-left mr-3"></i> PREV
+                                </a>
+                            {% endif %}
+                        </div>
+                        <div class="hidden md:-mt-px md:flex">
+                            <span class="text-xyz-charcoal pt-4 px-4 text-sm font-mono">
+                                PÁGINA {{ page_obj.number }} DE {{ page_obj.paginator.num_pages }}
+                            </span>
+                        </div>
+                        <div class="-mt-px w-0 flex-1 flex justify-end">
+                            {% if page_obj.has_next %}
+                                <a href="?page={{ page_obj.next_page_number }}" class="border-t-2 border-transparent pt-4 pl-1 inline-flex items-center text-sm font-medium text-gray-500 hover:text-xyz-charcoal hover:border-xyz-charcoal">
+                                    NEXT <i class="fas fa-arrow-right ml-3"></i>
+                                </a>
+                            {% endif %}
+                        </div>
+                    </nav>
+                {% endif %}
+
+            {% else %}
+                <div class="text-center py-24 border-2 border-dashed border-xyz-charcoal/10 rounded-xl">
+                    <i class="fas fa-drafting-compass text-4xl text-xyz-charcoal/20 mb-4"></i>
+                    <h3 class="font-squada text-2xl text-xyz-charcoal/50">NO HAY PROTOTIPOS AQUÍ</h3>
+                    <p class="text-sm text-gray-500 mt-2">Intenta ajustar los filtros o explora otra categoría.</p>
+                </div>
+            {% endif %}
+
+        </section>
+    </div>
+</div>
+{% endblock %}
