@@ -210,14 +210,13 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
 )
 
-# Haystack (Buscador) - Modo simple para empezar
+# Haystack (Buscador) - Solr 6.x
 HAYSTACK_CONNECTIONS = {
     'default': {
-        'ENGINE': 'haystack.backends.simple_backend.SimpleEngine',
-        # Cuando se pase a producción, usar otro buscardor más potente. Por ejemplo:
-        # 'ENGINE': 'haystack.backends.solr_backend.SolrEngine',
-        # 'URL': 'http://127.0.0.1:8983/solr',
-        # 'INCLUDE_SPELLING': True,
+        'ENGINE': 'haystack.backends.solr_backend.SolrEngine',
+        'URL': 'http://127.0.0.1:8983/solr/sandbox',
+        'ADMIN_URL': 'http://127.0.0.1:8983/solr/admin/cores',
+        'INCLUDE_SPELLING': True,
     },
 }
 HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
