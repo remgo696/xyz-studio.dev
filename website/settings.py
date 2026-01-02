@@ -52,8 +52,6 @@ INSTALLED_APPS = [
     'oscar.apps.catalogue.reviews.apps.CatalogueReviewsConfig',
     'oscar.apps.communication.apps.CommunicationConfig',
     'oscar.apps.partner.apps.PartnerConfig',
-    'apps.basket.apps.BasketConfig', # My custom basket app
-    # 'oscar.apps.basket.apps.BasketConfig', # Original basket app
     'oscar.apps.payment.apps.PaymentConfig',
     'oscar.apps.offer.apps.OfferConfig',
     'oscar.apps.order.apps.OrderConfig',
@@ -74,6 +72,8 @@ INSTALLED_APPS = [
     'oscar.apps.dashboard.vouchers.apps.VouchersDashboardConfig',
     'oscar.apps.dashboard.communications.apps.CommunicationsDashboardConfig',
     'oscar.apps.dashboard.shipping.apps.ShippingDashboardConfig',
+    # 'oscar.apps.basket.apps.BasketConfig', # Original basket app
+    'apps.basket.apps.BasketConfig', # My custom basket app
 
     # 3rd-party apps that oscar depends on
     'widget_tweaks',
@@ -81,6 +81,11 @@ INSTALLED_APPS = [
     'treebeard',
     'sorl.thumbnail',   # Default thumbnail backend, can be replaced
     'django_tables2',
+
+    # Tailwind CSS integration
+    "tailwind",
+    'theme',
+    'django_browser_reload',
 ]
 
 SITE_ID = 1
@@ -98,6 +103,9 @@ MIDDLEWARE = [
     'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
     # Middleware de Oscar (Añadir este)
     'oscar.apps.basket.middleware.BasketMiddleware',
+
+    # Middleware para recarga en caliente con Tailwind CSS
+    "django_browser_reload.middleware.BrowserReloadMiddleware",
 ]
 
 ROOT_URLCONF = 'website.urls'
@@ -173,6 +181,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = 'static/'
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
 # Media files (User-uploaded content)
 MEDIA_URL = '/media/'
@@ -220,3 +229,13 @@ OSCAR_ORDER_STATUS_PIPELINE = {
     'Delivered': (),
     'Cancelled': (),
 }
+
+# Configuración de Tailwind CSS
+TAILWIND_APP_NAME = "theme"
+
+# Configuración de IPs internas para el hot-reload
+INTERNAL_IPS = [
+    "127.0.0.1",
+]
+
+NPM_BIN_PATH = r"C:\Program Files\nodejs\npm.cmd"  # Ajustar según la ruta de npm en Windows

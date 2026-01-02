@@ -23,6 +23,8 @@ from django.apps import apps
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include(apps.get_app_config('oscar').urls[0])),
+
+    path("__reload__/", include("django_browser_reload.urls")),
 ]
 
 # Esto asegura que las fotos se vean mientras desarrollas
