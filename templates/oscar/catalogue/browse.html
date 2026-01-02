@@ -90,40 +90,52 @@
             {% if products %}
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-10 gap-x-8">
                     {% for product in products %}
+                        {# Handle both Haystack search results (.object) and direct QuerySet objects #}
+                        {% with real_product=product.object|default:product %}
                         
                         <div class="group relative flex flex-col h-full">
                             <div class="relative aspect-square overflow-hidden rounded-lg bg-gray-100 group-hover:shadow-md transition-shadow duration-300">
-                                {% with image=product.primary_image %}
-                                    {% oscar_thumbnail image.original "600x600" upscale=False as thumb %}
-                                    <img src="{{ thumb.url }}" 
-                                         alt="{{ product.get_title }}" 
-                                         class="h-full w-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-tech mix-blend-multiply opacity-95 group-hover:opacity-100">
+                                {% with image=real_product.primary_image %}
+                                    
+                                    {# --- INICIO DEL PARCHE DE SEGURIDAD --- #}
+                                    {% if image and image.original %}
+                                        {# Caso A: El producto TIENE imagen #}
+                                        {% oscar_thumbnail image.original "600x600" upscale=False as thumb %}
+                                        <img src="{{ thumb.url }}" 
+                                             alt="{{ real_product.get_title }}" 
+                                             class="h-full w-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-tech mix-blend-multiply opacity-95 group-hover:opacity-100">
+                                    {% else %}
+                                        {# Caso B: El producto NO tiene imagen (Fallback) #}
+                                        <div class="h-full w-full flex flex-col items-center justify-center bg-xyz-charcoal/5 text-xyz-charcoal/20">
+                                            <i class="fas fa-cube text-4xl mb-2"></i>
+                                            <span class="font-mono text-[10px] tracking-widest uppercase">NO RENDER</span>
+                                        </div>
+                                    {% endif %}
+                                    {# --- FIN DEL PARCHE --- #}
+
                                 {% endwith %}
                                 
                                 <div class="absolute inset-0 border-2 border-xyz-sage opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
-                                    <div class="absolute top-0 right-0 bg-xyz-sage text-white text-[10px] font-mono px-2 py-1">VIEW_ID: {{ product.upc|default:"00" }}</div>
+                                    <div class="absolute top-0 right-0 bg-xyz-sage text-white text-[10px] font-mono px-2 py-1">VIEW_ID: {{ real_product.upc|default:"00" }}</div>
                                 </div>
 
                                 <div class="absolute bottom-4 left-0 right-0 flex justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 translate-y-2 group-hover:translate-y-0">
-                                    <form action="{% url 'basket:add' pk=product.id %}" method="post">
-                                        {% csrf_token %}
-                                        <a href="{{ product.get_absolute_url }}" class="bg-xyz-charcoal text-white text-xs font-bold tracking-widest uppercase px-6 py-2 rounded-full hover:bg-xyz-sage transition-colors shadow-lg">
-                                            Configurar
-                                        </a>
-                                    </form>
+                                    <a href="{{ real_product.get_absolute_url }}" class="bg-xyz-charcoal text-white text-xs font-bold tracking-widest uppercase px-6 py-2 rounded-full hover:bg-xyz-sage transition-colors shadow-lg">
+                                        Configurar
+                                    </a>
                                 </div>
                             </div>
 
                             <div class="mt-4 flex flex-col flex-1">
                                 <h3 class="text-lg font-squada text-xyz-charcoal group-hover:text-xyz-clay transition-colors leading-tight">
-                                    <a href="{{ product.get_absolute_url }}">
+                                    <a href="{{ real_product.get_absolute_url }}">
                                         <span aria-hidden="true" class="absolute inset-0"></span>
-                                        {{ product.get_title }}
+                                        {{ real_product.get_title }}
                                     </a>
                                 </h3>
                                 
                                 <div class="flex justify-between items-end mt-2">
-                                    {% purchase_info_for_product request product as session %}
+                                    {% purchase_info_for_product request real_product as session %}
                                     {% if session.price.exists %}
                                         <p class="text-xl font-bold font-squada text-xyz-charcoal">
                                             {{ session.price.incl_tax|currency:session.price.currency }}
@@ -136,7 +148,8 @@
                                 </div>
                             </div>
                         </div>
-
+                        
+                        {% endwith %}
                     {% endfor %}
                 </div>
 
