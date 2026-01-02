@@ -1,0 +1,53 @@
+{% load static %}
+{% load tailwind_tags %}
+
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE|default:"es" }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{{ shop_name }} - {{ shop_tagline }}{% endblock %}</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&family=Squada+One&display=swap" rel="stylesheet">
+
+    {% tailwind_css %}
+
+    {% block extra_head %}{% endblock %}
+</head>
+<body class="bg-xyz-offwhite text-xyz-charcoal font-roboto">
+
+    <nav class="bg-white shadow-md p-4">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="/" class="text-3xl font-squada text-xyz-sage">XYZ STUDIO</a>
+            <div>
+                <a href="{% url 'basket:summary' %}" class="text-xyz-charcoal hover:text-xyz-clay font-bold">
+                    Cesta
+                    {% if not request.basket.is_empty %}
+                        <span class="bg-xyz-clay text-white rounded-full px-2 py-1 text-xs">{{ request.basket.num_items }}</span>
+                    {% endif %}
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mx-auto p-4 min-h-screen">
+        {% if messages %}
+            <div class="mb-4">
+                {% for message in messages %}
+                    <div class="p-4 rounded bg-xyz-sage text-white">{{ message }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        {% block layout %}{% endblock %}
+    </main>
+
+    <footer class="bg-xyz-charcoal text-xyz-offwhite p-8 mt-8">
+        <div class="container mx-auto text-center font-squada">
+            &copy; 2025 XYZ Studio - Lima, Perú
+        </div>
+    </footer>
+
+</body>
+</html>

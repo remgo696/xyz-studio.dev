@@ -1,11 +1,25 @@
 @import "tailwindcss";
+
+/* 1. Plugins Oficiales (que ya tienes en package.json) */
+@plugin "@tailwindcss/forms";
+@plugin "@tailwindcss/typography";
+@plugin "@tailwindcss/aspect-ratio";
+
+/* DaisyUI (Opcional, vino con la plantilla, puedes dejarlo o quitarlo) */
 @plugin "daisyui";
 
-/**
-  * A catch-all path to Django template files, JavaScript, and Python files
-  * that contain Tailwind CSS classes and will be scanned by Tailwind to generate the final CSS file.
-  *
-  * If your final CSS file is not being updated after code changes, you may want to broaden or narrow
-  * the scope of this path.
-  */
+/* 2. Rutas de escaneo (Para que detecte tus clases en Django) */
 @source "../../../**/*.{html,py,js}";
+
+/* CONFIGURACIÓN (Colores y Fuentes) */
+@theme {
+  /* Colores personalizados */
+  --color-xyz-clay: #CCA498;      /* Terracota */
+  --color-xyz-sage: #8A9A5B;      /* Salvia */
+  --color-xyz-offwhite: #F0EAD6;  /* Blanco Hueso */
+  --color-xyz-charcoal: #36454F;  /* Gris Texto */
+
+  /* Fuentes */
+  --font-squada: "Squada One", cursive;
+  --font-roboto: "Roboto", sans-serif;
+}
