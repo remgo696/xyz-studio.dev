@@ -26,3 +26,108 @@
   /* Animaciones suaves */
   --ease-tech: cubic-bezier(0.4, 0, 0.2, 1);
 }
+
+/* ============================================
+   ESTILOS DE FORMULARIOS - XYZ STUDIO PALETTE
+   ============================================ */
+
+/* Radio Buttons y Checkboxes - Override del azul por defecto */
+input[type="radio"]:checked,
+input[type="checkbox"]:checked {
+  background-color: var(--color-xyz-sage) !important;
+  border-color: var(--color-xyz-sage) !important;
+}
+
+input[type="radio"]:focus,
+input[type="checkbox"]:focus {
+  border-color: var(--color-xyz-sage) !important;
+  box-shadow: 0 0 0 2px rgba(138, 154, 91, 0.25) !important;
+  --tw-ring-color: var(--color-xyz-sage) !important;
+}
+
+input[type="radio"]:checked:focus,
+input[type="checkbox"]:checked:focus {
+  background-color: var(--color-xyz-sage) !important;
+  border-color: var(--color-xyz-sage) !important;
+}
+
+/* Select y Multiselect */
+select:focus,
+select[multiple]:focus {
+  border-color: var(--color-xyz-sage) !important;
+  box-shadow: 0 0 0 2px rgba(138, 154, 91, 0.25) !important;
+  --tw-ring-color: var(--color-xyz-sage) !important;
+}
+
+/* Opciones seleccionadas en multiselect */
+select[multiple] option:checked,
+select[multiple] option:active,
+select option:checked {
+  background: linear-gradient(0deg, var(--color-xyz-sage) 0%, var(--color-xyz-sage) 100%) !important;
+  background-color: var(--color-xyz-sage) !important;
+  color: white !important;
+}
+
+/* Input fields focus */
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="number"]:focus,
+input[type="tel"]:focus,
+input[type="url"]:focus,
+textarea:focus {
+  border-color: var(--color-xyz-sage) !important;
+  box-shadow: 0 0 0 2px rgba(138, 154, 91, 0.25) !important;
+  --tw-ring-color: var(--color-xyz-sage) !important;
+}
+
+/* Color Swatch List - Estilo especial para selectores de color */
+.color-swatch-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.color-swatch-list label {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  border: 2px solid var(--color-xyz-charcoal);
+  border-radius: 0.25rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.875rem;
+}
+
+.color-swatch-list label:hover {
+  border-color: var(--color-xyz-sage);
+  background-color: rgba(138, 154, 91, 0.1);
+}
+
+.color-swatch-list input[type="radio"]:checked + label,
+.color-swatch-list label:has(input[type="radio"]:checked) {
+  border-color: var(--color-xyz-sage);
+  background-color: var(--color-xyz-sage);
+  color: white;
+}
+
+/* File Dropzone */
+.file-dropzone {
+  border: 2px dashed var(--color-xyz-charcoal);
+  border-radius: 0.5rem;
+  padding: 2rem;
+  text-align: center;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.file-dropzone:hover,
+.file-dropzone:focus {
+  border-color: var(--color-xyz-sage);
+  background-color: rgba(138, 154, 91, 0.05);
+}
+
+/* Accent color global override */
+:root {
+  accent-color: var(--color-xyz-sage);
+}

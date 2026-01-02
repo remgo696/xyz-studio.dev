@@ -1,0 +1,59 @@
+{% load widget_tweaks %}
+
+{% if field.is_hidden %}
+    {{ field }}
+{% else %}
+    {% block control_group %}
+        <div class="form-group{% if style == "horizontal" %} row{% endif %} mb-6">
+
+            {# --- CORRECCIÓN AQUÍ --- #}
+            {% block label %}
+                {# Solo mostramos label con 'for' si NO es checkbox Y NO es radio #}
+                {% if not nolabel and field.widget_type != 'checkbox' and field.widget_type != 'radioselect' %}
+                    <label for="{{ field.auto_id }}" class="block text-sm font-bold font-squada text-xyz-charcoal mb-2 {% if field.field.required %} required{% endif %}">
+                        {{ field.label|safe }}
+                    </label>
+                
+                {# Si ES RadioSelect, mostramos el título sin el atributo 'for' (para evitar el error) #}
+                {% elif field.widget_type == 'radioselect' %}
+                     <label class="block text-sm font-bold font-squada text-xyz-charcoal mb-2 {% if field.field.required %} required{% endif %}">
+                        {{ field.label|safe }}
+                    </label>
+                {% endif %}
+            {% endblock %}
+            {# ----------------------- #}
+
+            {% block controls %}
+                <div class="{% if style|default:"stacked" != 'stacked' %}col-sm-7{% endif %}{% if field.widget_type == 'checkbox' %} form-check{% endif %}">
+                    {% block widget %}
+                        {# Renderizado estándar #}
+                        {% if field.widget_type == 'checkbox' %}
+                            <label for="{{ field.auto_id }}" class="col-form-label {% if field.field.required %}required{% endif %}">
+                                {% render_field field %}
+                                {{ field.label|safe }}
+                            </label>
+                        {% else %}
+                            {# Aquí se dibujan nuestros inputs (incluyendo el RadioSelect con la clase swatches) #}
+                            {% render_field field class+="form-control" %}
+                        {% endif %}
+                    {% endblock %}
+
+                    {# Errores y Ayuda #}
+                    {% block errors %}
+                        {% for error in field.errors %}
+                            <span class="block text-xs text-red-500 mt-1 font-mono"><i class="fas fa-exclamation-circle"></i> {{ error }}</span>
+                        {% endfor %}
+                    {% endblock %}
+
+                    {% block help_text %}
+                        {% if field.help_text %}
+                            <small class="block text-xs text-gray-400 mt-1">
+                                {{ field.help_text|safe }}
+                            </small>
+                        {% endif %}
+                    {% endblock %}
+                </div>
+            {% endblock %}
+        </div>
+    {% endblock %}
+{% endif %}
