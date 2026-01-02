@@ -5,13 +5,28 @@ name = "pypi"
 
 [packages]
 django = "*"
+django-oscar = "*"
 django-ckeditor = "*"
+django-haystack = "*"
+django-tailwind = "*"
+django-browser-reload = "*"
+django-tables2 = "*"
+django-treebeard = "*"
+django-widget-tweaks = "*"
+django-phonenumber-field = "*"
+django-extra-views = "*"
 pillow = "*"
+pysolr = "*"
+sorl-thumbnail = "*"
+purl = "*"
+phonenumbers = "*"
+pycountry = "*"
+factory-boy = "*"
+
+[dev-packages]
 pylint = "*"
 pylint-django = "*"
 pylint-celery = "*"
-
-[dev-packages]
 
 [requires]
 python_version = "3.13"
