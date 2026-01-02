@@ -1,0 +1,49 @@
+{% load i18n %}
+{% load currency_filters %}
+{% load shipping_tags %} {# <-- Cargamos nuestra herramienta nueva #}
+
+{# Calculamos los datos usando el tag que creamos #}
+{% calculate_shipping_progress request.basket threshold=490 as shipping %}
+
+<div class="bg-xyz-offwhite border-b border-xyz-charcoal/10 py-3 shadow-sm relative z-40">
+    <div class="max-w-2xl mx-auto px-6">
+        
+        <div class="text-center mb-2 font-roboto text-sm text-xyz-charcoal">
+            {% if shipping.is_free %}
+                <span class="text-xyz-sage font-bold flex items-center justify-center gap-2">
+                    <i class="fas fa-check-circle"></i> ¡FELICIDADES! TIENES ENVÍO GRATIS
+                </span>
+            {% else %}
+                <span>
+                    Te falta 
+                    <span class="font-bold font-squada text-lg text-xyz-charcoal">
+                        S/ {{ shipping.gap }}
+                    </span> 
+                    para obtener <span class="font-bold">ENVÍO GRATIS</span>
+                </span>
+            {% endif %}
+        </div>
+
+        <div class="relative h-1.5 bg-xyz-charcoal/10 rounded-full w-full mt-3 overflow-visible">
+            
+            <div class="absolute top-0 left-0 h-full bg-xyz-sage rounded-full transition-all duration-700 ease-tech"
+                 style="width: {{ shipping.percent }}%;">
+                
+                <div class="absolute right-0 top-1/2 transform -translate-y-1/2 translate-x-1/2 
+                            bg-xyz-offwhite border border-xyz-sage text-xyz-sage 
+                            w-7 h-7 rounded-full flex items-center justify-center shadow-sm z-10">
+                    {% if shipping.is_free %}
+                        <i class="fas fa-gift text-xs"></i>
+                    {% else %}
+                        <i class="fas fa-truck-fast text-[10px]"></i>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <div class="flex justify-between text-[10px] text-xyz-charcoal/40 mt-1 font-mono tracking-widest">
+            <span>S/ 0</span>
+            <span>S/ {{ shipping.limit|floatformat:0 }}</span>
+        </div>
+    </div>
+</div>
