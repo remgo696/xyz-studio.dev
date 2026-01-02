@@ -1,41 +1,82 @@
 {% load static %}
 {% load tailwind_tags %}
+{% load i18n %}
 
 <!DOCTYPE html>
-<html lang="{{ LANGUAGE_CODE|default:"es" }}">
+<html lang="{{ LANGUAGE_CODE|default:"es" }}" class="h-full">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}{{ shop_name }} - {{ shop_tagline }}{% endblock %}</title>
+    <title>{% block title %}{{ shop_name }} | Diseño Paramétrico{% endblock %}</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&family=Squada+One&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Squada+One&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     {% tailwind_css %}
-
+    
     {% block extra_head %}{% endblock %}
 </head>
-<body class="bg-xyz-offwhite text-xyz-charcoal font-roboto">
+<body class="bg-xyz-offwhite text-xyz-charcoal font-roboto antialiased flex flex-col min-h-screen selection:bg-xyz-sage selection:text-white">
 
-    <nav class="bg-white shadow-md p-4">
-        <div class="container mx-auto flex justify-between items-center">
-            <a href="/" class="text-3xl font-squada text-xyz-sage">XYZ STUDIO</a>
-            <div>
-                <a href="{% url 'basket:summary' %}" class="text-xyz-charcoal hover:text-xyz-clay font-bold">
-                    Cesta
-                    {% if not request.basket.is_empty %}
-                        <span class="bg-xyz-clay text-white rounded-full px-2 py-1 text-xs">{{ request.basket.num_items }}</span>
-                    {% endif %}
-                </a>
+    <nav class="sticky top-0 z-50 bg-xyz-offwhite/95 backdrop-blur-sm border-b border-xyz-charcoal/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20 items-center">
+                
+                <div class="flex-shrink-0 flex items-center">
+                    <a href="/" class="group flex items-center gap-2">
+                        <div class="w-8 h-8 border-2 border-xyz-sage group-hover:bg-xyz-sage transition-colors duration-300 transform rotate-45 flex items-center justify-center">
+                            <div class="w-2 h-2 bg-xyz-charcoal transform -rotate-45"></div>
+                        </div>
+                        <span class="font-squada text-3xl tracking-wide text-xyz-charcoal group-hover:text-xyz-sage transition-colors ml-2">
+                            XYZ STUDIO
+                        </span>
+                    </a>
+                </div>
+
+                <div class="hidden md:flex space-x-12">
+                    <a href="/catalogue/" class="text-sm font-bold tracking-widest hover:text-xyz-clay transition-colors uppercase border-b-2 border-transparent hover:border-xyz-clay py-1">
+                        Catálogo
+                    </a>
+                    <a href="/catalogue/category/iluminacion/" class="text-sm font-bold tracking-widest hover:text-xyz-sage transition-colors uppercase border-b-2 border-transparent hover:border-xyz-sage py-1">
+                        Iluminación
+                    </a>
+                    <a href="/catalogue/category/organizacion/" class="text-sm font-bold tracking-widest hover:text-xyz-sage transition-colors uppercase border-b-2 border-transparent hover:border-xyz-sage py-1">
+                        Organización
+                    </a>
+                </div>
+
+                <div class="flex items-center space-x-6">
+                    <a href="/search/" class="text-xyz-charcoal hover:text-xyz-clay transition-colors">
+                        <i class="fas fa-search text-lg"></i>
+                    </a>
+
+                    <a href="{% url 'customer:summary' %}" class="text-xyz-charcoal hover:text-xyz-clay transition-colors">
+                        <i class="far fa-user text-lg"></i>
+                    </a>
+
+                    <a href="{% url 'basket:summary' %}" class="relative group flex items-center">
+                        <i class="fas fa-cube text-xl text-xyz-charcoal group-hover:text-xyz-sage transition-colors"></i>
+                        {% if not request.basket.is_empty %}
+                            <span class="absolute -top-2 -right-2 bg-xyz-clay text-white text-[10px] font-bold w-5 h-5 flex items-center justify-center rounded-full border border-xyz-offwhite">
+                                {{ request.basket.num_items }}
+                            </span>
+                        {% endif %}
+                    </a>
+                </div>
             </div>
         </div>
     </nav>
 
-    <main class="container mx-auto p-4 min-h-screen">
+    <main class="flex-grow w-full">
         {% if messages %}
-            <div class="mb-4">
+            <div class="max-w-7xl mx-auto px-4 mt-4">
                 {% for message in messages %}
-                    <div class="p-4 rounded bg-xyz-sage text-white">{{ message }}</div>
+                    <div class="p-4 mb-2 text-sm border-l-4 border-xyz-sage bg-white shadow-sm flex items-center justify-between">
+                        <span>{{ message }}</span>
+                        <button onclick="this.parentElement.remove()" class="text-xyz-charcoal/50 hover:text-xyz-charcoal">&times;</button>
+                    </div>
                 {% endfor %}
             </div>
         {% endif %}
@@ -43,9 +84,60 @@
         {% block layout %}{% endblock %}
     </main>
 
-    <footer class="bg-xyz-charcoal text-xyz-offwhite p-8 mt-8">
-        <div class="container mx-auto text-center font-squada">
-            &copy; 2025 XYZ Studio - Lima, Perú
+    <footer class="bg-xyz-charcoal text-xyz-offwhite mt-auto pt-16 pb-8 border-t-4 border-xyz-sage">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+                
+                <div class="col-span-1 md:col-span-1">
+                    <span class="font-squada text-4xl text-xyz-offwhite block mb-4">XYZ</span>
+                    <p class="text-sm font-light leading-relaxed opacity-80 max-w-xs">
+                        Manufactura digital y diseño paramétrico. Erradicamos lo estándar para crear objetos que se adaptan a ti, no al revés.
+                    </p>
+                    <div class="flex space-x-4 mt-6">
+                        <a href="#" class="opacity-60 hover:opacity-100 hover:text-xyz-clay transition-all"><i class="fab fa-instagram text-xl"></i></a>
+                        <a href="#" class="opacity-60 hover:opacity-100 hover:text-xyz-clay transition-all"><i class="fab fa-tiktok text-xl"></i></a>
+                        <a href="#" class="opacity-60 hover:opacity-100 hover:text-xyz-clay transition-all"><i class="fab fa-linkedin text-xl"></i></a>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="font-squada text-xl text-xyz-sage mb-6 tracking-wide">EXPLORAR</h4>
+                    <ul class="space-y-3 text-sm font-light">
+                        <li><a href="/catalogue/" class="hover:text-xyz-clay hover:pl-2 transition-all duration-300">Colección Completa</a></li>
+                        <li><a href="#" class="hover:text-xyz-clay hover:pl-2 transition-all duration-300">Lámparas Voronoi</a></li>
+                        <li><a href="#" class="hover:text-xyz-clay hover:pl-2 transition-all duration-300">Soportes Gaming</a></li>
+                        <li><a href="#" class="hover:text-xyz-clay hover:pl-2 transition-all duration-300">Litofanías</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-squada text-xl text-xyz-sage mb-6 tracking-wide">SOPORTE</h4>
+                    <ul class="space-y-3 text-sm font-light">
+                        <li><a href="#" class="hover:text-xyz-clay hover:pl-2 transition-all duration-300">Envíos y Entregas</a></li>
+                        <li><a href="#" class="hover:text-xyz-clay hover:pl-2 transition-all duration-300">Preguntas Frecuentes</a></li>
+                        <li><a href="#" class="hover:text-xyz-clay hover:pl-2 transition-all duration-300">Cuidado del PLA</a></li>
+                        <li><a href="#" class="hover:text-xyz-clay hover:pl-2 transition-all duration-300">Contacto</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-squada text-xl text-xyz-clay mb-6 tracking-wide">NEWSLETTER</h4>
+                    <p class="text-xs opacity-70 mb-4">Recibe diseños nuevos y descuentos exclusivos.</p>
+                    <form class="flex border border-xyz-offwhite/20 p-1">
+                        <input type="email" placeholder="Tu correo" class="bg-transparent border-none text-sm w-full focus:ring-0 text-xyz-offwhite placeholder-xyz-offwhite/30">
+                        <button class="bg-xyz-sage text-xyz-charcoal px-4 py-2 font-bold font-squada hover:bg-xyz-offwhite transition-colors">OK</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="border-t border-xyz-offwhite/10 pt-8 flex flex-col md:flex-row justify-between items-center text-xs opacity-40 font-mono">
+                <p>&copy; 2025 XYZ STUDIO. LIMA, PERÚ.</p>
+                <div class="flex space-x-6 mt-4 md:mt-0">
+                    <span>PRIVACIDAD</span>
+                    <span>TÉRMINOS</span>
+                    <span>INGENIERÍA</span>
+                </div>
+            </div>
         </div>
     </footer>
 
