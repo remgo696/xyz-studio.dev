@@ -85,8 +85,10 @@ INSTALLED_APPS = [
     # Tailwind CSS integration
     "tailwind",
     'theme',
-    'django_browser_reload',
 ]
+
+if DEBUG:
+    INSTALLED_APPS += ["django_browser_reload"]
 
 SITE_ID = 1
 
@@ -103,10 +105,12 @@ MIDDLEWARE = [
     'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
     # Middleware de Oscar (Añadir este)
     'oscar.apps.basket.middleware.BasketMiddleware',
-
-    # Middleware para recarga en caliente con Tailwind CSS
-    "django_browser_reload.middleware.BrowserReloadMiddleware",
 ]
+
+if DEBUG:
+    MIDDLEWARE += [
+        "django_browser_reload.middleware.BrowserReloadMiddleware",
+    ]
 
 ROOT_URLCONF = 'website.urls'
 

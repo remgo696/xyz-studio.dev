@@ -1,8 +1,8 @@
 {% load i18n %}
 {% load currency_filters %}
-{% load shipping_tags %} {# <-- Cargamos nuestra herramienta nueva #}
+{% load shipping_tags %}
+{% load l10n %}
 
-{# Calculamos los datos usando el tag que creamos #}
 {% calculate_shipping_progress request.basket threshold=490 as shipping %}
 
 <div class="bg-xyz-offwhite border-b border-xyz-charcoal/10 py-3 shadow-sm relative z-40">
@@ -27,7 +27,7 @@
         <div class="relative h-1.5 bg-xyz-charcoal/10 rounded-full w-full mt-3 overflow-visible">
             
             <div class="absolute top-0 left-0 h-full bg-xyz-sage rounded-full transition-all duration-700 ease-tech"
-                 style="width: {{ shipping.percent }}%;">
+                 style="width: {{ shipping.percent|unlocalize }}%;">
                 
                 <div class="absolute right-0 top-1/2 transform -translate-y-1/2 translate-x-1/2 
                             bg-xyz-offwhite border border-xyz-sage text-xyz-sage 
