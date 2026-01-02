@@ -1,0 +1,122 @@
+{% extends "oscar/layout.html" %}
+{% load i18n %}
+{% load static %}
+
+{% block title %}
+    {{ shop_name }} | El Fin de lo Estándar
+{% endblock %}
+
+{% block layout %}
+
+<div class="relative w-full h-[85vh] flex flex-col md:flex-row border-b border-xyz-charcoal/10">
+    
+    <div class="w-full md:w-5/12 flex flex-col justify-center px-8 md:px-16 bg-xyz-offwhite relative overflow-hidden">
+        <div class="absolute top-10 left-10 border-l border-t border-xyz-charcoal/20 w-8 h-8"></div>
+        <div class="absolute bottom-10 right-10 border-r border-b border-xyz-charcoal/20 w-8 h-8"></div>
+        
+        <span class="font-mono text-xs tracking-[0.3em] text-xyz-sage mb-4 uppercase">Manufactura Digital</span>
+        
+        <h1 class="font-squada text-6xl md:text-7xl text-xyz-charcoal leading-[0.9] mb-6">
+            DISEÑO QUE <br>
+            <span class="text-xyz-clay">SE ADAPTA</span> <br>
+            A TI.
+        </h1>
+        
+        <p class="font-roboto font-light text-lg text-xyz-charcoal/80 mb-10 leading-relaxed max-w-md">
+            No te conformes con lo estándar. Mobiliario paramétrico y accesorios impresos bajo demanda en Lima.
+            Tu espacio merece precisión, no plástico genérico.
+        </p>
+        
+        <a href="/catalogue/" class="group inline-flex items-center gap-3 text-xyz-charcoal font-bold tracking-widest text-sm uppercase">
+            <span class="border-b-2 border-xyz-charcoal pb-1 group-hover:border-xyz-sage group-hover:text-xyz-sage transition-all duration-300">
+                Explorar el Estudio
+            </span>
+            <i class="fas fa-arrow-right text-xs group-hover:translate-x-1 transition-transform"></i>
+        </a>
+    </div>
+
+    <div class="w-full md:w-7/12 bg-gray-200 relative group overflow-hidden">
+        <img src="https://images.unsplash.com/photo-1543152668-3f5f3e9c9162?q=80&w=2000&auto=format&fit=crop" 
+             class="absolute inset-0 w-full h-full object-cover transition-transform duration-[2s] ease-tech group-hover:scale-105 opacity-90"
+             alt="Lámpara Paramétrica">
+             
+        <div class="absolute inset-0 bg-xyz-charcoal/10 mix-blend-multiply"></div>
+        
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] h-[80%] border border-white/20 pointer-events-none">
+            <div class="absolute -top-3 left-1/2 text-[10px] text-white/60 font-mono bg-transparent px-2">1200mm</div>
+            <div class="absolute top-1/2 -left-3 text-[10px] text-white/60 font-mono bg-transparent -rotate-90">ITEM: VORONOI-01</div>
+        </div>
+    </div>
+</div>
+
+<section class="bg-xyz-charcoal text-xyz-offwhite py-24 relative overflow-hidden">
+    <div class="absolute inset-0 opacity-5" style="background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0IiBoZWlnaHQ9IjQiPgo8cmVjdCB3aWR0aD0iNCIgaGVpZ2h0PSI0IiBmaWxsPSIjZmZmIi8+CjxyZWN0IHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9IiMwMDAiLz4KPC9zdmc+');"></div>
+
+    <div class="max-w-4xl mx-auto px-6 text-center relative z-10">
+        <div class="inline-block border border-xyz-sage/30 rounded-full px-4 py-1 mb-8">
+            <span class="text-xyz-sage font-mono text-xs tracking-widest">MISIÓN XYZ</span>
+        </div>
+        
+        <h2 class="font-squada text-4xl md:text-5xl mb-8 leading-tight">
+            "TU CASA NO ES UN SHOWROOM GENÉRICO.<br>
+            <span class="text-xyz-offwhite/50">¿POR QUÉ TUS MUEBLES SÍ?"</span>
+        </h2>
+        
+        <p class="font-roboto font-light text-xl text-xyz-offwhite/80 leading-relaxed max-w-2xl mx-auto">
+            Erradicamos la frustración de lo 'estándar'. Creamos piezas mediante manufactura digital que no solo ocupan un lugar, 
+            sino que <span class="text-xyz-clay font-medium">completan el espacio</span>.
+        </p>
+
+        <div class="grid grid-cols-3 gap-8 mt-16 max-w-2xl mx-auto opacity-70 border-t border-xyz-offwhite/10 pt-12">
+            <div class="flex flex-col items-center gap-3">
+                <i class="fas fa-fingerprint text-2xl text-xyz-sage"></i>
+                <span class="text-xs font-mono uppercase tracking-widest">A Medida</span>
+            </div>
+            <div class="flex flex-col items-center gap-3">
+                <i class="fas fa-cube text-2xl text-xyz-sage"></i>
+                <span class="text-xs font-mono uppercase tracking-widest">Impresión 3D</span>
+            </div>
+            <div class="flex flex-col items-center gap-3">
+                <i class="fas fa-leaf text-2xl text-xyz-sage"></i>
+                <span class="text-xs font-mono uppercase tracking-widest">PLA Eco</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="flex flex-col md:flex-row h-[70vh]">
+    
+    <a href="/catalogue/category/iluminacion/" class="relative w-full md:w-1/2 h-full group overflow-hidden border-r border-xyz-charcoal/10">
+        <img src="https://images.unsplash.com/photo-1497215728101-856f4ea42174?q=80&w=1500&auto=format&fit=crop" 
+             class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 filter grayscale-[20%]"
+             alt="Workspace">
+        
+        <div class="absolute inset-0 bg-xyz-sage/20 group-hover:bg-xyz-sage/10 transition-colors duration-500"></div>
+        
+        <div class="absolute inset-0 flex flex-col items-center justify-center text-center p-8">
+            <div class="bg-xyz-offwhite/90 backdrop-blur px-8 py-6 shadow-xl transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500 border border-xyz-sage/20">
+                <span class="block font-mono text-[10px] text-xyz-charcoal/60 mb-2 tracking-widest">COLECCIÓN 01</span>
+                <h3 class="font-squada text-4xl text-xyz-charcoal mb-0">WORKSPACE</h3>
+                <span class="block h-0.5 w-0 bg-xyz-sage mt-2 group-hover:w-full transition-all duration-500"></span>
+            </div>
+        </div>
+    </a>
+
+    <a href="/catalogue/category/organizacion/" class="relative w-full md:w-1/2 h-full group overflow-hidden">
+        <img src="https://images.unsplash.com/photo-1593305841991-05c29736ce37?q=80&w=1500&auto=format&fit=crop" 
+             class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 filter contrast-125"
+             alt="Gaming Setup">
+        
+        <div class="absolute inset-0 bg-xyz-clay/20 group-hover:bg-xyz-clay/10 transition-colors duration-500"></div>
+        
+        <div class="absolute inset-0 flex flex-col items-center justify-center text-center p-8">
+            <div class="bg-xyz-charcoal/90 backdrop-blur px-8 py-6 shadow-xl transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500 border border-xyz-clay/30">
+                <span class="block font-mono text-[10px] text-xyz-offwhite/60 mb-2 tracking-widest">COLECCIÓN 02</span>
+                <h3 class="font-squada text-4xl text-xyz-offwhite mb-0">GAMING SETUP</h3>
+                <span class="block h-0.5 w-0 bg-xyz-clay mt-2 group-hover:w-full transition-all duration-500"></span>
+            </div>
+        </div>
+    </a>
+</section>
+
+{% endblock %}
