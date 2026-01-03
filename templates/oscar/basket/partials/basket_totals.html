@@ -1,0 +1,62 @@
+{% load i18n %}
+{% load currency_filters %}
+{% load shipping_tags %}
+
+<div class="bg-white p-6 rounded-lg border border-xyz-charcoal/10 shadow-sm" id="basket_totals">
+    
+    <h3 class="font-squada text-xl text-xyz-charcoal mb-4 border-b border-xyz-charcoal/10 pb-2">
+        RESUMEN DEL PROYECTO
+    </h3>
+
+    <div class="space-y-3 text-sm font-roboto text-xyz-charcoal/80">
+        
+        <div class="flex justify-between items-center">
+            <span class="uppercase tracking-wider text-xs">Subtotal (Sin Envío)</span>
+            <span class="font-bold">
+                {% if basket.is_tax_known and not show_tax_separately %}
+                    {{ basket.total_incl_tax_excl_discounts|currency:basket.currency }}
+                {% else %}
+                    {{ basket.total_excl_tax_excl_discounts|currency:basket.currency }}
+                {% endif %}
+            </span>
+        </div>
+
+        {% if basket.offer_discounts or basket.grouped_voucher_discounts %}
+            {% for discount in basket.offer_discounts %}
+                <div class="flex justify-between items-center text-xyz-sage">
+                    <span class="flex items-center gap-1">
+                        <i class="fas fa-tag text-xs"></i> {{ discount.name }}
+                    </span>
+                    <span>-{{ discount.amount|currency:basket.currency }}</span>
+                </div>
+            {% endfor %}
+            {% if basket.grouped_voucher_discounts %}
+                {% for voucher in basket.grouped_voucher_discounts %}
+                    <div class="flex justify-between items-center text-xyz-sage">
+                        <span class="flex items-center gap-1">
+                            <i class="fas fa-ticket-alt text-xs"></i> {{ voucher.voucher.name }}
+                        </span>
+                        <span>-{{ voucher.discount|currency:basket.currency }}</span>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endif %}
+
+        <div class="flex justify-between items-center text-xyz-charcoal/50 italic">
+            <span class="text-xs">Envío e Impuestos</span>
+            <span class="text-xs">Calculados al finalizar</span>
+        </div>
+
+        <div class="border-t-2 border-xyz-charcoal pt-4 mt-4 flex justify-between items-end">
+            <span class="font-squada text-lg">TOTAL ESTIMADO</span>
+            <span class="font-squada text-3xl text-xyz-charcoal leading-none">
+                {% if order_total.is_tax_known %}
+                    {{ order_total.incl_tax|currency:basket.currency }}
+                {% else %}
+                    {{ order_total.excl_tax|currency:basket.currency }}
+                {% endif %}
+            </span>
+        </div>
+        
+    </div>
+</div>

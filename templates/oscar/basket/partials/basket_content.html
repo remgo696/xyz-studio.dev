@@ -1,0 +1,174 @@
+{% load i18n %}
+{% load image_tags %}
+{% load currency_filters %}
+{% load purchase_info_tags %}
+{% load widget_tweaks %}
+
+{% if basket_warnings %}
+    <div class="mb-6 bg-xyz-clay/10 border-l-4 border-xyz-clay p-4 text-xyz-charcoal text-sm">
+        {% for warning in basket_warnings %}
+            <p><i class="fas fa-exclamation-circle mr-2"></i> {{ warning }}</p>
+        {% endfor %}
+    </div>
+{% endif %}
+
+{% if upsell_messages %}
+    <div class="mb-6 bg-xyz-sage/10 border border-xyz-sage p-4 rounded text-sm text-xyz-charcoal">
+        <h3 class="font-bold mb-2">¡Ofertas disponibles!</h3>
+        {% for upsell in upsell_messages %}
+            <div class="flex items-center gap-2">
+                <i class="fas fa-gift text-xyz-sage"></i>
+                <span>{{ upsell.message }} <a href="{{ upsell.offer.get_absolute_url }}" class="underline hover:text-xyz-sage">{{ upsell.offer.name }}</a></span>
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}
+
+{% if not basket.is_empty %}
+    
+    <div class="flex items-center justify-between mb-8 border-b border-xyz-charcoal/10 pb-4">
+        <h1 class="font-squada text-4xl text-xyz-charcoal">LISTA DE MATERIALES</h1>
+        <span class="font-mono text-xs text-xyz-charcoal/50 bg-gray-100 px-3 py-1 rounded-full">{{ basket.num_items }} ITEMS</span>
+    </div>
+
+    <form action="." method="post" class="basket_summary" id="basket_formset">
+        {% csrf_token %}
+        {{ formset.management_form }}
+
+        <div class="lg:grid lg:grid-cols-12 lg:gap-12">
+            
+            <div class="lg:col-span-8 space-y-6">
+                {% for form in formset %}
+                    {% with line=form.instance product=form.instance.product %}
+                    {% purchase_info_for_product request product as session %}
+                    
+                    <div class="group bg-white p-4 rounded-lg border border-xyz-charcoal/5 hover:border-xyz-sage/30 transition-all duration-300 shadow-sm flex gap-4 md:gap-6 items-start">
+                        
+                        <div class="w-24 h-24 flex-shrink-0 bg-gray-100 rounded overflow-hidden relative">
+                            {% with image=product.primary_image %}
+                                {% oscar_thumbnail image.original "200x200" upscale=False as thumb %}
+                                <a href="{{ product.get_absolute_url }}">
+                                    <img src="{{ thumb.url }}" alt="{{ product.get_title }}" class="w-full h-full object-cover mix-blend-multiply">
+                                </a>
+                            {% endwith %}
+                        </div>
+
+                        <div class="flex-grow">
+                            <div class="flex justify-between items-start">
+                                <h3 class="font-squada text-lg text-xyz-charcoal leading-tight">
+                                    <a href="{{ product.get_absolute_url }}">{{ line.description }}</a>
+                                </h3>
+                                <p class="hidden md:block font-mono text-sm text-xyz-charcoal/60">
+                                    {{ line.unit_price_excl_tax|currency:basket.currency }}/unid
+                                </p>
+                            </div>
+
+                            <div class="mt-2 text-xs text-xyz-charcoal/70 space-y-1 font-mono">
+                                {% for option in line.options %}
+                                    <div class="flex items-center gap-2">
+                                        <span class="font-bold uppercase">{{ option.name }}:</span>
+                                        {% if 'uploads/' in option.value %}
+                                            <a href="/media/{{ option.value }}" target="_blank" class="text-xyz-sage hover:underline flex items-center gap-1">
+                                                <i class="fas fa-file-image"></i> Ver Archivo
+                                            </a>
+                                        {% else %}
+                                            <span>{{ option.value }}</span>
+                                        {% endif %}
+                                    </div>
+                                {% endfor %}
+                            </div>
+
+                            <p class="mt-2 text-[10px] uppercase tracking-widest {{ session.availability.code }} {% if session.availability.is_available_to_buy %}text-xyz-sage{% else %}text-red-400{% endif %}">
+                                {{ session.availability.message }}
+                            </p>
+                        </div>
+
+                        <div class="flex flex-col items-end gap-3 min-w-[120px]">
+                            
+                            <span class="font-squada text-xl text-xyz-charcoal">
+                                {% if line.is_tax_known %}
+                                    {{ line.line_price_incl_tax|currency:basket.currency }}
+                                {% else %}
+                                    {{ line.line_price_excl_tax|currency:basket.currency }}
+                                {% endif %}
+                            </span>
+
+                            <div class="flex items-center border border-xyz-charcoal/20 rounded overflow-hidden w-24">
+                                {{ form.id }}
+                                {% render_field form.quantity class+="w-full text-center border-none p-1 text-sm font-mono focus:ring-0" %}
+                            </div>
+
+                            <div class="flex gap-3 text-xs">
+                                <a href="#" data-id="{{ forloop.counter0 }}" data-behaviours="remove" class="text-red-400 hover:text-red-600 font-bold uppercase tracking-wider flex items-center gap-1">
+                                    <small><i class="fas fa-trash"></i></small> Eliminar
+                                </a>
+                                <div style="display:none">
+                                    {{ form.save_for_later }}
+                                    {{ form.DELETE }}
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    {% endwith %}
+                {% endfor %}
+            </div>
+
+            <div class="lg:col-span-4 mt-8 lg:mt-0">
+                <div class="sticky top-24 space-y-6">
+                    {% include 'oscar/basket/partials/basket_totals.html' %}
+                    
+                    <div class="grid gap-3">
+                        <a href="{% url 'checkout:index' %}" class="btn btn-lg btn-primary w-full shadow-xl animate-pulse-slow">
+                            PROCEDER AL PAGO <i class="fas fa-arrow-right ml-2"></i>
+                        </a>
+                        <button type="submit" class="btn btn-sm btn-default w-full text-xyz-charcoal/50 hover:text-xyz-charcoal">
+                            <i class="fas fa-sync-alt mr-2"></i> Actualizar Cantidades
+                        </button>
+                    </div>
+                    
+                    <div class="text-center">
+                        <a href="/" class="text-xs font-bold text-xyz-charcoal/50 hover:text-xyz-sage uppercase tracking-widest border-b border-transparent hover:border-xyz-sage transition-all">
+                            Continuar Comprando
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </form>
+
+{% else %}
+    <div class="min-h-[50vh] flex flex-col items-center justify-center text-center">
+        <div class="w-32 h-32 bg-xyz-charcoal/5 rounded-full flex items-center justify-center mb-6 animate-float">
+            <i class="fas fa-cubes text-5xl text-xyz-charcoal/20"></i>
+        </div>
+        <h2 class="font-squada text-4xl text-xyz-charcoal mb-2">TU PROYECTO ESTÁ VACÍO</h2>
+        <p class="font-roboto text-xyz-charcoal/60 mb-8 max-w-md">
+            Aún no has agregado piezas a tu lista de materiales. Explora nuestro catálogo de diseños paramétricos.
+        </p>
+        <a href="{{ homepage_url }}" class="btn btn-primary">
+            EXPLORAR CATÁLOGO
+        </a>
+    </div>
+{% endif %}
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Manejador para el botón "Eliminar"
+        const removeBtns = document.querySelectorAll('[data-behaviours="remove"]');
+        removeBtns.forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                const id = this.getAttribute('data-id');
+                // En Oscar, el checkbox de borrar tiene name="form-N-DELETE"
+                const checkbox = document.querySelector(`input[name="form-${id}-DELETE"]`);
+                if (checkbox) {
+                    checkbox.checked = true;
+                    // Enviamos el formulario automáticamente
+                    document.getElementById('basket_formset').submit();
+                }
+            });
+        });
+    });
+</script>

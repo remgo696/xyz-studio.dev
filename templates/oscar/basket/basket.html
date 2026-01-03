@@ -1,0 +1,17 @@
+{% extends "oscar/layout.html" %}
+{% load i18n %}
+
+{% block title %}
+    {% trans "Basket" %} | {{ shop_name }}
+{% endblock %}
+
+{# AQUÍ ESTÁ LA MAGIA: Usamos 'block layout' para que coincida con tu base #}
+{% block layout %}
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    
+    {# Incluimos el contenido parcial que ya diseñamos #}
+    {# Asegúrate de que basket_content.html esté dentro de la carpeta partials #}
+    {% include "oscar/basket/partials/basket_content.html" %}
+
+</div>
+{% endblock %}
