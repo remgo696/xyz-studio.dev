@@ -65,14 +65,21 @@
 
                             <div class="mt-2 text-xs text-xyz-charcoal/70 space-y-1 font-mono">
                                 {% for option in line.options %}
-                                    <div class="flex items-center gap-2">
-                                        <span class="font-bold uppercase">{{ option.name }}:</span>
+                                    <div class="flex items-center gap-3">
+                                        <span class="font-bold uppercase text-[10px] text-xyz-charcoal/60">{{ option.name }}:</span>
+                                        
                                         {% if 'uploads/' in option.value %}
-                                            <a href="/media/{{ option.value }}" target="_blank" class="text-xyz-sage hover:underline flex items-center gap-1">
-                                                <i class="fas fa-file-image"></i> Ver Archivo
+                                            <a href="{{ MEDIA_URL }}{{ option.value }}" target="_blank" class="group relative block">
+                                                <img src="{{ MEDIA_URL }}{{ option.value }}" 
+                                                    alt="Archivo subido" 
+                                                    class="h-10 w-10 object-cover rounded border border-xyz-charcoal/20 group-hover:border-xyz-sage transition-colors">
+                                                
+                                                <div class="absolute inset-0 flex items-center justify-center bg-xyz-charcoal/50 opacity-0 group-hover:opacity-100 transition-opacity rounded">
+                                                    <i class="fas fa-search-plus text-white text-xs"></i>
+                                                </div>
                                             </a>
                                         {% else %}
-                                            <span>{{ option.value }}</span>
+                                            <span class="font-mono text-xyz-charcoal">{{ option.value }}</span>
                                         {% endif %}
                                     </div>
                                 {% endfor %}
