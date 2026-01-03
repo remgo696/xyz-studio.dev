@@ -1,0 +1,23 @@
+<section class="bg-xyz-sage py-16">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 class="font-squada text-3xl lg:text-4xl text-white mb-4">
+            ¿TIENES ALGUNA DUDA?
+        </h2>
+        <p class="text-white/80 mb-8">
+            Estamos aquí para ayudarte con cualquier consulta{% if mensaje %} {{ mensaje }}{% endif %}.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <a href="https://wa.me/51XXXXXXXXX?text={{ whatsapp_text|default:'Hola! Tengo una consulta'|urlencode }}" 
+               target="_blank"
+               class="inline-flex items-center justify-center gap-2 bg-white text-xyz-charcoal font-squada text-sm tracking-widest uppercase px-8 py-4 hover:bg-xyz-offwhite transition-colors">
+                <i class="fab fa-whatsapp text-lg"></i>
+                ESCRÍBENOS
+            </a>
+            {% if show_catalogue|default:True %}
+            <a href="/catalogue/" class="inline-flex items-center justify-center gap-2 bg-xyz-charcoal text-white font-squada text-sm tracking-widest uppercase px-8 py-4 hover:bg-xyz-clay transition-colors">
+                VER CATÁLOGO <i class="fas fa-arrow-right ml-2"></i>
+            </a>
+            {% endif %}
+        </div>
+    </div>
+</section>

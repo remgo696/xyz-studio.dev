@@ -1,0 +1,476 @@
+{% extends "oscar/layout.html" %}
+{% load static %}
+
+{% block title %}Cuidado del PLA | XYZ Studio{% endblock %}
+
+{% block layout %}
+
+{# === HERO SECTION === #}
+<section class="relative bg-xyz-charcoal text-xyz-offwhite overflow-hidden">
+    <div class="absolute inset-0 opacity-10">
+        <div class="absolute inset-0" style="background-image: url('data:image/svg+xml,%3Csvg width=&quot;60&quot; height=&quot;60&quot; viewBox=&quot;0 0 60 60&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;%3E%3Cg fill=&quot;none&quot; fill-rule=&quot;evenodd&quot;%3E%3Cg fill=&quot;%23F0EAD6&quot; fill-opacity=&quot;0.4&quot;%3E%3Cpath d=&quot;M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z&quot;/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');"></div>
+    </div>
+    
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28">
+        <div class="max-w-3xl">
+            <span class="inline-block font-mono text-xs tracking-[0.3em] text-xyz-sage uppercase mb-4">
+                // GUÍA DE CUIDADOS
+            </span>
+            <h1 class="font-squada text-5xl lg:text-6xl leading-tight mb-6">
+                CUIDADO DEL<br>
+                <span class="text-xyz-sage">PLA</span>
+            </h1>
+            <p class="text-lg text-xyz-offwhite/80 leading-relaxed max-w-xl">
+                El PLA (Ácido Poliláctico) es un bioplástico derivado del maíz. 
+                Con los cuidados correctos, tus piezas paramétricas mantendrán 
+                su belleza y funcionalidad por años.
+            </p>
+        </div>
+    </div>
+</section>
+
+{# === QUÉ ES EL PLA === #}
+<section class="bg-xyz-offwhite py-16 lg:py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid lg:grid-cols-2 gap-12 items-center">
+            <div>
+                <span class="font-mono text-xs tracking-[0.3em] text-xyz-sage uppercase">// EL MATERIAL</span>
+                <h2 class="font-squada text-4xl text-xyz-charcoal mt-4 mb-6">
+                    ¿QUÉ ES EL PLA?
+                </h2>
+                <p class="text-xyz-charcoal/70 leading-relaxed mb-6">
+                    El <strong class="text-xyz-charcoal">Ácido Poliláctico (PLA)</strong> es uno de los 
+                    materiales más populares en impresión 3D. Se obtiene de recursos renovables como 
+                    el almidón de maíz o la caña de azúcar, lo que lo convierte en una opción 
+                    más amigable con el medio ambiente.
+                </p>
+                <p class="text-xyz-charcoal/70 leading-relaxed">
+                    Es rígido, tiene excelente precisión dimensional y produce piezas con 
+                    acabados suaves. Sin embargo, tiene algunas limitaciones que debes conocer 
+                    para cuidar correctamente tus productos.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4">
+                <div class="bg-white p-6 text-center">
+                    <div class="w-16 h-16 mx-auto bg-xyz-sage/10 rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-leaf text-xyz-sage text-2xl"></i>
+                    </div>
+                    <h3 class="font-squada text-lg text-xyz-charcoal">BIODEGRADABLE</h3>
+                    <p class="text-xs text-xyz-charcoal/60 mt-2">Derivado de plantas, compostable industrialmente</p>
+                </div>
+
+                <div class="bg-white p-6 text-center">
+                    <div class="w-16 h-16 mx-auto bg-xyz-clay/10 rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-ruler-combined text-xyz-clay text-2xl"></i>
+                    </div>
+                    <h3 class="font-squada text-lg text-xyz-charcoal">PRECISIÓN</h3>
+                    <p class="text-xs text-xyz-charcoal/60 mt-2">Excelente detalle y acabado superficial</p>
+                </div>
+
+                <div class="bg-white p-6 text-center">
+                    <div class="w-16 h-16 mx-auto bg-xyz-charcoal/10 rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-shield-alt text-xyz-charcoal text-2xl"></i>
+                    </div>
+                    <h3 class="font-squada text-lg text-xyz-charcoal">RIGIDEZ</h3>
+                    <p class="text-xs text-xyz-charcoal/60 mt-2">Resistente y mantiene su forma</p>
+                </div>
+
+                <div class="bg-white p-6 text-center">
+                    <div class="w-16 h-16 mx-auto bg-xyz-sage/10 rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-palette text-xyz-sage text-2xl"></i>
+                    </div>
+                    <h3 class="font-squada text-lg text-xyz-charcoal">COLORES</h3>
+                    <p class="text-xs text-xyz-charcoal/60 mt-2">Amplia gama de tonos disponibles</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{# === LO QUE DEBES EVITAR === #}
+<section class="bg-xyz-charcoal text-xyz-offwhite py-16 lg:py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <span class="font-mono text-xs tracking-[0.3em] text-xyz-clay uppercase">// IMPORTANTE</span>
+            <h2 class="font-squada text-4xl mt-4">LO QUE DEBES EVITAR</h2>
+            <p class="text-xyz-offwhite/60 mt-4 max-w-2xl mx-auto">
+                El PLA tiene limitaciones que debes conocer para mantener tus piezas en perfecto estado.
+            </p>
+        </div>
+
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {# Calor #}
+            <div class="bg-xyz-offwhite/5 border border-xyz-clay/30 p-6">
+                <div class="w-14 h-14 bg-xyz-clay/20 rounded-full flex items-center justify-center mb-4">
+                    <i class="fas fa-temperature-high text-xyz-clay text-2xl"></i>
+                </div>
+                <h3 class="font-squada text-xl mb-3">CALOR EXTREMO</h3>
+                <p class="text-sm text-xyz-offwhite/70 mb-4">
+                    El PLA se ablanda a partir de <strong class="text-xyz-clay">50-60°C</strong>. 
+                    Evita dejarlo en:
+                </p>
+                <ul class="text-xs text-xyz-offwhite/60 space-y-1">
+                    <li><i class="fas fa-times text-xyz-clay mr-2"></i>Interior de autos al sol</li>
+                    <li><i class="fas fa-times text-xyz-clay mr-2"></i>Cerca de estufas o radiadores</li>
+                    <li><i class="fas fa-times text-xyz-clay mr-2"></i>Ventanas con sol directo</li>
+                    <li><i class="fas fa-times text-xyz-clay mr-2"></i>Lavavajillas</li>
+                </ul>
+            </div>
+
+            {# Sol directo #}
+            <div class="bg-xyz-offwhite/5 border border-xyz-clay/30 p-6">
+                <div class="w-14 h-14 bg-xyz-clay/20 rounded-full flex items-center justify-center mb-4">
+                    <i class="fas fa-sun text-xyz-clay text-2xl"></i>
+                </div>
+                <h3 class="font-squada text-xl mb-3">SOL DIRECTO</h3>
+                <p class="text-sm text-xyz-offwhite/70 mb-4">
+                    La exposición prolongada al sol puede causar:
+                </p>
+                <ul class="text-xs text-xyz-offwhite/60 space-y-1">
+                    <li><i class="fas fa-times text-xyz-clay mr-2"></i>Decoloración del color</li>
+                    <li><i class="fas fa-times text-xyz-clay mr-2"></i>Fragilidad del material</li>
+                    <li><i class="fas fa-times text-xyz-clay mr-2"></i>Deformación por calor UV</li>
+                    <li><i class="fas fa-times text-xyz-clay mr-2"></i>Degradación acelerada</li>
+                </ul>
+            </div>
+
+            {# Agua prolongada #}
+            <div class="bg-xyz-offwhite/5 border border-xyz-clay/30 p-6">
+                <div class="w-14 h-14 bg-xyz-clay/20 rounded-full flex items-center justify-center mb-4">
+                    <i class="fas fa-tint text-xyz-clay text-2xl"></i>
+                </div>
+                <h3 class="font-squada text-xl mb-3">INMERSIÓN EN AGUA</h3>
+                <p class="text-sm text-xyz-offwhite/70 mb-4">
+                    El PLA absorbe humedad con el tiempo:
+                </p>
+                <ul class="text-xs text-xyz-offwhite/60 space-y-1">
+                    <li><i class="fas fa-times text-xyz-clay mr-2"></i>No sumergir por períodos largos</li>
+                    <li><i class="fas fa-times text-xyz-clay mr-2"></i>No usar como florero con agua</li>
+                    <li><i class="fas fa-times text-xyz-clay mr-2"></i>No dejar en exteriores con lluvia</li>
+                    <li><i class="fas fa-check text-xyz-sage mr-2"></i>Salpicaduras ocasionales OK</li>
+                </ul>
+            </div>
+
+            {# Impactos fuertes #}
+            <div class="bg-xyz-offwhite/5 border border-xyz-clay/30 p-6">
+                <div class="w-14 h-14 bg-xyz-clay/20 rounded-full flex items-center justify-center mb-4">
+                    <i class="fas fa-hammer text-xyz-clay text-2xl"></i>
+                </div>
+                <h3 class="font-squada text-xl mb-3">IMPACTOS FUERTES</h3>
+                <p class="text-sm text-xyz-offwhite/70 mb-4">
+                    El PLA es rígido pero puede ser frágil:
+                </p>
+                <ul class="text-xs text-xyz-offwhite/60 space-y-1">
+                    <li><i class="fas fa-times text-xyz-clay mr-2"></i>Evita caídas desde altura</li>
+                    <li><i class="fas fa-times text-xyz-clay mr-2"></i>No doblar piezas delgadas</li>
+                    <li><i class="fas fa-times text-xyz-clay mr-2"></i>No forzar ensambles</li>
+                    <li><i class="fas fa-check text-xyz-sage mr-2"></i>Manipular con cuidado</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+{# === CÓMO LIMPIAR === #}
+<section class="bg-white py-16 lg:py-20 border-y border-xyz-charcoal/10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <span class="font-mono text-xs tracking-[0.3em] text-xyz-sage uppercase">// MANTENIMIENTO</span>
+            <h2 class="font-squada text-4xl text-xyz-charcoal mt-4">CÓMO LIMPIAR TUS PIEZAS</h2>
+        </div>
+
+        <div class="grid lg:grid-cols-3 gap-8 max-w-5xl mx-auto">
+            {# Método 1 #}
+            <div class="text-center">
+                <div class="w-20 h-20 mx-auto bg-xyz-sage rounded-full flex items-center justify-center mb-6">
+                    <span class="font-squada text-3xl text-white">01</span>
+                </div>
+                <h3 class="font-squada text-xl text-xyz-charcoal mb-3">LIMPIEZA BÁSICA</h3>
+                <p class="text-sm text-xyz-charcoal/60 mb-4">Para polvo y suciedad ligera</p>
+                <div class="bg-xyz-offwhite p-4 text-left text-sm space-y-2">
+                    <p><i class="fas fa-check text-xyz-sage mr-2"></i>Paño de microfibra seco</p>
+                    <p><i class="fas fa-check text-xyz-sage mr-2"></i>Brocha suave para ranuras</p>
+                    <p><i class="fas fa-check text-xyz-sage mr-2"></i>Aire comprimido (baja presión)</p>
+                </div>
+            </div>
+
+            {# Método 2 #}
+            <div class="text-center">
+                <div class="w-20 h-20 mx-auto bg-xyz-sage rounded-full flex items-center justify-center mb-6">
+                    <span class="font-squada text-3xl text-white">02</span>
+                </div>
+                <h3 class="font-squada text-xl text-xyz-charcoal mb-3">LIMPIEZA HÚMEDA</h3>
+                <p class="text-sm text-xyz-charcoal/60 mb-4">Para manchas y suciedad adherida</p>
+                <div class="bg-xyz-offwhite p-4 text-left text-sm space-y-2">
+                    <p><i class="fas fa-check text-xyz-sage mr-2"></i>Paño húmedo (no empapado)</p>
+                    <p><i class="fas fa-check text-xyz-sage mr-2"></i>Agua tibia + jabón neutro</p>
+                    <p><i class="fas fa-check text-xyz-sage mr-2"></i>Secar inmediatamente</p>
+                </div>
+            </div>
+
+            {# Método 3 #}
+            <div class="text-center">
+                <div class="w-20 h-20 mx-auto bg-xyz-sage rounded-full flex items-center justify-center mb-6">
+                    <span class="font-squada text-3xl text-white">03</span>
+                </div>
+                <h3 class="font-squada text-xl text-xyz-charcoal mb-3">LIMPIEZA PROFUNDA</h3>
+                <p class="text-sm text-xyz-charcoal/60 mb-4">Para suciedad difícil</p>
+                <div class="bg-xyz-offwhite p-4 text-left text-sm space-y-2">
+                    <p><i class="fas fa-check text-xyz-sage mr-2"></i>Alcohol isopropílico 70%</p>
+                    <p><i class="fas fa-check text-xyz-sage mr-2"></i>Aplicar con hisopo/paño</p>
+                    <p><i class="fas fa-check text-xyz-sage mr-2"></i>No remojar la pieza</p>
+                </div>
+            </div>
+        </div>
+
+        {# Advertencias #}
+        <div class="mt-12 max-w-3xl mx-auto">
+            <div class="bg-xyz-clay/10 border border-xyz-clay/20 p-6 flex items-start gap-4">
+                <i class="fas fa-exclamation-triangle text-xyz-clay text-xl mt-1"></i>
+                <div>
+                    <h4 class="font-squada text-lg text-xyz-charcoal mb-2">NUNCA USES:</h4>
+                    <div class="grid sm:grid-cols-2 gap-2 text-sm text-xyz-charcoal/70">
+                        <p><i class="fas fa-times text-xyz-clay mr-2"></i>Acetona (derrite el PLA)</p>
+                        <p><i class="fas fa-times text-xyz-clay mr-2"></i>Agua caliente (+50°C)</p>
+                        <p><i class="fas fa-times text-xyz-clay mr-2"></i>Esponjas abrasivas</p>
+                        <p><i class="fas fa-times text-xyz-clay mr-2"></i>Limpiadores con cloro</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{# === UBICACIÓN IDEAL === #}
+<section class="bg-xyz-offwhite py-16 lg:py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <span class="font-mono text-xs tracking-[0.3em] text-xyz-sage uppercase">// UBICACIÓN</span>
+            <h2 class="font-squada text-4xl text-xyz-charcoal mt-4">DÓNDE COLOCAR TUS PIEZAS</h2>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            {# Lugares ideales #}
+            <div class="bg-white p-8 border-l-4 border-xyz-sage">
+                <h3 class="font-squada text-2xl text-xyz-charcoal mb-6 flex items-center gap-3">
+                    <i class="fas fa-check-circle text-xyz-sage"></i>
+                    LUGARES IDEALES
+                </h3>
+                <ul class="space-y-4 text-xyz-charcoal/70">
+                    <li class="flex items-start gap-3">
+                        <i class="fas fa-couch text-xyz-sage mt-1"></i>
+                        <div>
+                            <strong class="text-xyz-charcoal">Interiores con sombra</strong>
+                            <p class="text-sm">Estantes, repisas, escritorios alejados de ventanas.</p>
+                        </div>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <i class="fas fa-thermometer-half text-xyz-sage mt-1"></i>
+                        <div>
+                            <strong class="text-xyz-charcoal">Temperatura ambiente</strong>
+                            <p class="text-sm">Entre 15°C y 30°C es perfecto.</p>
+                        </div>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <i class="fas fa-wind text-xyz-sage mt-1"></i>
+                        <div>
+                            <strong class="text-xyz-charcoal">Espacios ventilados</strong>
+                            <p class="text-sm">Evita la acumulación de humedad.</p>
+                        </div>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <i class="fas fa-lightbulb text-xyz-sage mt-1"></i>
+                        <div>
+                            <strong class="text-xyz-charcoal">Luz artificial</strong>
+                            <p class="text-sm">Las lámparas LED no afectan el PLA.</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            {# Lugares a evitar #}
+            <div class="bg-white p-8 border-l-4 border-xyz-clay">
+                <h3 class="font-squada text-2xl text-xyz-charcoal mb-6 flex items-center gap-3">
+                    <i class="fas fa-times-circle text-xyz-clay"></i>
+                    LUGARES A EVITAR
+                </h3>
+                <ul class="space-y-4 text-xyz-charcoal/70">
+                    <li class="flex items-start gap-3">
+                        <i class="fas fa-car text-xyz-clay mt-1"></i>
+                        <div>
+                            <strong class="text-xyz-charcoal">Interior del auto</strong>
+                            <p class="text-sm">Puede superar 60°C en verano.</p>
+                        </div>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <i class="fas fa-window-maximize text-xyz-clay mt-1"></i>
+                        <div>
+                            <strong class="text-xyz-charcoal">Ventanas soleadas</strong>
+                            <p class="text-sm">El sol directo calienta y decolora.</p>
+                        </div>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <i class="fas fa-cloud-rain text-xyz-clay mt-1"></i>
+                        <div>
+                            <strong class="text-xyz-charcoal">Exteriores expuestos</strong>
+                            <p class="text-sm">Lluvia, sol y humedad dañan el PLA.</p>
+                        </div>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <i class="fas fa-fire text-xyz-clay mt-1"></i>
+                        <div>
+                            <strong class="text-xyz-charcoal">Cerca de fuentes de calor</strong>
+                            <p class="text-sm">Estufas, hornos, radiadores.</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+{# === DURABILIDAD === #}
+<section class="bg-xyz-charcoal text-xyz-offwhite py-16 lg:py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid lg:grid-cols-2 gap-12 items-center">
+            <div>
+                <span class="font-mono text-xs tracking-[0.3em] text-xyz-sage uppercase">// DURABILIDAD</span>
+                <h2 class="font-squada text-4xl mt-4 mb-6">
+                    ¿CUÁNTO DURAN LAS<br>
+                    <span class="text-xyz-sage">PIEZAS DE PLA?</span>
+                </h2>
+                <p class="text-xyz-offwhite/70 leading-relaxed mb-6">
+                    Con los cuidados adecuados, una pieza de PLA puede durar 
+                    <strong class="text-xyz-offwhite">décadas</strong> en interiores. 
+                    El PLA es biodegradable bajo condiciones industriales de compostaje 
+                    (alta temperatura y humedad), pero en tu hogar permanecerá estable por años.
+                </p>
+                <p class="text-xyz-offwhite/70 leading-relaxed">
+                    El enemigo principal es el calor. Mientras mantengas tu pieza 
+                    en condiciones normales de interior, conservará su forma, color 
+                    y estructura original.
+                </p>
+            </div>
+
+            <div class="space-y-4">
+                <div class="bg-xyz-offwhite/10 p-6 border-l-4 border-xyz-sage">
+                    <div class="flex items-center justify-between">
+                        <span class="font-squada text-xl">Interior protegido</span>
+                        <span class="font-mono text-xyz-sage">10+ años</span>
+                    </div>
+                    <div class="mt-2 h-2 bg-xyz-offwhite/10 rounded-full overflow-hidden">
+                        <div class="h-full bg-xyz-sage" style="width: 100%"></div>
+                    </div>
+                </div>
+
+                <div class="bg-xyz-offwhite/10 p-6 border-l-4 border-xyz-sage/70">
+                    <div class="flex items-center justify-between">
+                        <span class="font-squada text-xl">Interior con sol indirecto</span>
+                        <span class="font-mono text-xyz-sage">5-10 años</span>
+                    </div>
+                    <div class="mt-2 h-2 bg-xyz-offwhite/10 rounded-full overflow-hidden">
+                        <div class="h-full bg-xyz-sage/70" style="width: 75%"></div>
+                    </div>
+                </div>
+
+                <div class="bg-xyz-offwhite/10 p-6 border-l-4 border-xyz-clay/70">
+                    <div class="flex items-center justify-between">
+                        <span class="font-squada text-xl">Exterior cubierto</span>
+                        <span class="font-mono text-xyz-clay">1-3 años</span>
+                    </div>
+                    <div class="mt-2 h-2 bg-xyz-offwhite/10 rounded-full overflow-hidden">
+                        <div class="h-full bg-xyz-clay/70" style="width: 30%"></div>
+                    </div>
+                </div>
+
+                <div class="bg-xyz-offwhite/10 p-6 border-l-4 border-xyz-clay">
+                    <div class="flex items-center justify-between">
+                        <span class="font-squada text-xl">Exterior expuesto</span>
+                        <span class="font-mono text-xyz-clay">6-12 meses</span>
+                    </div>
+                    <div class="mt-2 h-2 bg-xyz-offwhite/10 rounded-full overflow-hidden">
+                        <div class="h-full bg-xyz-clay" style="width: 10%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{# === TIPS RÁPIDOS === #}
+<section class="bg-xyz-offwhite py-16 lg:py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <span class="font-mono text-xs tracking-[0.3em] text-xyz-sage uppercase">// RESUMEN</span>
+            <h2 class="font-squada text-4xl text-xyz-charcoal mt-4">TIPS RÁPIDOS</h2>
+        </div>
+
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
+            <div class="bg-white p-6 flex items-start gap-4">
+                <div class="w-10 h-10 bg-xyz-sage rounded-full flex items-center justify-center flex-shrink-0">
+                    <i class="fas fa-check text-white"></i>
+                </div>
+                <p class="text-sm text-xyz-charcoal/70">
+                    <strong class="text-xyz-charcoal">Limpia con paño seco</strong> regularmente 
+                    para evitar acumulación de polvo.
+                </p>
+            </div>
+
+            <div class="bg-white p-6 flex items-start gap-4">
+                <div class="w-10 h-10 bg-xyz-sage rounded-full flex items-center justify-center flex-shrink-0">
+                    <i class="fas fa-check text-white"></i>
+                </div>
+                <p class="text-sm text-xyz-charcoal/70">
+                    <strong class="text-xyz-charcoal">Mantén en interiores</strong> y lejos 
+                    de ventanas con sol directo.
+                </p>
+            </div>
+
+            <div class="bg-white p-6 flex items-start gap-4">
+                <div class="w-10 h-10 bg-xyz-sage rounded-full flex items-center justify-center flex-shrink-0">
+                    <i class="fas fa-check text-white"></i>
+                </div>
+                <p class="text-sm text-xyz-charcoal/70">
+                    <strong class="text-xyz-charcoal">Evita temperaturas +50°C</strong> como 
+                    autos cerrados o cerca de estufas.
+                </p>
+            </div>
+
+            <div class="bg-white p-6 flex items-start gap-4">
+                <div class="w-10 h-10 bg-xyz-sage rounded-full flex items-center justify-center flex-shrink-0">
+                    <i class="fas fa-check text-white"></i>
+                </div>
+                <p class="text-sm text-xyz-charcoal/70">
+                    <strong class="text-xyz-charcoal">No uses acetona</strong> ni solventes 
+                    fuertes para limpiar.
+                </p>
+            </div>
+
+            <div class="bg-white p-6 flex items-start gap-4">
+                <div class="w-10 h-10 bg-xyz-sage rounded-full flex items-center justify-center flex-shrink-0">
+                    <i class="fas fa-check text-white"></i>
+                </div>
+                <p class="text-sm text-xyz-charcoal/70">
+                    <strong class="text-xyz-charcoal">Manipula con cuidado</strong> para 
+                    evitar caídas y golpes.
+                </p>
+            </div>
+
+            <div class="bg-white p-6 flex items-start gap-4">
+                <div class="w-10 h-10 bg-xyz-sage rounded-full flex items-center justify-center flex-shrink-0">
+                    <i class="fas fa-check text-white"></i>
+                </div>
+                <p class="text-sm text-xyz-charcoal/70">
+                    <strong class="text-xyz-charcoal">No es apto para alimentos</strong> a 
+                    menos que se indique explícitamente.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+{# === CTA === #}
+{% include 'oscar/partials/cta_contacto.html' with mensaje="sobre el cuidado de tu pieza" whatsapp_text="Hola! Tengo una consulta sobre el cuidado de mi pieza" %}
+
+{% endblock %}

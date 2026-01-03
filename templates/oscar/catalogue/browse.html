@@ -95,24 +95,20 @@
                         
                         <div class="group relative flex flex-col h-full">
                             <div class="relative aspect-square overflow-hidden rounded-lg bg-gray-100 group-hover:shadow-md transition-shadow duration-300">
-                                {% with image=real_product.primary_image %}
-                                    
-                                    {# --- INICIO DEL PARCHE DE SEGURIDAD --- #}
+                                {% with image=product.primary_image %}
+                                    {# --- PARCHE DE SEGURIDAD --- #}
                                     {% if image and image.original %}
-                                        {# Caso A: El producto TIENE imagen #}
                                         {% oscar_thumbnail image.original "600x600" upscale=False as thumb %}
                                         <img src="{{ thumb.url }}" 
-                                             alt="{{ real_product.get_title }}" 
-                                             class="h-full w-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-tech mix-blend-multiply opacity-95 group-hover:opacity-100">
+                                            alt="{{ product.get_title }}" 
+                                            class="h-full w-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-tech mix-blend-multiply opacity-95 group-hover:opacity-100">
                                     {% else %}
-                                        {# Caso B: El producto NO tiene imagen (Fallback) #}
-                                        <div class="h-full w-full flex flex-col items-center justify-center bg-xyz-charcoal/5 text-xyz-charcoal/20">
-                                            <i class="fas fa-cube text-4xl mb-2"></i>
-                                            <span class="font-mono text-[10px] tracking-widest uppercase">NO RENDER</span>
+                                        {# Placeholder si no hay imagen #}
+                                        <div class="h-full w-full flex items-center justify-center bg-gray-100 text-gray-300">
+                                            <i class="fas fa-camera text-3xl"></i>
                                         </div>
                                     {% endif %}
-                                    {# --- FIN DEL PARCHE --- #}
-
+                                    {# --------------------------- #}
                                 {% endwith %}
                                 
                                 <div class="absolute inset-0 border-2 border-xyz-sage opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
