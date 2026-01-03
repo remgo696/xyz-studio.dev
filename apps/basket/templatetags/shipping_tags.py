@@ -6,6 +6,92 @@ from django.core.cache import cache
 register = template.Library()
 
 
+def get_lima_shipping_price():
+    """
+    Obtiene el precio de envío para Lima desde el método weight-based.
+    Busca el método con pk=1 (Lima Metropolitana Courier) y retorna
+    el precio de la primera banda.
+    
+    Cachea el resultado por 5 minutos para evitar consultas repetidas.
+    """
+    cache_key = 'lima_shipping_price'
+    price = cache.get(cache_key)
+    
+    if price is None:
+        try:
+            from oscar.apps.shipping.models import WeightBased
+            
+            method = WeightBased.objects.get(pk=1)
+            bands = method.bands.all().order_by('upper_limit')
+            
+            if bands.exists():
+                price = bands.first().charge
+            else:
+                price = Decimal('9.90')  # Fallback
+                
+        except Exception:
+            price = Decimal('9.90')  # Fallback si hay error
+        
+        # Cachear por 5 minutos
+        cache.set(cache_key, price, 300)
+    
+    return price
+
+
+@register.simple_tag
+def lima_shipping_price():
+    """
+    Template tag para mostrar el precio de envío de Lima.
+    
+    Uso: {% lima_shipping_price %}
+    Retorna: Decimal (ej: 9.90)
+    """
+    return get_lima_shipping_price()
+
+
+def get_provincia_shipping_price():
+    """
+    Obtiene el precio de envío para Provincias desde el método weight-based.
+    Busca el método con pk=2 (Provincia Courier) y retorna
+    el precio de la primera banda.
+    
+    Cachea el resultado por 5 minutos para evitar consultas repetidas.
+    """
+    cache_key = 'provincia_shipping_price'
+    price = cache.get(cache_key)
+    
+    if price is None:
+        try:
+            from oscar.apps.shipping.models import WeightBased
+            
+            method = WeightBased.objects.get(pk=2)
+            bands = method.bands.all().order_by('upper_limit')
+            
+            if bands.exists():
+                price = bands.first().charge
+            else:
+                price = Decimal('16.90')  # Fallback
+                
+        except Exception:
+            price = Decimal('16.90')  # Fallback si hay error
+        
+        # Cachear por 5 minutos
+        cache.set(cache_key, price, 300)
+    
+    return price
+
+
+@register.simple_tag
+def provincia_shipping_price():
+    """
+    Template tag para mostrar el precio de envío a Provincias.
+    
+    Uso: {% provincia_shipping_price %}
+    Retorna: Decimal (ej: 16.90)
+    """
+    return get_provincia_shipping_price()
+
+
 def get_free_shipping_threshold():
     """
     Obtiene el umbral de envío gratis desde las ofertas de Oscar.
@@ -55,6 +141,17 @@ def get_free_shipping_threshold():
         cache.set(cache_key, threshold, 300)
     
     return threshold
+
+
+@register.simple_tag
+def free_shipping_threshold():
+    """
+    Template tag para mostrar el umbral de envío gratis.
+    
+    Uso: {% free_shipping_threshold %}
+    Retorna: Decimal (ej: 490)
+    """
+    return get_free_shipping_threshold()
 
 
 @register.simple_tag

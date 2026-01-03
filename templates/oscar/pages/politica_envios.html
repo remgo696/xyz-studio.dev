@@ -1,5 +1,6 @@
 {% extends "oscar/layout.html" %}
 {% load static %}
+{% load shipping_tags %}
 
 {% block title %}Políticas de Envíos | XYZ Studio{% endblock %}
 
@@ -39,7 +40,7 @@
                     <i class="fas fa-truck text-xyz-sage text-xl"></i>
                 </div>
                 <div>
-                    <span class="font-squada text-2xl text-xyz-charcoal">S/9.90</span>
+                    <span class="font-squada text-2xl text-xyz-charcoal">S/{% lima_shipping_price %}</span>
                     <p class="text-xs text-xyz-charcoal/60">Lima Normal</p>
                 </div>
             </div>
@@ -61,7 +62,7 @@
                     <i class="fas fa-plane text-xyz-charcoal text-xl"></i>
                 </div>
                 <div>
-                    <span class="font-squada text-2xl text-xyz-charcoal">S/16.90</span>
+                    <span class="font-squada text-2xl text-xyz-charcoal">S/{% provincia_shipping_price %}</span>
                     <p class="text-xs text-xyz-charcoal/60">Provincias</p>
                 </div>
             </div>
@@ -73,7 +74,7 @@
                 </div>
                 <div>
                     <span class="font-squada text-2xl text-xyz-sage">GRATIS</span>
-                    <p class="text-xs text-xyz-charcoal/60">Lima Normal +S/490</p>
+                    <p class="text-xs text-xyz-charcoal/60">Lima Normal +S/{% free_shipping_threshold %}</p>
                 </div>
             </div>
         </div>
@@ -106,7 +107,7 @@
                         <p class="text-sm text-xyz-charcoal/60">Entrega a domicilio</p>
                     </div>
                     <div class="text-right">
-                        <span class="font-squada text-3xl text-xyz-sage">S/9.90</span>
+                        <span class="font-squada text-3xl text-xyz-sage">S/{% lima_shipping_price %}</span>
                     </div>
                 </div>
 
@@ -308,7 +309,7 @@
                 <div class="bg-xyz-offwhite/10 p-6 border border-xyz-offwhite/20">
                     <div class="flex items-start justify-between mb-4">
                         <h3 class="font-squada text-2xl">ENVÍO POR COURIER</h3>
-                        <span class="font-squada text-3xl text-xyz-clay">S/16.90</span>
+                        <span class="font-squada text-3xl text-xyz-clay">S/{% provincia_shipping_price %}</span>
                     </div>
                     
                     <p class="text-xyz-offwhite/70 mb-6">
