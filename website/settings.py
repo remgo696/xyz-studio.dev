@@ -45,7 +45,6 @@ INSTALLED_APPS = [
     # Aplicaciones de oscar
     'oscar.config.Shop',
     'oscar.apps.analytics.apps.AnalyticsConfig',
-    'oscar.apps.checkout.apps.CheckoutConfig',
     'oscar.apps.address.apps.AddressConfig',
     'oscar.apps.shipping.apps.ShippingConfig',
     'oscar.apps.catalogue.apps.CatalogueConfig',
@@ -72,8 +71,10 @@ INSTALLED_APPS = [
     'oscar.apps.dashboard.vouchers.apps.VouchersDashboardConfig',
     'oscar.apps.dashboard.communications.apps.CommunicationsDashboardConfig',
     'oscar.apps.dashboard.shipping.apps.ShippingDashboardConfig',
+    # 'oscar.apps.checkout.apps.CheckoutConfig',
     # 'oscar.apps.basket.apps.BasketConfig', # Original basket app
     'apps.basket.apps.BasketConfig', # My custom basket app
+    'apps.checkout.apps.CheckoutConfig',
 
     # 3rd-party apps that oscar depends on
     'widget_tweaks',

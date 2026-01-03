@@ -1,0 +1,75 @@
+{% extends "oscar/checkout/thank_you.html" %}
+{% load i18n %}
+{% load currency_filters %}
+{% load image_tags %}
+
+{% block title %}
+    ¡Pedido Recibido! | {{ shop_name }}
+{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto py-16 px-4 text-center">
+    
+    <div class="mb-8">
+        <div class="w-20 h-20 bg-xyz-sage/20 text-xyz-sage rounded-full flex items-center justify-center mx-auto mb-4 animate-bounce">
+            <i class="fas fa-check text-3xl"></i>
+        </div>
+        <h1 class="font-squada text-5xl text-xyz-charcoal mb-2">¡CASI LISTO!</h1>
+        <p class="text-xyz-charcoal/60 font-mono text-sm tracking-widest uppercase">ORDEN #{{ order.number }} REGISTRADA</p>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-8 text-left max-w-3xl mx-auto">
+        
+        <div class="bg-white p-8 rounded-xl border-2 border-xyz-charcoal/5 shadow-sm">
+            <h3 class="font-squada text-xl text-xyz-charcoal mb-4 flex items-center gap-2">
+                <i class="fas fa-wallet text-xyz-clay"></i> PASO 1: REALIZA EL PAGO
+            </h3>
+            
+            <div class="space-y-4 font-roboto text-sm text-xyz-charcoal/80">
+                <p>El total a pagar es: <strong class="text-xl text-xyz-charcoal block mt-1">{{ order.total_incl_tax|currency:order.currency }}</strong></p>
+                
+                <div class="bg-purple-50 p-3 rounded border border-purple-100 flex items-center gap-3">
+                    <div class="w-10 h-10 bg-purple-500 text-white rounded flex items-center justify-center font-bold">Y</div>
+                    <div>
+                        <span class="block font-bold text-purple-700">YAPE / PLIN</span>
+                        <span class="font-mono text-lg">999 999 999</span>
+                        <span class="block text-xs text-gray-500">David D.</span>
+                    </div>
+                </div>
+
+                <div class="bg-blue-50 p-3 rounded border border-blue-100 flex items-center gap-3">
+                    <div class="w-10 h-10 bg-blue-600 text-white rounded flex items-center justify-center"><i class="fas fa-university"></i></div>
+                    <div>
+                        <span class="block font-bold text-blue-700">BCP AHORROS</span>
+                        <span class="font-mono">191-12345678-0-00</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-xyz-charcoal p-8 rounded-xl text-white shadow-lg flex flex-col justify-between">
+            <div>
+                <h3 class="font-squada text-xl text-xyz-sage mb-4 flex items-center gap-2">
+                    <i class="fab fa-whatsapp"></i> PASO 2: CONFIRMA
+                </h3>
+                <p class="text-sm text-white/80 mb-6">
+                    Envíanos la captura del pago para iniciar la fabricación de tus piezas paramétricas.
+                </p>
+            </div>
+
+            <a href="https://wa.me/51999999999?text=Hola%20XYZ!%20Acabo%20de%20hacer%20el%20pedido%20{{ order.number }}%20por%20{{ order.total_incl_tax|currency:order.currency }}.%20Adjunto%20mi%20constancia%20aquí:%20" 
+               target="_blank"
+               class="block w-full bg-[#25D366] hover:bg-[#128C7E] text-white text-center font-bold py-4 rounded-lg transition-colors shadow-md group">
+                <span class="group-hover:hidden">ENVIAR CONSTANCIA</span>
+                <span class="hidden group-hover:inline-block"><i class="fas fa-paper-plane mr-2"></i> ABRIR WHATSAPP</span>
+            </a>
+        </div>
+    </div>
+
+    <div class="mt-12">
+        <a href="/" class="text-sm font-bold text-xyz-charcoal/40 hover:text-xyz-charcoal border-b border-transparent hover:border-xyz-charcoal transition-all">
+            VOLVER AL ESTUDIO
+        </a>
+    </div>
+</div>
+{% endblock content %}
