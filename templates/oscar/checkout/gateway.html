@@ -1,0 +1,118 @@
+{% extends "oscar/layout.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Checkout" %} | {{ shop_name }}{% endblock %}
+
+{% block layout %}
+<div class="min-h-screen bg-xyz-offwhite">
+    {# === CHECKOUT HEADER === #}
+    <div class="bg-xyz-charcoal text-white py-6">
+        <div class="max-w-4xl mx-auto px-4">
+            <div class="flex items-center justify-between">
+                <div>
+                    <span class="font-mono text-xs tracking-[0.3em] text-xyz-sage uppercase">// CHECKOUT</span>
+                    <h1 class="font-squada text-3xl">INICIAR COMPRA</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="max-w-2xl mx-auto px-4 py-12">
+        <div class="bg-white rounded-xl shadow-sm border border-xyz-charcoal/5 overflow-hidden">
+            <div class="p-6 border-b border-xyz-charcoal/10">
+                <h2 class="font-squada text-xl text-xyz-charcoal flex items-center gap-3">
+                    <i class="fas fa-user text-xyz-sage"></i>
+                    ¿Cómo deseas continuar?
+                </h2>
+            </div>
+
+            <div class="p-6">
+                <form action="{% url 'checkout:index' %}" method="post">
+                    {% csrf_token %}
+                    
+                    {# Opción: Invitado #}
+                    <div class="space-y-6">
+                        <div class="p-6 border-2 border-xyz-sage/30 rounded-xl bg-xyz-sage/5">
+                            <h3 class="font-squada text-lg text-xyz-charcoal mb-4 flex items-center gap-2">
+                                <i class="fas fa-bolt text-xyz-sage"></i>
+                                Comprar como invitado
+                            </h3>
+                            <p class="text-sm text-xyz-charcoal/60 mb-4">
+                                Continúa rápidamente sin crear una cuenta. Solo necesitamos tu correo para enviarte la confirmación.
+                            </p>
+                            
+                            <div class="mb-4">
+                                <label class="block text-sm font-bold text-xyz-charcoal mb-2">
+                                    Correo electrónico <span class="text-xyz-clay">*</span>
+                                </label>
+                                <input type="email" name="username" value="{{ form.username.value|default:'' }}"
+                                    class="w-full px-4 py-3 border-2 border-xyz-charcoal/10 rounded-lg focus:border-xyz-sage focus:ring-0 transition-colors font-roboto"
+                                    placeholder="tu@correo.com" required>
+                                {% if form.username.errors %}
+                                    <p class="text-red-500 text-xs mt-1">{{ form.username.errors.0 }}</p>
+                                {% endif %}
+                            </div>
+
+                            <input type="hidden" name="options" value="guest">
+                            <button type="submit"
+                                class="w-full bg-xyz-sage text-white font-squada text-sm tracking-widest uppercase px-8 py-4 rounded-lg hover:bg-xyz-charcoal transition-colors">
+                                CONTINUAR COMO INVITADO
+                            </button>
+                        </div>
+
+                        <div class="relative">
+                            <div class="absolute inset-0 flex items-center">
+                                <div class="w-full border-t border-xyz-charcoal/10"></div>
+                            </div>
+                            <div class="relative flex justify-center">
+                                <span class="px-4 bg-white text-xyz-charcoal/40 text-sm">o</span>
+                            </div>
+                        </div>
+
+                        {# Opción: Iniciar sesión #}
+                        <div class="p-6 border-2 border-xyz-charcoal/10 rounded-xl">
+                            <h3 class="font-squada text-lg text-xyz-charcoal mb-4 flex items-center gap-2">
+                                <i class="fas fa-sign-in-alt text-xyz-clay"></i>
+                                Ya tengo cuenta
+                            </h3>
+                            <p class="text-sm text-xyz-charcoal/60 mb-4">
+                                Inicia sesión para acceder a tus direcciones guardadas y ver tu historial de pedidos.
+                            </p>
+                            <a href="{% url 'customer:login' %}?next={% url 'checkout:index' %}"
+                                class="block w-full text-center bg-xyz-charcoal text-white font-squada text-sm tracking-widest uppercase px-8 py-4 rounded-lg hover:bg-xyz-clay transition-colors">
+                                INICIAR SESIÓN
+                            </a>
+                        </div>
+
+                        {# Opción: Crear cuenta #}
+                        <div class="text-center">
+                            <p class="text-sm text-xyz-charcoal/60">
+                                ¿Primera vez aquí? 
+                                <a href="{% url 'customer:register' %}?next={% url 'checkout:index' %}" class="text-xyz-sage hover:underline font-bold">
+                                    Crear una cuenta
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        {# Beneficios de crear cuenta #}
+        <div class="mt-8 grid sm:grid-cols-3 gap-4">
+            <div class="bg-white p-4 rounded-lg border border-xyz-charcoal/5 text-center">
+                <i class="fas fa-history text-xyz-sage text-xl mb-2"></i>
+                <p class="text-xs text-xyz-charcoal/60">Historial de pedidos</p>
+            </div>
+            <div class="bg-white p-4 rounded-lg border border-xyz-charcoal/5 text-center">
+                <i class="fas fa-map-marker-alt text-xyz-sage text-xl mb-2"></i>
+                <p class="text-xs text-xyz-charcoal/60">Direcciones guardadas</p>
+            </div>
+            <div class="bg-white p-4 rounded-lg border border-xyz-charcoal/5 text-center">
+                <i class="fas fa-tag text-xyz-sage text-xl mb-2"></i>
+                <p class="text-xs text-xyz-charcoal/60">Ofertas exclusivas</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,265 @@
+{% extends "oscar/layout.html" %}
+{% load i18n %}
+{% load form_tags %}
+{% load currency_filters %}
+{% load widget_tweaks %}
+
+{% block title %}{% trans "Dirección de envío" %} | {{ shop_name }}{% endblock %}
+
+{% block layout %}
+<div class="min-h-screen bg-xyz-offwhite">
+    {# === CHECKOUT HEADER === #}
+    <div class="bg-xyz-charcoal text-white py-6">
+        <div class="max-w-4xl mx-auto px-4">
+            <div class="flex items-center justify-between">
+                <div>
+                    <span class="font-mono text-xs tracking-[0.3em] text-xyz-sage uppercase">// CHECKOUT</span>
+                    <h1 class="font-squada text-3xl">DIRECCIÓN DE ENVÍO</h1>
+                </div>
+                <div class="text-right">
+                    <span class="text-xs text-white/60">Paso 1 de 3</span>
+                    <div class="flex gap-1 mt-1">
+                        <div class="w-8 h-1 bg-xyz-sage rounded"></div>
+                        <div class="w-8 h-1 bg-white/20 rounded"></div>
+                        <div class="w-8 h-1 bg-white/20 rounded"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="max-w-4xl mx-auto px-4 py-12">
+        <div class="grid lg:grid-cols-3 gap-8">
+            {# === FORMULARIO === #}
+            <div class="lg:col-span-2">
+                <div class="bg-white rounded-xl shadow-sm border border-xyz-charcoal/5 overflow-hidden">
+                    <div class="p-6 border-b border-xyz-charcoal/10">
+                        <h2 class="font-squada text-xl text-xyz-charcoal flex items-center gap-3">
+                            <i class="fas fa-map-marker-alt text-xyz-sage"></i>
+                            ¿A dónde enviamos tu pedido?
+                        </h2>
+                    </div>
+
+                    {% if addresses %}
+                    <div class="p-6 border-b border-xyz-charcoal/10 bg-xyz-offwhite/50">
+                        <h3 class="font-mono text-xs tracking-widest uppercase text-xyz-charcoal/60 mb-4">
+                            DIRECCIONES GUARDADAS
+                        </h3>
+                        <div class="grid gap-3">
+                            {% for address in addresses %}
+                            <form action="{% url 'checkout:shipping-address' %}" method="post">
+                                {% csrf_token %}
+                                <input type="hidden" name="address_id" value="{{ address.id }}">
+                                <button type="submit" name="action" value="ship_to" 
+                                    class="w-full text-left p-4 bg-white rounded-lg border-2 border-xyz-charcoal/10 hover:border-xyz-sage transition-colors group">
+                                    <div class="flex items-start justify-between">
+                                        <div>
+                                            <span class="font-bold text-xyz-charcoal group-hover:text-xyz-sage transition-colors">
+                                                {{ address.line1 }}
+                                            </span>
+                                            {% if address.line2 %}<span class="text-xyz-charcoal/60">, {{ address.line2 }}</span>{% endif %}
+                                            <p class="text-sm text-xyz-charcoal/60 mt-1">
+                                                {{ address.line4 }}, {{ address.postcode }} - {{ address.country }}
+                                            </p>
+                                        </div>
+                                        <i class="fas fa-chevron-right text-xyz-charcoal/30 group-hover:text-xyz-sage transition-colors mt-1"></i>
+                                    </div>
+                                </button>
+                            </form>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    <form action="{% url 'checkout:shipping-address' %}" method="post" class="p-6">
+                        {% csrf_token %}
+                        
+                        {# Mostrar errores generales del formulario #}
+                        {% if form.errors %}
+                        <div class="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
+                            <p class="font-bold text-red-600 mb-2">
+                                <i class="fas fa-exclamation-circle mr-2"></i>Por favor corrige los siguientes errores:
+                            </p>
+                            <ul class="text-sm text-red-600 list-disc list-inside">
+                                {% for field in form %}
+                                    {% for error in field.errors %}
+                                        <li><strong>{{ field.label }}:</strong> {{ error }}</li>
+                                    {% endfor %}
+                                {% endfor %}
+                                {% for error in form.non_field_errors %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        {% endif %}
+                        
+                        {% if addresses %}
+                        <h3 class="font-mono text-xs tracking-widest uppercase text-xyz-charcoal/60 mb-4">
+                            O INGRESA UNA NUEVA DIRECCIÓN
+                        </h3>
+                        {% endif %}
+
+                        <div class="grid md:grid-cols-2 gap-4">
+                            {# Nombre #}
+                            <div>
+                                <label for="{{ form.first_name.id_for_label }}" class="block text-sm font-bold text-xyz-charcoal mb-2">
+                                    {{ form.first_name.label }} <span class="text-xyz-clay">*</span>
+                                </label>
+                                {% render_field form.first_name class="w-full px-4 py-3 border-2 border-xyz-charcoal/10 rounded-lg focus:border-xyz-sage focus:ring-0 transition-colors font-roboto" placeholder="Tu nombre" %}
+                                {% if form.first_name.errors %}
+                                    <p class="text-red-500 text-xs mt-1">{{ form.first_name.errors.0 }}</p>
+                                {% endif %}
+                            </div>
+
+                            {# Apellidos #}
+                            <div>
+                                <label for="{{ form.last_name.id_for_label }}" class="block text-sm font-bold text-xyz-charcoal mb-2">
+                                    {{ form.last_name.label }} <span class="text-xyz-clay">*</span>
+                                </label>
+                                {% render_field form.last_name class="w-full px-4 py-3 border-2 border-xyz-charcoal/10 rounded-lg focus:border-xyz-sage focus:ring-0 transition-colors font-roboto" placeholder="Tus apellidos" %}
+                                {% if form.last_name.errors %}
+                                    <p class="text-red-500 text-xs mt-1">{{ form.last_name.errors.0 }}</p>
+                                {% endif %}
+                            </div>
+
+                            {# Dirección línea 1 #}
+                            <div class="md:col-span-2">
+                                <label for="{{ form.line1.id_for_label }}" class="block text-sm font-bold text-xyz-charcoal mb-2">
+                                    {{ form.line1.label }} <span class="text-xyz-clay">*</span>
+                                </label>
+                                {% render_field form.line1 class="w-full px-4 py-3 border-2 border-xyz-charcoal/10 rounded-lg focus:border-xyz-sage focus:ring-0 transition-colors font-roboto" placeholder="Av. / Jr. / Calle, número, interior" %}
+                                {% if form.line1.errors %}
+                                    <p class="text-red-500 text-xs mt-1">{{ form.line1.errors.0 }}</p>
+                                {% endif %}
+                            </div>
+
+                            {# Dirección línea 2 #}
+                            <div class="md:col-span-2">
+                                <label for="{{ form.line2.id_for_label }}" class="block text-sm font-bold text-xyz-charcoal mb-2">
+                                    {{ form.line2.label }}
+                                </label>
+                                {% render_field form.line2 class="w-full px-4 py-3 border-2 border-xyz-charcoal/10 rounded-lg focus:border-xyz-sage focus:ring-0 transition-colors font-roboto" placeholder="Urbanización, edificio, piso (opcional)" %}
+                            </div>
+
+                            {# Distrito/Ciudad #}
+                            <div>
+                                <label for="{{ form.line4.id_for_label }}" class="block text-sm font-bold text-xyz-charcoal mb-2">
+                                    Distrito <span class="text-xyz-clay">*</span>
+                                </label>
+                                {% render_field form.line4 class="w-full px-4 py-3 border-2 border-xyz-charcoal/10 rounded-lg focus:border-xyz-sage focus:ring-0 transition-colors font-roboto" placeholder="Ej: Miraflores, San Isidro, Trujillo Centro" %}
+                                {% if form.line4.errors %}
+                                    <p class="text-red-500 text-xs mt-1">{{ form.line4.errors.0 }}</p>
+                                {% endif %}
+                            </div>
+
+                            {# Departamento/Región #}
+                            <div>
+                                <label for="{{ form.state.id_for_label }}" class="block text-sm font-bold text-xyz-charcoal mb-2">
+                                    Departamento <span class="text-xyz-clay">*</span>
+                                </label>
+                                {% render_field form.state class="w-full px-4 py-3 border-2 border-xyz-charcoal/10 rounded-lg focus:border-xyz-sage focus:ring-0 transition-colors font-roboto bg-white" %}
+                                {% if form.state.errors %}
+                                    <p class="text-red-500 text-xs mt-1">{{ form.state.errors.0 }}</p>
+                                {% endif %}
+                                <p class="text-xs text-xyz-charcoal/50 mt-1">
+                                    <i class="fas fa-info-circle text-xyz-sage"></i>
+                                    El costo de envío depende del departamento
+                                </p>
+                            </div>
+
+                            {# Código postal (opcional) #}
+                            <div>
+                                <label for="{{ form.postcode.id_for_label }}" class="block text-sm font-bold text-xyz-charcoal mb-2">
+                                    {{ form.postcode.label }}
+                                </label>
+                                {% render_field form.postcode class="w-full px-4 py-3 border-2 border-xyz-charcoal/10 rounded-lg focus:border-xyz-sage focus:ring-0 transition-colors font-roboto" placeholder="Opcional" %}
+                            </div>
+
+                            {# País - Mostrar campo si existe, sino mostrar país por defecto #}
+                            <div>
+                                <label class="block text-sm font-bold text-xyz-charcoal mb-2">
+                                    {% trans "País" %}
+                                </label>
+                                {% if 'country' in form.fields %}
+                                    {% render_field form.country class="w-full px-4 py-3 border-2 border-xyz-charcoal/10 rounded-lg focus:border-xyz-sage focus:ring-0 transition-colors font-roboto bg-white" %}
+                                {% else %}
+                                    {# Solo un país de envío configurado (Perú) - mostrar como texto #}
+                                    <div class="w-full px-4 py-3 border-2 border-xyz-charcoal/10 rounded-lg bg-xyz-offwhite/50 font-roboto text-xyz-charcoal flex items-center gap-2">
+                                        <span class="fi fi-pe"></span>
+                                        Perú
+                                    </div>
+                                {% endif %}
+                            </div>
+
+                            {# Teléfono #}
+                            <div>
+                                <label for="{{ form.phone_number.id_for_label }}" class="block text-sm font-bold text-xyz-charcoal mb-2">
+                                    {{ form.phone_number.label }}
+                                </label>
+                                {% render_field form.phone_number class="w-full px-4 py-3 border-2 border-xyz-charcoal/10 rounded-lg focus:border-xyz-sage focus:ring-0 transition-colors font-roboto" placeholder="999 999 999" %}
+                            </div>
+
+                            {# Notas #}
+                            <div class="md:col-span-2">
+                                <label for="{{ form.notes.id_for_label }}" class="block text-sm font-bold text-xyz-charcoal mb-2">
+                                    {{ form.notes.label }}
+                                </label>
+                                {% render_field form.notes class="w-full px-4 py-3 border-2 border-xyz-charcoal/10 rounded-lg focus:border-xyz-sage focus:ring-0 transition-colors font-roboto resize-none" rows="2" placeholder="Referencias adicionales para el courier..." %}
+                            </div>
+                        </div>
+
+                        <div class="mt-8 flex justify-end">
+                            <button type="submit"
+                                class="inline-flex items-center gap-2 bg-xyz-charcoal text-white font-squada text-sm tracking-widest uppercase px-8 py-4 rounded-lg hover:bg-xyz-sage transition-colors">
+                                CONTINUAR
+                                <i class="fas fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            {# === SIDEBAR === #}
+            <div class="lg:col-span-1">
+                <div class="bg-white rounded-xl shadow-sm border border-xyz-charcoal/5 p-6 sticky top-24">
+                    <h3 class="font-squada text-lg text-xyz-charcoal mb-4 flex items-center gap-2">
+                        <i class="fas fa-shopping-bag text-xyz-clay"></i>
+                        Tu pedido
+                    </h3>
+                    
+                    <div class="space-y-3 max-h-64 overflow-y-auto">
+                        {% for line in basket.all_lines %}
+                        <div class="flex gap-3 p-2 bg-xyz-offwhite/50 rounded">
+                            {% if line.product.primary_image %}
+                            <img src="{{ line.product.primary_image.original.url }}" 
+                                 alt="{{ line.product.get_title }}"
+                                 class="w-12 h-12 object-cover rounded">
+                            {% else %}
+                            <div class="w-12 h-12 bg-gray-200 rounded flex items-center justify-center">
+                                <i class="fas fa-cube text-gray-400"></i>
+                            </div>
+                            {% endif %}
+                            <div class="flex-1 min-w-0">
+                                <p class="text-sm font-bold text-xyz-charcoal truncate">{{ line.product.get_title }}</p>
+                                <p class="text-xs text-xyz-charcoal/60">Cant: {{ line.quantity }}</p>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="border-t border-xyz-charcoal/10 mt-4 pt-4 space-y-2 text-sm">
+                        <div class="flex justify-between">
+                            <span class="text-xyz-charcoal/60">Subtotal</span>
+                            <span class="font-bold">{{ basket.total_incl_tax_excl_discounts|currency:basket.currency }}</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-xyz-charcoal/60">Envío</span>
+                            <span class="text-xyz-sage font-mono text-xs">Por calcular</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

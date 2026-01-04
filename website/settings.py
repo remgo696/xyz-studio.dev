@@ -45,9 +45,8 @@ INSTALLED_APPS = [
     # Aplicaciones de oscar
     'oscar.config.Shop',
     'oscar.apps.analytics.apps.AnalyticsConfig',
-    'oscar.apps.checkout.apps.CheckoutConfig',
-    'oscar.apps.address.apps.AddressConfig',
-    'oscar.apps.shipping.apps.ShippingConfig',
+    'apps.address.apps.AddressConfig',  # Fork personalizado
+    'apps.shipping.apps.ShippingConfig',  # Fork personalizado
     'oscar.apps.catalogue.apps.CatalogueConfig',
     'oscar.apps.catalogue.reviews.apps.CatalogueReviewsConfig',
     'oscar.apps.communication.apps.CommunicationConfig',
@@ -72,8 +71,10 @@ INSTALLED_APPS = [
     'oscar.apps.dashboard.vouchers.apps.VouchersDashboardConfig',
     'oscar.apps.dashboard.communications.apps.CommunicationsDashboardConfig',
     'oscar.apps.dashboard.shipping.apps.ShippingDashboardConfig',
+    # 'oscar.apps.checkout.apps.CheckoutConfig',
     # 'oscar.apps.basket.apps.BasketConfig', # Original basket app
     'apps.basket.apps.BasketConfig', # My custom basket app
+    'apps.checkout.apps.CheckoutConfig',
 
     # 3rd-party apps that oscar depends on
     'widget_tweaks',
@@ -203,6 +204,9 @@ OSCAR_SHOP_NAME = 'XYZ Studio'
 OSCAR_SHOP_TAGLINE = 'Decoración e Impresión 3D'
 OSCAR_DEFAULT_CURRENCY = 'PEN'  # Sol Peruano
 
+# Repositorio de envíos personalizado
+OSCAR_SHIPPING_REPOSITORY = 'apps.shipping.repository.Repository'
+
 
 # Autenticación (Oscar usa Email como usuario por defecto, muy moderno)
 AUTHENTICATION_BACKENDS = (
@@ -242,3 +246,10 @@ INTERNAL_IPS = [
 ]
 
 NPM_BIN_PATH = r"C:\Program Files\nodejs\npm.cmd"  # Ajustar según la ruta de npm en Windows
+
+# Email - Para desarrollo, usamos el backend de consola
+# Los emails se muestran en la terminal en vez de enviarse
+if DEBUG:
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+    OSCAR_FROM_EMAIL = 'noreply@xyzstudio.pe'
+    OSCAR_SEND_REGISTRATION_EMAIL = True
