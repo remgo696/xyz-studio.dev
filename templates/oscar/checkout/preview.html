@@ -133,12 +133,29 @@
                                 {% if shipping_method.description %}
                                 <p class="text-sm text-xyz-charcoal/60">{{ shipping_method.description }}</p>
                                 {% endif %}
+                                {% if shipping_discounts %}
+                                <p class="text-xs text-xyz-sage mt-1">
+                                    {% for discount in shipping_discounts %}{{ discount.offer.name }}{% endfor %}
+                                </p>
+                                {% endif %}
+                                {% if shipping_method.code == 'lima-urgente' %}
+                                <p class="text-xs text-xyz-clay mt-1">
+                                    <i class="fas fa-info-circle mr-1"></i>Pagas al motorizado al recibir
+                                </p>
+                                {% endif %}
                             </div>
-                            <span class="font-squada text-lg text-xyz-charcoal">
-                                {% if shipping_charge.incl_tax == 0 %}
+                            <span class="font-squada text-lg">
+                                {% if shipping_method.code == 'lima-urgente' %}
+                                    {# Envío urgente: cliente paga al motorizado #}
+                                    <span class="text-xyz-clay">S/7-S/35</span>
+                                    <span class="block text-xs text-xyz-charcoal/50 text-right">al motorizado</span>
+                                {% elif shipping_discounts %}
+                                    <span class="line-through text-xyz-charcoal/40 text-sm">{{ original_shipping_charge.incl_tax|currency:original_shipping_charge.currency }}</span>
+                                    <span class="text-xyz-sage ml-1">GRATIS</span>
+                                {% elif shipping_charge.incl_tax == 0 %}
                                     <span class="text-xyz-sage">GRATIS</span>
                                 {% else %}
-                                    {{ shipping_charge.incl_tax|currency:shipping_charge.currency }}
+                                    <span class="text-xyz-charcoal">{{ shipping_charge.incl_tax|currency:shipping_charge.currency }}</span>
                                 {% endif %}
                             </span>
                         </div>
@@ -196,7 +213,7 @@
                         
                         {% if basket.total_discount %}
                         <div class="flex justify-between text-xyz-sage">
-                            <span>Descuentos</span>
+                            <span>Descuentos productos</span>
                             <span>-{{ basket.total_discount|currency:basket.currency }}</span>
                         </div>
                         {% endif %}
@@ -204,13 +221,27 @@
                         <div class="flex justify-between">
                             <span class="text-xyz-charcoal/60">Envío</span>
                             <span>
-                                {% if shipping_charge.incl_tax == 0 %}
+                                {% if shipping_method.code == 'lima-urgente' %}
+                                    <span class="text-xyz-clay text-xs">S/7-S/35 al motorizado</span>
+                                {% elif shipping_discounts %}
+                                    <span class="line-through text-xyz-charcoal/30 text-xs mr-1">{{ original_shipping_charge.incl_tax|currency:original_shipping_charge.currency }}</span>
+                                    <span class="text-xyz-sage font-bold">GRATIS</span>
+                                {% elif shipping_charge.incl_tax == 0 %}
                                     <span class="text-xyz-sage font-bold">GRATIS</span>
                                 {% else %}
                                     {{ shipping_charge.incl_tax|currency:shipping_charge.currency }}
                                 {% endif %}
                             </span>
                         </div>
+                        
+                        {% if shipping_discounts %}
+                        <div class="flex justify-between text-xyz-sage text-xs">
+                            <span>
+                                {% for discount in shipping_discounts %}{{ discount.offer.name }}{% endfor %}
+                            </span>
+                            <span>-{{ shipping_discount_amount|currency:basket.currency }}</span>
+                        </div>
+                        {% endif %}
                     </div>
 
                     <div class="border-t border-xyz-charcoal/10 mt-4 pt-4">

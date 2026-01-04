@@ -74,6 +74,25 @@
                     <form action="{% url 'checkout:shipping-address' %}" method="post" class="p-6">
                         {% csrf_token %}
                         
+                        {# Mostrar errores generales del formulario #}
+                        {% if form.errors %}
+                        <div class="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
+                            <p class="font-bold text-red-600 mb-2">
+                                <i class="fas fa-exclamation-circle mr-2"></i>Por favor corrige los siguientes errores:
+                            </p>
+                            <ul class="text-sm text-red-600 list-disc list-inside">
+                                {% for field in form %}
+                                    {% for error in field.errors %}
+                                        <li><strong>{{ field.label }}:</strong> {{ error }}</li>
+                                    {% endfor %}
+                                {% endfor %}
+                                {% for error in form.non_field_errors %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        {% endif %}
+                        
                         {% if addresses %}
                         <h3 class="font-mono text-xs tracking-widest uppercase text-xyz-charcoal/60 mb-4">
                             O INGRESA UNA NUEVA DIRECCIÓN
@@ -125,32 +144,44 @@
                             {# Distrito/Ciudad #}
                             <div>
                                 <label for="{{ form.line4.id_for_label }}" class="block text-sm font-bold text-xyz-charcoal mb-2">
-                                    {{ form.line4.label }} <span class="text-xyz-clay">*</span>
+                                    Distrito <span class="text-xyz-clay">*</span>
                                 </label>
-                                {% render_field form.line4 class="w-full px-4 py-3 border-2 border-xyz-charcoal/10 rounded-lg focus:border-xyz-sage focus:ring-0 transition-colors font-roboto" placeholder="Distrito" %}
+                                {% render_field form.line4 class="w-full px-4 py-3 border-2 border-xyz-charcoal/10 rounded-lg focus:border-xyz-sage focus:ring-0 transition-colors font-roboto" placeholder="Ej: Miraflores, San Isidro, Trujillo Centro" %}
                                 {% if form.line4.errors %}
                                     <p class="text-red-500 text-xs mt-1">{{ form.line4.errors.0 }}</p>
                                 {% endif %}
                             </div>
 
-                            {# Código postal #}
+                            {# Departamento/Región #}
+                            <div>
+                                <label for="{{ form.state.id_for_label }}" class="block text-sm font-bold text-xyz-charcoal mb-2">
+                                    Departamento <span class="text-xyz-clay">*</span>
+                                </label>
+                                {% render_field form.state class="w-full px-4 py-3 border-2 border-xyz-charcoal/10 rounded-lg focus:border-xyz-sage focus:ring-0 transition-colors font-roboto bg-white" %}
+                                {% if form.state.errors %}
+                                    <p class="text-red-500 text-xs mt-1">{{ form.state.errors.0 }}</p>
+                                {% endif %}
+                                <p class="text-xs text-xyz-charcoal/50 mt-1">
+                                    <i class="fas fa-info-circle text-xyz-sage"></i>
+                                    El costo de envío depende del departamento
+                                </p>
+                            </div>
+
+                            {# Código postal (opcional) #}
                             <div>
                                 <label for="{{ form.postcode.id_for_label }}" class="block text-sm font-bold text-xyz-charcoal mb-2">
                                     {{ form.postcode.label }}
                                 </label>
-                                {% render_field form.postcode class="w-full px-4 py-3 border-2 border-xyz-charcoal/10 rounded-lg focus:border-xyz-sage focus:ring-0 transition-colors font-roboto" placeholder="15000" %}
+                                {% render_field form.postcode class="w-full px-4 py-3 border-2 border-xyz-charcoal/10 rounded-lg focus:border-xyz-sage focus:ring-0 transition-colors font-roboto" placeholder="Opcional" %}
                             </div>
 
                             {# País - Mostrar campo si existe, sino mostrar país por defecto #}
                             <div>
                                 <label class="block text-sm font-bold text-xyz-charcoal mb-2">
-                                    {% trans "País" %} <span class="text-xyz-clay">*</span>
+                                    {% trans "País" %}
                                 </label>
-                                {% if form.country %}
+                                {% if 'country' in form.fields %}
                                     {% render_field form.country class="w-full px-4 py-3 border-2 border-xyz-charcoal/10 rounded-lg focus:border-xyz-sage focus:ring-0 transition-colors font-roboto bg-white" %}
-                                    {% if form.country.errors %}
-                                        <p class="text-red-500 text-xs mt-1">{{ form.country.errors.0 }}</p>
-                                    {% endif %}
                                 {% else %}
                                     {# Solo un país de envío configurado (Perú) - mostrar como texto #}
                                     <div class="w-full px-4 py-3 border-2 border-xyz-charcoal/10 rounded-lg bg-xyz-offwhite/50 font-roboto text-xyz-charcoal flex items-center gap-2">

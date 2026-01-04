@@ -45,8 +45,8 @@ INSTALLED_APPS = [
     # Aplicaciones de oscar
     'oscar.config.Shop',
     'oscar.apps.analytics.apps.AnalyticsConfig',
-    'oscar.apps.address.apps.AddressConfig',
-    'oscar.apps.shipping.apps.ShippingConfig',
+    'apps.address.apps.AddressConfig',  # Fork personalizado
+    'apps.shipping.apps.ShippingConfig',  # Fork personalizado
     'oscar.apps.catalogue.apps.CatalogueConfig',
     'oscar.apps.catalogue.reviews.apps.CatalogueReviewsConfig',
     'oscar.apps.communication.apps.CommunicationConfig',
@@ -203,6 +203,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 OSCAR_SHOP_NAME = 'XYZ Studio'
 OSCAR_SHOP_TAGLINE = 'Decoración e Impresión 3D'
 OSCAR_DEFAULT_CURRENCY = 'PEN'  # Sol Peruano
+
+# Repositorio de envíos personalizado
+OSCAR_SHIPPING_REPOSITORY = 'apps.shipping.repository.Repository'
 
 
 # Autenticación (Oscar usa Email como usuario por defecto, muy moderno)

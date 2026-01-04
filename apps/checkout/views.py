@@ -41,8 +41,26 @@ class PaymentDetailsView(CorePaymentDetailsView):
         # fue "exitoso" y procede automáticamente a colocar la orden (place_order).
         return
 
-    # Si necesitas pasar datos extra al template (como el número de Yape)
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
         ctx['payment_method'] = 'manual'
+        
+        # Obtener información de descuentos de envío aplicados
+        basket = self.request.basket
+        shipping_method = ctx.get('shipping_method')
+        
+        if shipping_method and hasattr(basket, 'offer_applications'):
+            # Descuentos de envío aplicados (ofertas como "Envío gratis +S/490")
+            shipping_discounts = basket.offer_applications.shipping_discounts
+            ctx['shipping_discounts'] = shipping_discounts
+            
+            # Calcular el precio original del envío (sin descuentos)
+            # para mostrar tachado si hay descuento
+            if shipping_discounts:
+                original_shipping = shipping_method.calculate(basket)
+                ctx['original_shipping_charge'] = original_shipping
+                # Total de descuento de envío
+                total_shipping_discount = sum(d['discount'] for d in shipping_discounts)
+                ctx['shipping_discount_amount'] = total_shipping_discount
+        
         return ctx

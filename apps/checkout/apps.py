@@ -8,5 +8,7 @@ class CheckoutConfig(apps.CheckoutConfig):
 
     def ready(self):
         super().ready()
-        # Esto le dice a Oscar: "Cuando busques PaymentDetailsView, usa LA MÍA"
+        # Usar nuestra vista de pago personalizada
         self.payment_details_view = get_class('checkout.views', 'PaymentDetailsView')
+        # Usar nuestro formulario de dirección personalizado
+        self.shipping_address_form_class = get_class('checkout.forms', 'ShippingAddressForm')

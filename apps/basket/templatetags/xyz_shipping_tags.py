@@ -58,6 +58,15 @@ def get_free_shipping_threshold():
 
 
 @register.simple_tag
+def free_shipping_threshold():
+    """
+    Retorna el umbral de envío gratis para usar en templates.
+    Ejemplo: {% free_shipping_threshold as threshold %}
+    """
+    return get_free_shipping_threshold()
+
+
+@register.simple_tag
 def calculate_shipping_progress(basket, threshold=None):
     """
     Calcula cuánto falta para el envío gratis.
