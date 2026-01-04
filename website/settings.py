@@ -246,3 +246,10 @@ INTERNAL_IPS = [
 ]
 
 NPM_BIN_PATH = r"C:\Program Files\nodejs\npm.cmd"  # Ajustar según la ruta de npm en Windows
+
+# Email - Para desarrollo, usamos el backend de consola
+# Los emails se muestran en la terminal en vez de enviarse
+if DEBUG:
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+    OSCAR_FROM_EMAIL = 'noreply@xyzstudio.pe'
+    OSCAR_SEND_REGISTRATION_EMAIL = True

@@ -28,7 +28,7 @@ class EnvioUrgenteLima:
     """
     code = 'lima-urgente'
     name = 'Envío Urgente (Motorizado)'
-    description = 'Entrega el mismo día. Tú pagas al motorizado (InDrive/Didi/Rappi)'
+    description = 'Entrega el mismo día por motorizado (InDrive/Didi/Rappi)'
     
     # Precio S/0 porque XYZ no cobra, el cliente paga directo al motorizado
     is_discounted = False
