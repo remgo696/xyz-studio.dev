@@ -1,6 +1,6 @@
 {% extends "oscar/layout.html" %}
 {% load static %}
-{% load shipping_tags %}
+{% load xyz_shipping_tags %}
 
 {% block title %}Políticas de Envíos | XYZ Studio{% endblock %}
 
@@ -259,7 +259,7 @@
                 </div>
 
                 <div class="mt-6 pt-6 border-t border-xyz-charcoal/10">
-                    <a href="https://wa.me/51XXXXXXXXX?text=Hola!%20Quiero%20coordinar%20el%20recojo%20de%20mi%20pedido" 
+                    <a href="https://wa.me/{{ shop_whatsapp }}?text=Hola!%20Quiero%20coordinar%20el%20recojo%20de%20mi%20pedido" 
                        target="_blank"
                        class="inline-flex items-center gap-2 text-xyz-sage hover:text-xyz-clay transition-colors">
                         <i class="fab fa-whatsapp text-lg"></i>
@@ -275,7 +275,7 @@
             <div class="text-sm">
                 <strong class="text-xyz-clay">Importante sobre dimensiones:</strong>
                 <p class="text-xyz-charcoal/70">
-                    Los pedidos que excedan 2kg de peso (real o volumétrico) o dimensiones mayores a 40x40x40cm 
+                    Los pedidos que excedan 2kg de peso (real o volumétrico)
                     tendrán un recargo adicional en el costo de envío. Te contactaremos antes de procesar el pedido si aplica.
                 </p>
             </div>

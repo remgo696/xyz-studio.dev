@@ -22,6 +22,7 @@ purl = "*"
 phonenumbers = "*"
 pycountry = "*"
 factory-boy = "*"
+django-environ = "*"
 
 [dev-packages]
 pylint = "*"

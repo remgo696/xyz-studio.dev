@@ -11,22 +11,31 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 import os
 from pathlib import Path
+import environ
 from oscar.defaults import *
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# Inicializar django-environ
+env = environ.Env(
+    # Valores por defecto con type casting
+    DEBUG=(bool, True),
+)
+
+# Leer archivo .env
+environ.Env.read_env(BASE_DIR / '.env')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-nn*2zm)lal*fk))+rzhg7h#3mn%jiwuay-$#*$j8f!qm*k41e_'
+SECRET_KEY = env('SECRET_KEY', default='django-insecure-nn*2zm)lal*fk))+rzhg7h#3mn%jiwuay-$#*$j8f!qm*k41e_')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env.bool('DEBUG', default=True)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=['localhost', '127.0.0.1'])
 
 
 # Application definition
@@ -131,6 +140,9 @@ TEMPLATES = [
                 'oscar.apps.checkout.context_processors.checkout',
                 'oscar.apps.communication.notifications.context_processors.notifications',
                 'oscar.core.context_processors.metadata',
+                
+                # Context processor personalizado de XYZ Studio
+                'website.context_processors.shop_info',
             ],
         },
     },
@@ -253,3 +265,26 @@ if DEBUG:
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
     OSCAR_FROM_EMAIL = 'noreply@xyzstudio.pe'
     OSCAR_SEND_REGISTRATION_EMAIL = True
+
+# =============================================================================
+# INFORMACIÓN DE CONTACTO XYZ STUDIO (desde .env)
+# =============================================================================
+SHOP_WHATSAPP = env('SHOP_WHATSAPP', default='51999999999')
+SHOP_EMAIL = env('SHOP_EMAIL', default='contacto@xyzstudio.pe')
+SHOP_PHONE = env('SHOP_PHONE', default='999999999')
+SHOP_ADDRESS = env('SHOP_ADDRESS', default='Lima, Perú')
+
+# Redes Sociales
+SHOP_INSTAGRAM = env('SHOP_INSTAGRAM', default='')
+SHOP_TIKTOK = env('SHOP_TIKTOK', default='')
+SHOP_LINKEDIN = env('SHOP_LINKEDIN', default='')
+
+# Datos bancarios (sensibles)
+BANK_BCP_ACCOUNT = env('BANK_BCP_ACCOUNT', default='')
+BANK_BCP_CCI = env('BANK_BCP_CCI', default='')
+BANK_BCP_HOLDER = env('BANK_BCP_HOLDER', default='')
+
+# Yape / Plin
+YAPE_PHONE = env('YAPE_PHONE', default='')
+YAPE_HOLDER = env('YAPE_HOLDER', default='')
+PLIN_PHONE = env('PLIN_PHONE', default='')

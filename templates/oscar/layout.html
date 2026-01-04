@@ -96,9 +96,9 @@
                         Manufactura digital y diseño paramétrico. Erradicamos lo estándar para crear objetos que se adaptan a ti, no al revés.
                     </p>
                     <div class="flex space-x-4 mt-6">
-                        <a href="#" class="opacity-60 hover:opacity-100 hover:text-xyz-clay transition-all"><i class="fab fa-instagram text-xl"></i></a>
-                        <a href="#" class="opacity-60 hover:opacity-100 hover:text-xyz-clay transition-all"><i class="fab fa-tiktok text-xl"></i></a>
-                        <a href="#" class="opacity-60 hover:opacity-100 hover:text-xyz-clay transition-all"><i class="fab fa-linkedin text-xl"></i></a>
+                        {% if shop_instagram %}<a href="https://instagram.com/{{ shop_instagram }}" target="_blank" class="opacity-60 hover:opacity-100 hover:text-xyz-clay transition-all"><i class="fab fa-instagram text-xl"></i></a>{% endif %}
+                        {% if shop_tiktok %}<a href="https://tiktok.com/@{{ shop_tiktok }}" target="_blank" class="opacity-60 hover:opacity-100 hover:text-xyz-clay transition-all"><i class="fab fa-tiktok text-xl"></i></a>{% endif %}
+                        {% if shop_linkedin %}<a href="https://linkedin.com/company/{{ shop_linkedin }}" target="_blank" class="opacity-60 hover:opacity-100 hover:text-xyz-clay transition-all"><i class="fab fa-linkedin text-xl"></i></a>{% endif %}
                     </div>
                 </div>
 
@@ -117,8 +117,6 @@
                     <h4 class="font-squada text-xl text-xyz-sage mb-6 tracking-wide">NOSOTROS</h4>
                     <ul class="space-y-3 text-sm font-light">
                         <li><a href="/sobre-xyz/" class="hover:text-xyz-clay hover:pl-2 transition-all duration-300">Sobre XYZ Studio</a></li>
-                        <li><a href="/nuestra-historia/" class="hover:text-xyz-clay hover:pl-2 transition-all duration-300">Nuestra Historia</a></li>
-                        <li><a href="/manufactura-responsable/" class="hover:text-xyz-clay hover:pl-2 transition-all duration-300">Manufactura Responsable</a></li>
                         <li><a href="/cuidado-pla/" class="hover:text-xyz-clay hover:pl-2 transition-all duration-300">Cuidado del PLA</a></li>
                         <li><a href="/terminos-condiciones/" class="hover:text-xyz-clay hover:pl-2 transition-all duration-300">Términos y Condiciones</a></li>
                         <li><a href="/politica-de-privacidad/" class="hover:text-xyz-clay hover:pl-2 transition-all duration-300">Política de Privacidad</a></li>

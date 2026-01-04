@@ -55,8 +55,8 @@
                             <div class="w-12 h-12 bg-purple-500 text-white rounded-lg flex items-center justify-center font-bold text-xl">Y</div>
                             <div>
                                 <span class="block font-bold text-purple-700">YAPE / PLIN</span>
-                                <span class="font-mono text-lg text-xyz-charcoal">999 999 999</span>
-                                <span class="block text-xs text-xyz-charcoal/50">David D.</span>
+                                <span class="font-mono text-lg text-xyz-charcoal">{{ shop_yape_phone }}</span>
+                                <span class="block text-xs text-xyz-charcoal/50">{{ shop_yape_holder }}</span>
                             </div>
                         </div>
                         
@@ -67,7 +67,8 @@
                             </div>
                             <div>
                                 <span class="block font-bold text-blue-700">BCP AHORROS</span>
-                                <span class="font-mono text-lg text-xyz-charcoal">191-12345678-0-00</span>
+                                <span class="font-mono text-lg text-xyz-charcoal">{{ shop_bank_bcp_account }}</span>
+                                <span class="block text-xs text-xyz-charcoal/50">{{ shop_bank_bcp_holder }}</span>
                             </div>
                         </div>
                     </div>
@@ -103,7 +104,7 @@
                         </ul>
                     </div>
 
-                    <a href="https://wa.me/51999999999?text=Hola%20XYZ!%20Acabo%20de%20hacer%20el%20pedido%20{{ order.number }}%20por%20{{ order.total_incl_tax|currency:order.currency }}.%20Adjunto%20mi%20constancia:" 
+                    <a href="https://wa.me/{{ shop_whatsapp }}?text=Hola%20XYZ!%20Acabo%20de%20hacer%20el%20pedido%20{{ order.number }}%20por%20{{ order.total_incl_tax|currency:order.currency }}.%20Adjunto%20mi%20constancia:" 
                        target="_blank"
                        class="block w-full bg-[#25D366] hover:bg-[#128C7E] text-white text-center font-squada tracking-wider uppercase py-4 rounded-lg transition-colors shadow-md">
                         <i class="fab fa-whatsapp mr-2"></i>

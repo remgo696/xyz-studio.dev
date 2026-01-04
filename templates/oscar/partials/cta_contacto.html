@@ -7,7 +7,7 @@
             Estamos aquí para ayudarte con cualquier consulta{% if mensaje %} {{ mensaje }}{% endif %}.
         </p>
         <div class="flex flex-col sm:flex-row gap-4 justify-center">
-            <a href="https://wa.me/51XXXXXXXXX?text={{ whatsapp_text|default:'Hola! Tengo una consulta'|urlencode }}" 
+            <a href="https://wa.me/{{ shop_whatsapp }}?text={{ whatsapp_text|default:'Hola! Tengo una consulta'|urlencode }}" 
                target="_blank"
                class="inline-flex items-center justify-center gap-2 bg-white text-xyz-charcoal font-squada text-sm tracking-widest uppercase px-8 py-4 hover:bg-xyz-offwhite transition-colors">
                 <i class="fab fa-whatsapp text-lg"></i>
