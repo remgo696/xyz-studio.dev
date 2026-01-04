@@ -33,4 +33,8 @@ def shop_info(request):
         'shop_yape_phone': getattr(settings, 'YAPE_PHONE', ''),
         'shop_yape_holder': getattr(settings, 'YAPE_HOLDER', ''),
         'shop_plin_phone': getattr(settings, 'PLIN_PHONE', ''),
+
+        # Datos legales
+        'shop_legal_name': getattr(settings, 'LEGAL_NAME', ''),
+        'shop_legal_ruc': getattr(settings, 'LEGAL_RUC', ''),
     }

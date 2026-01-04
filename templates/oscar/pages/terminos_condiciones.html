@@ -16,7 +16,7 @@
         <section>
             <h5 class="font-squada text-xl text-xyz-charcoal border-b border-xyz-charcoal/10 pb-2 mb-4">1. INTRODUCCIÓN E INFORMACIÓN GENERAL</h5>
             <p>
-                Las presentes Condiciones Generales regulan el acceso y uso de la plataforma de comercio electrónico <strong>XYZ Studio</strong> (en adelante, el "Sitio Web"), cuya titularidad legal corresponde a <strong>DAVID DÍAZ MALCA</strong> (en adelante, "El Titular"), identificado con <strong>RUC N° 10726400747</strong>, con domicilio fiscal en Santiago de Surco, Lima, Perú.
+                Las presentes Condiciones Generales regulan el acceso y uso de la plataforma de comercio electrónico <strong>XYZ Studio</strong> (en adelante, el "Sitio Web"), cuya titularidad legal corresponde a <strong>{{ shop_legal_name|upper }}</strong> (en adelante, "El Titular"), identificado con <strong>RUC N° {{ shop_legal_ruc }}</strong>, con domicilio fiscal en Santiago de Surco, Lima, Perú.
             </p>
             <p>
                 Al acceder, navegar y realizar transacciones en el Sitio Web, usted (en adelante, el "Cliente") acepta haber leído, entendido y estar de acuerdo con los presentes términos. El Titular se reserva el derecho de modificar estas condiciones en cualquier momento.
@@ -94,7 +94,7 @@
 
         <div class="mt-12 border-t-2 border-xyz-charcoal pt-8 text-center text-sm">
             <p class="font-bold">XYZ STUDIO</p>
-            <p>RUC: 10726400747</p>
+            <p>RUC: {{ shop_legal_ruc }}</p>
             <p>{{ shop_address }}</p>
             <p class="text-xyz-sage mt-2">Contacto: {{ shop_email }}</p>
         </div>

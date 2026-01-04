@@ -1,0 +1,110 @@
+{% extends "oscar/layout.html" %}
+{% load static %}
+
+{% block title %}Política de Privacidad | XYZ Studio{% endblock %}
+
+{% block layout %}
+<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 text-xyz-charcoal">
+
+    <div class="text-center mb-12">
+        <h1 class="font-squada text-4xl lg:text-5xl mb-2">POLÍTICA DE PRIVACIDAD</h1>
+        <span class="font-mono text-xs tracking-widest text-xyz-sage uppercase">CONFORME A LA LEY N° 29733 (PERÚ)</span>
+    </div>
+
+    <div class="prose prose-sm max-w-none font-roboto text-justify leading-relaxed space-y-8">
+        
+        <section>
+            <h5 class="font-squada text-xl text-xyz-charcoal border-b border-xyz-charcoal/10 pb-2 mb-4">1. ¿QUIÉN ES EL RESPONSABLE DE TUS DATOS?</h5>
+            <p>
+                El titular del banco de datos personales es <strong>{{ shop_legal_name|upper }}</strong> (en adelante, "XYZ Studio"), identificado con <strong>RUC N° {{ shop_legal_ruc }}</strong>, con domicilio en Lima, Perú.
+            </p>
+            <p>
+                Todas las operaciones de tratamiento de datos se realizan en estricto cumplimiento de la <strong>Ley de Protección de Datos Personales (Ley N° 29733)</strong> y su Reglamento (D.S. N° 003-2013-JUS).
+            </p>
+        </section>
+
+        <section>
+            <h5 class="font-squada text-xl text-xyz-charcoal border-b border-xyz-charcoal/10 pb-2 mb-4">2. ¿PARA QUÉ USAMOS TU INFORMACIÓN?</h5>
+            <p>Dividimos el uso de tus datos en dos categorías según su naturaleza:</p>
+
+            <div class="mt-4 space-y-6">
+                <div class="bg-xyz-offwhite p-4 border-l-4 border-xyz-sage">
+                    <strong class="block text-xyz-charcoal mb-2">A. Datos de Navegación y Contacto (Uso Comercial):</strong>
+                    <p class="mb-2">Tu nombre, correo electrónico, teléfono, dirección e historial de pedidos serán utilizados para:</p>
+                    <ul class="list-disc pl-5 space-y-1">
+                        <li>Procesar, enviar y entregar tus pedidos.</li>
+                        <li>Realizar análisis estadísticos internos para mejorar nuestra oferta.</li>
+                        <li><strong>Publicidad Digital:</strong> Compartir datos de comportamiento de compra (de manera encriptada o anonimizada) con plataformas publicitarias como <strong>Meta (Facebook/Instagram)</strong> y Google para mostrarte anuncios relevantes y encontrar audiencias similares a ti.</li>
+                        <li>Enviarte novedades o promociones (solo si has marcado la casilla de aceptación).</li>
+                    </ul>
+                </div>
+
+                <div class="bg-xyz-charcoal/5 p-4 border-l-4 border-xyz-charcoal">
+                    <strong class="block text-xyz-charcoal mb-2">B. Archivos de Manufactura (Uso Estrictamente Técnico):</strong>
+                    <p>
+                        Las <strong>imágenes, fotografías o archivos 3D</strong> que subas a nuestra plataforma para la personalización de productos (ej. Litofanías, cuadros) son considerados <strong>Información Confidencial Sensible</strong>.
+                    </p>
+                    <p class="mt-2">XYZ Studio garantiza que estos archivos:</p>
+                    <ul class="list-disc pl-5 mt-1 font-bold text-xyz-charcoal/90">
+                        <li>SE USARÁN ÚNICAMENTE para el proceso de modelado e impresión 3D de tu pedido.</li>
+                        <li>NO SERÁN COMPARTIDOS con plataformas publicitarias (Meta/Google).</li>
+                        <li>NO SERÁN PUBLICADOS en nuestras redes sociales ni web sin tu consentimiento expreso y por escrito.</li>
+                        <li>Serán eliminados de nuestros servidores operativos tras un periodo prudencial post-entrega, salvo obligación legal de conservarlos.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h5 class="font-squada text-xl text-xyz-charcoal border-b border-xyz-charcoal/10 pb-2 mb-4">3. TRANSFERENCIA DE DATOS A TERCEROS</h5>
+            <p>
+                Tus datos no se venden a nadie. Sin embargo, para prestarte el servicio, compartimos lo estrictamente necesario con los siguientes proveedores (Encargados de Tratamiento):
+            </p>
+            <ul class="list-disc pl-5 mt-2 space-y-1">
+                <li><strong>Logística:</strong> Olva Courier, Shalom o motorizados locales (solo Nombre, DNI, Teléfono y Dirección para la entrega).</li>
+                <li><strong>Pagos:</strong> Plin, Yape o Pasarelas de Pago (para validar la transacción).</li>
+                <li><strong>Marketing:</strong> Meta Platforms Inc. (Facebook/Instagram) y Google LLC. Utilizamos "Píxeles" y cookies para medir la efectividad de nuestra publicidad.</li>
+            </ul>
+        </section>
+
+        <section>
+            <h5 class="font-squada text-xl text-xyz-charcoal border-b border-xyz-charcoal/10 pb-2 mb-4">4. POLÍTICA DE COOKIES Y RASTREO (PIXEL)</h5>
+            <p>
+                Este sitio web utiliza cookies propias y de terceros (como el <strong>Pixel de Meta</strong>) para recopilar información sobre tu navegación. Esto nos permite:
+            </p>
+            <ul class="list-disc pl-5 mt-2">
+                <li>Recordar los productos en tu carrito.</li>
+                <li>Analizar qué productos son los más visitados.</li>
+                <li>Mostrarte publicidad de XYZ Studio cuando navegues en redes sociales (Retargeting).</li>
+            </ul>
+            <p class="mt-2 text-xs text-gray-500">
+                Puedes deshabilitar las cookies desde la configuración de tu navegador, aunque esto podría afectar el funcionamiento del carrito de compras.
+            </p>
+        </section>
+
+        <section>
+            <h5 class="font-squada text-xl text-xyz-charcoal border-b border-xyz-charcoal/10 pb-2 mb-4">5. FOTOGRAFÍAS DE PRODUCTOS RECIBIDOS</h5>
+            <p>
+                Nos encanta ver nuestros productos en tu espacio. Si nos envías voluntariamente fotos o videos de tus productos instalados (vía WhatsApp o etiquetándonos en redes), entenderemos que nos otorgas una licencia gratuita para repostearlas en nuestras redes sociales con fines promocionales.
+            </p>
+            <p>
+                <strong>Excepción Importante:</strong> Nunca publicaremos fotos detalladas de Litofanías personales (donde se vean rostros de familiares) a menos que tú nos lo pidas explícitamente como una muestra de trabajo. Privacidad ante todo.
+            </p>
+        </section>
+
+        <section>
+            <h5 class="font-squada text-xl text-xyz-charcoal border-b border-xyz-charcoal/10 pb-2 mb-4">6. TUS DERECHOS (ARCO)</h5>
+            <p>
+                Como titular de tus datos, tienes derecho a Acceder, Rectificar, Cancelar u Oponerte al tratamiento de tu información. Para ejercer estos derechos, solo debes enviar un correo a <strong>{{ shop_email }}</strong> o escribirnos al WhatsApp oficial indicando tu solicitud.
+            </p>
+        </section>
+
+        <div class="mt-12 border-t-2 border-xyz-charcoal pt-8 text-center text-sm">
+            <p class="font-bold">XYZ STUDIO ({{ shop_legal_name }})</p>
+            <p>RUC: {{ shop_legal_ruc }}</p>
+            <p class="text-xyz-sage mt-2">Email: {{ shop_email }} | WhatsApp: {{ shop_whatsapp }}</p>
+        </div>
+
+    </div>
+</div>
+{% endblock %}
