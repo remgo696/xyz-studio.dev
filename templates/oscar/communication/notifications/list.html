@@ -1,0 +1,70 @@
+{% extends "oscar/customer/baseaccountpage.html" %}
+{% load i18n %}
+
+{% block tabcontent %}
+    <div class="bg-white p-6 rounded-xl border border-xyz-charcoal/10 shadow-sm">
+        
+        <div class="flex justify-between items-center mb-6 border-b border-xyz-charcoal/10 pb-4">
+            <h2 class="font-squada text-2xl text-xyz-charcoal flex items-center gap-2">
+                <i class="fas fa-bell text-xyz-sage"></i>
+                REGISTRO DE ACTIVIDAD
+            </h2>
+            
+            {% if notifications %}
+                <form action="{% url 'customer:notifications-mark-all-read' %}" method="post" class="inline-block">
+                    {% csrf_token %}
+                    <button class="text-xs font-mono text-xyz-charcoal/50 hover:text-xyz-sage uppercase tracking-wider transition-colors">
+                        <i class="fas fa-check-double mr-1"></i> Marcar todo como leído
+                    </button>
+                </form>
+            {% endif %}
+        </div>
+
+        {% if notifications %}
+            {% include "oscar/partials/pagination.html" %}
+            
+            <div class="space-y-4">
+                {% for notification in notifications %}
+                    <div class="group relative p-4 border-l-4 {% if notification.is_read %}border-xyz-charcoal/20 bg-gray-50 opacity-70{% else %}border-xyz-sage bg-xyz-sage/5{% endif %} hover:bg-white transition-all duration-300 shadow-sm rounded-r-lg">
+                        
+                        <div class="flex justify-between items-start">
+                            <div class="flex-grow pr-8">
+                                <span class="block text-[10px] font-mono text-xyz-charcoal/40 uppercase tracking-widest mb-1">
+                                    {{ notification.date_sent }}
+                                </span>
+                                <h3 class="font-bold text-xyz-charcoal text-sm mb-1 group-hover:text-xyz-sage transition-colors">
+                                    {{ notification.subject|safe }}
+                                </h3>
+                                <div class="text-xs text-xyz-charcoal/70 font-roboto leading-relaxed">
+                                    {{ notification.body|safe|striptags }}
+                                </div>
+                            </div>
+                            
+                            <div class="flex flex-col gap-2">
+                                <a href="{% url 'customer:notifications-detail' pk=notification.pk %}" class="text-xyz-charcoal/40 hover:text-xyz-charcoal transition-colors" title="{% trans 'View' %}">
+                                    <i class="fas fa-eye"></i>
+                                </a>
+                                <form action="{% url 'customer:notifications-delete' pk=notification.pk %}" method="post">
+                                    {% csrf_token %}
+                                    <button type="submit" class="text-red-300 hover:text-red-500 transition-colors" title="{% trans 'Delete' %}">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                        
+                        <a href="{% url 'customer:notifications-detail' pk=notification.pk %}" class="absolute inset-0 z-0"></a>
+                    </div>
+                {% endfor %}
+            </div>
+            
+            {% include "oscar/partials/pagination.html" %}
+        {% else %}
+            <div class="text-center py-12 text-xyz-charcoal/40">
+                <i class="far fa-bell-slash text-4xl mb-3"></i>
+                <p class="font-mono text-xs uppercase tracking-widest">Sin notificaciones pendientes</p>
+            </div>
+        {% endif %}
+
+    </div>
+{% endblock %}

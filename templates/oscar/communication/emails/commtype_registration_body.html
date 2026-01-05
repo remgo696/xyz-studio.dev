@@ -1,0 +1,26 @@
+{% extends "oscar/emails/base.html" %}
+{% load i18n %}
+
+{% block body %}
+    <p>Hola {{ user.get_full_name|default:user.email }},</p>
+    
+    <p>Bienvenido al ecosistema de <strong>XYZ Studio</strong>. Tu cuenta ha sido creada exitosamente.</p>
+    
+    <p>A partir de ahora, tienes acceso a:</p>
+    <ul>
+        <li>Historial de tus proyectos y pedidos.</li>
+        <li>Guardar diseños en tu lista de favoritos.</li>
+        <li>Seguimiento en tiempo real de la fabricación.</li>
+    </ul>
+
+    <div style="text-align: center; margin: 30px 0;">
+        <a href="{{ homepage_url }}" class="btn">ACCEDER A MI CUENTA</a>
+    </div>
+
+    <p>Si tienes alguna idea para un diseño personalizado que no encuentras en el catálogo, recuerda que nuestro <span class="highlight">Custom Lab</span> está abierto para tus propuestas.</p>
+
+    <div class="divider"></div>
+    <p style="font-size: 12px; color: #666;">
+        Si no has sido tú quien ha creado esta cuenta, por favor ignora este mensaje.
+    </p>
+{% endblock %}
