@@ -1,0 +1,18 @@
+{% extends "oscar/customer/baseaccountpage.html" %}
+{% load i18n %}
+
+{% block tabcontent %}
+<div class="space-y-6">
+    <div class="pb-6 border-b border-xyz-charcoal/10">
+        <h2 class="font-squada text-2xl text-xyz-charcoal flex items-center gap-3">
+            <i class="fas fa-pencil-alt text-xyz-clay"></i>
+            {% trans "Edit Profile" %}
+        </h2>
+        <p class="text-xs text-xyz-charcoal/50 mt-2 font-mono">{% trans "Update your personal information" %}</p>
+    </div>
+
+    <div class="bg-xyz-offwhite p-6 rounded-lg border border-xyz-charcoal/5">
+        {% include 'oscar/partials/form.html' with form_id="profile_form" %}
+    </div>
+</div>
+{% endblock tabcontent %}

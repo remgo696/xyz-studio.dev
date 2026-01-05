@@ -1,0 +1,75 @@
+{% extends "oscar/customer/baseaccountpage.html" %}
+{% load i18n %}
+
+{% block tabcontent %}
+    <div class="bg-white p-8 rounded-xl border border-xyz-charcoal/10 shadow-sm relative overflow-hidden">
+        
+        <div class="absolute top-0 right-0 p-6 opacity-5 pointer-events-none">
+            <i class="fas fa-id-card text-8xl text-xyz-charcoal"></i>
+        </div>
+
+        <div class="relative z-10">
+            <h2 class="font-squada text-3xl text-xyz-charcoal mb-8 border-b border-xyz-charcoal/10 pb-4 flex items-center gap-3">
+                <i class="fas fa-user-circle text-xyz-sage"></i>
+                DATOS DE OPERADOR
+            </h2>
+
+            <div class="grid md:grid-cols-2 gap-y-8 gap-x-12 mb-10">
+                <div class="group">
+                    <span class="block text-[10px] font-mono tracking-[0.2em] text-xyz-charcoal/50 uppercase mb-2">
+                        {% trans 'Name' %}
+                    </span>
+                    <p class="text-xl font-bold text-xyz-charcoal border-l-2 border-xyz-sage pl-3 group-hover:bg-xyz-sage/5 transition-colors py-1">
+                        {{ user.get_full_name|default:'-' }}
+                    </p>
+                </div>
+
+                <div class="group">
+                    <span class="block text-[10px] font-mono tracking-[0.2em] text-xyz-charcoal/50 uppercase mb-2">
+                        {% trans 'Email address' %}
+                    </span>
+                    <p class="text-lg font-mono text-xyz-charcoal/80 border-l-2 border-xyz-clay pl-3 group-hover:bg-xyz-clay/5 transition-colors py-1 break-all">
+                        {{ user.email }}
+                    </p>
+                </div>
+
+                <div class="group">
+                    <span class="block text-[10px] font-mono tracking-[0.2em] text-xyz-charcoal/50 uppercase mb-2">
+                        {% trans 'Date registered' %}
+                    </span>
+                    <p class="text-base font-roboto text-xyz-charcoal/80 pl-3 border-l-2 border-xyz-charcoal/20">
+                        {{ user.date_joined|date:"d F Y" }}
+                    </p>
+                </div>
+
+                {% block profile_fields %}
+                    {% for field in profile_fields %}
+                        <div>
+                            <span class="block text-[10px] font-mono tracking-[0.2em] text-xyz-charcoal/50 uppercase mb-2">
+                                {{ field.name }}
+                            </span>
+                            <p class="text-base text-xyz-charcoal pl-3 border-l-2 border-xyz-charcoal/20">
+                                {{ field.value|default:"-" }}
+                            </p>
+                        </div>
+                    {% endfor %}
+                {% endblock %}
+            </div>
+
+            <div class="flex flex-col sm:flex-row gap-4 border-t border-xyz-charcoal/10 pt-8 mt-4">
+                
+                <a href="{% url 'customer:profile-update' %}" class="btn btn-primary btn-sm shadow-md">
+                    <i class="fas fa-edit mr-2"></i> {% trans 'Edit profile' %}
+                </a>
+                
+                <a href="{% url 'customer:change-password' %}" class="btn bg-white border border-xyz-charcoal/20 text-xyz-charcoal hover:bg-xyz-charcoal hover:text-white btn-sm transition-colors">
+                    <i class="fas fa-key mr-2"></i> {% trans 'Change password' %}
+                </a>
+                
+                <a id="delete_profile" href="{% url 'customer:profile-delete' %}" class="btn btn-sm text-red-400 hover:text-red-600 hover:bg-red-50 ml-auto border-transparent px-4">
+                    <i class="fas fa-trash-alt mr-2"></i> {% trans 'Delete profile' %}
+                </a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

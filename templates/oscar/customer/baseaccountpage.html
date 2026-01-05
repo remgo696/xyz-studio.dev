@@ -1,0 +1,111 @@
+{% extends "oscar/layout.html" %}
+{% load i18n %}
+
+{% block title %}
+    {{ page_title }} | {% trans 'Account' %} | {{ shop_name }}
+{% endblock %}
+
+{% block body_class %}account-profile{% endblock %}
+
+{% block layout %}
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    {# === BREADCRUMBS === #}
+    <nav class="mb-8" aria-label="breadcrumb">
+        <ol class="flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-xyz-charcoal/50">
+            <li>
+                <a href="{{ homepage_url }}" class="hover:text-xyz-sage transition-colors">
+                    {% trans 'Home' %}
+                </a>
+            </li>
+            <li class="text-xyz-charcoal/30">/</li>
+            <li>
+                <a href="{% url 'customer:summary' %}" class="hover:text-xyz-sage transition-colors">
+                    {% trans 'Account' %}
+                </a>
+            </li>
+            {% block extra_breadcrumbs %}{% endblock %}
+            <li class="text-xyz-charcoal/30">/</li>
+            <li class="text-xyz-charcoal font-bold" aria-current="page">{{ page_title }}</li>
+        </ol>
+    </nav>
+
+    {# === HEADER === #}
+    <div class="mb-12 pb-8 border-b border-xyz-charcoal/10">
+        <span class="font-mono text-xs tracking-[0.3em] text-xyz-sage uppercase block mb-2">// PANEL DE USUARIO</span>
+        <h1 class="font-squada text-4xl lg:text-5xl text-xyz-charcoal">{% block headertext %}{{ page_title }}{% endblock %}</h1>
+    </div>
+
+    {# === LAYOUT DE 2 COLUMNAS === #}
+    <div class="grid lg:grid-cols-12 gap-8 lg:gap-12">
+        
+        {# === COLUMNA IZQUIERDA: NAVEGACIÓN === #}
+        <aside class="lg:col-span-3">
+            <div class="sticky top-24">
+                {# Card de navegación #}
+                <div class="bg-white rounded-xl border-2 border-xyz-charcoal/10 overflow-hidden shadow-sm">
+                    
+                    {# Header del menú #}
+                    <div class="bg-xyz-charcoal text-white p-4 border-b-4 border-xyz-sage">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center">
+                                <i class="fas fa-user text-xyz-sage"></i>
+                            </div>
+                            <div>
+                                <span class="font-squada text-sm uppercase tracking-wide">Mi Cuenta</span>
+                                {% if user.get_full_name %}
+                                <p class="text-xs text-white/60 font-roboto">{{ user.get_full_name }}</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+
+                    {# Menú de navegación #}
+                    <nav class="p-2">
+                        {% block standard_tabs %}
+                            {% include 'oscar/customer/partials/standard_tabs.html' %}
+                        {% endblock %}
+                    </nav>
+                </div>
+
+                {# Soporte técnico card (opcional) #}
+                <div class="mt-6 bg-xyz-offwhite rounded-lg p-5 border border-xyz-charcoal/5">
+                    <div class="flex items-start gap-3 mb-3">
+                        <div class="w-8 h-8 rounded bg-xyz-sage/10 flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-headset text-xyz-sage text-sm"></i>
+                        </div>
+                        <div>
+                            <span class="block font-squada text-sm text-xyz-charcoal">¿NECESITAS AYUDA?</span>
+                            <p class="text-xs text-xyz-charcoal/60 mt-1 leading-relaxed">
+                                Contáctanos por WhatsApp o email.
+                            </p>
+                        </div>
+                    </div>
+                    <a href="https://wa.me/{{ shop_whatsapp }}" target="_blank" class="block w-full text-center bg-[#25D366] text-white text-xs font-bold uppercase py-2 rounded hover:bg-[#20BA5A] transition-colors">
+                        <i class="fab fa-whatsapp mr-1"></i> WhatsApp
+                    </a>
+                </div>
+            </div>
+        </aside>
+
+        {# === COLUMNA DERECHA: CONTENIDO === #}
+        <main class="lg:col-span-9">
+            <div class="bg-white rounded-xl border border-xyz-charcoal/10 shadow-sm p-6 md:p-8 relative overflow-hidden">
+                
+                {# Decoración geométrica #}
+                <div class="absolute top-0 right-0 w-32 h-32 bg-xyz-clay/5 transform rotate-45 translate-x-16 -translate-y-16"></div>
+                <div class="absolute bottom-0 left-0 w-24 h-24 bg-xyz-sage/5 rounded-full -translate-x-12 translate-y-12 blur-xl"></div>
+                
+                {# Contenido dinámico #}
+                <div class="relative z-10">
+                    {% block content %}
+                        {% block tabcontent %}{% endblock tabcontent %}
+                    {% endblock content %}
+                </div>
+            </div>
+        </main>
+
+    </div>
+
+</div>
+{% endblock %}

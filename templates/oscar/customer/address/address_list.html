@@ -1,0 +1,103 @@
+{% extends "oscar/customer/baseaccountpage.html" %}
+{% load i18n %}
+
+{% block tabcontent %}
+<div class="space-y-6">
+    
+    <div class="pb-6 border-b border-xyz-charcoal/10">
+        <h2 class="font-squada text-2xl text-xyz-charcoal flex items-center gap-3">
+            <i class="fas fa-address-book text-xyz-sage"></i>
+            {% trans "Address Book" %}
+        </h2>
+        <p class="text-xs text-xyz-charcoal/50 mt-2 font-mono">{% trans "Manage your delivery addresses" %}</p>
+    </div>
+
+    {% if addresses %}
+        <div class="grid md:grid-cols-2 gap-6">
+            {% for address in addresses %}
+            <div class="bg-white p-6 rounded-lg border-2 border-xyz-charcoal/10 hover:border-xyz-sage transition-all relative group">
+                
+                {# Badges de dirección default #}
+                <div class="absolute top-4 right-4 space-y-2">
+                    {% if address.is_default_for_shipping %}
+                    <div class="inline-block px-3 py-1 bg-xyz-sage/10 border border-xyz-sage rounded text-xs font-squada uppercase tracking-wide text-xyz-sage">
+                        <i class="fas fa-truck mr-1"></i>
+                        {% trans 'Shipping' %}
+                    </div>
+                    {% endif %}
+                    {% if address.is_default_for_billing %}
+                    <div class="inline-block px-3 py-1 bg-xyz-clay/10 border border-xyz-clay rounded text-xs font-squada uppercase tracking-wide text-xyz-clay">
+                        <i class="fas fa-credit-card mr-1"></i>
+                        {% trans 'Billing' %}
+                    </div>
+                    {% endif %}
+                </div>
+
+                {# Contenido de la dirección #}
+                <address class="text-sm text-xyz-charcoal/70 not-italic space-y-1 mb-6 pr-48">
+                    {% for field in address.active_address_fields %}
+                        <div>{{ field }}</div>
+                    {% endfor %}
+                </address>
+
+                {# Acciones #}
+                <div class="flex flex-col gap-2 pt-4 border-t border-xyz-charcoal/10">
+                    <a href="{% url 'customer:address-detail' pk=address.id %}" class="block text-center px-3 py-2 bg-xyz-charcoal text-white text-xs font-bold uppercase tracking-wide hover:bg-xyz-sage transition-all">
+                        <i class="fas fa-pencil-alt mr-1"></i>
+                        {% trans 'Edit' %}
+                    </a>
+                    
+                    <div class="flex gap-2">
+                        <a href="{% url 'customer:address-delete' pk=address.id %}" class="flex-1 text-center px-3 py-2 bg-red-100 text-red-700 text-xs font-bold uppercase tracking-wide hover:bg-red-200 transition-all">
+                            <i class="fas fa-trash mr-1"></i>
+                            {% trans 'Delete' %}
+                        </a>
+                        
+                        {% if address.country.is_shipping_country and not address.is_default_for_shipping %}
+                        <a href="{% url 'customer:address-change-status' pk=address.id action='default_for_shipping' %}" class="flex-1 text-center px-3 py-2 bg-xyz-sage/10 text-xyz-sage text-xs font-bold uppercase tracking-wide hover:bg-xyz-sage hover:text-white transition-all">
+                            <i class="fas fa-check mr-1"></i>
+                            {% trans 'Set Shipping' %}
+                        </a>
+                        {% endif %}
+                        
+                        {% if not address.is_default_for_billing %}
+                        <a href="{% url 'customer:address-change-status' pk=address.id action='default_for_billing' %}" class="flex-1 text-center px-3 py-2 bg-xyz-clay/10 text-xyz-clay text-xs font-bold uppercase tracking-wide hover:bg-xyz-clay hover:text-white transition-all">
+                            <i class="fas fa-check mr-1"></i>
+                            {% trans 'Set Billing' %}
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        
+        {% include "oscar/partials/pagination.html" %}
+    {% else %}
+        <div class="bg-xyz-offwhite p-12 rounded-lg border-2 border-dashed border-xyz-charcoal/20 text-center">
+            <div class="flex justify-center mb-4">
+                <div class="w-16 h-16 rounded-full bg-xyz-sage/10 flex items-center justify-center">
+                    <i class="fas fa-map-marked-alt text-xyz-sage text-2xl"></i>
+                </div>
+            </div>
+            <h3 class="font-squada text-lg text-xyz-charcoal mb-2">{% trans "No Addresses Yet" %}</h3>
+            <p class="text-sm text-xyz-charcoal/60 mb-6">{% trans "You haven't added any addresses yet. Add one now to speed up checkout." %}</p>
+            <a href="{% url 'customer:address-create' %}" class="inline-block px-6 py-2 bg-xyz-sage text-white font-squada text-xs uppercase tracking-wide hover:bg-xyz-clay transition-all">
+                <i class="fas fa-plus mr-2"></i>
+                {% trans 'Add New Address' %}
+            </a>
+        </div>
+    {% endif %}
+
+    {# Botón para agregar nueva dirección (siempre visible) #}
+    {% if addresses %}
+    <div class="pt-6 border-t border-xyz-charcoal/10">
+        <a href="{% url 'customer:address-create' %}" class="inline-block px-6 py-2 bg-xyz-sage text-white font-squada text-xs uppercase tracking-wide hover:bg-xyz-clay transition-all">
+            <i class="fas fa-plus mr-2"></i>
+            {% trans 'Add New Address' %}
+        </a>
+    </div>
+    {% endif %}
+
+</div>
+{% endblock tabcontent %}

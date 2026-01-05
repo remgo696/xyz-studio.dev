@@ -1,0 +1,53 @@
+{% extends "oscar/customer/baseaccountpage.html" %}
+{% load i18n %}
+
+{% block tabcontent %}
+<div class="space-y-6">
+
+    <div class="pb-6 border-b border-xyz-charcoal/10">
+        <h2 class="font-squada text-2xl text-xyz-charcoal flex items-center gap-3">
+            <i class="fas fa-envelope text-xyz-clay"></i>
+            {% trans "Email History" %}
+        </h2>
+        <p class="text-xs text-xyz-charcoal/50 mt-2 font-mono">{% trans "View all communications from XYZ Studio" %}</p>
+    </div>
+
+    {% if emails %}
+    <div class="space-y-3">
+        {% for email in emails %}
+        <div class="bg-white p-5 rounded-lg border border-xyz-charcoal/10 hover:border-xyz-sage hover:shadow-md transition-all">
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                <div class="flex-grow">
+                    <a href="{% url 'customer:email-detail' email_id=email.id %}" class="block font-squada text-xyz-sage hover:text-xyz-clay underline text-base mb-2">
+                        {{ email.subject }}
+                    </a>
+                    <p class="text-xs text-xyz-charcoal/60 font-mono">
+                        {{ email.date_sent|date:"d \d\e N \d\e Y" }} {% trans "at" %} {{ email.date_sent|time:"H:i" }}
+                    </p>
+                </div>
+                <div class="flex-shrink-0">
+                    <a href="{% url 'customer:email-detail' email_id=email.id %}" class="inline-block px-4 py-2 bg-xyz-charcoal/10 text-xyz-charcoal hover:bg-xyz-charcoal hover:text-white text-xs font-bold uppercase tracking-wide transition-all">
+                        {% trans "View" %}
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    {% include "oscar/partials/pagination.html" %}
+
+    {% else %}
+    <div class="bg-xyz-offwhite p-12 rounded-lg border-2 border-dashed border-xyz-charcoal/20 text-center">
+        <div class="flex justify-center mb-4">
+            <div class="w-16 h-16 rounded-full bg-xyz-sage/10 flex items-center justify-center">
+                <i class="fas fa-inbox text-xyz-sage text-2xl"></i>
+            </div>
+        </div>
+        <h3 class="font-squada text-lg text-xyz-charcoal mb-2">{% trans "No Emails Yet" %}</h3>
+        <p class="text-sm text-xyz-charcoal/60">{% trans "You don't have any email communications yet. They will appear here once you place an order." %}</p>
+    </div>
+    {% endif %}
+
+</div>
+{% endblock tabcontent %}

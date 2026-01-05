@@ -1,0 +1,189 @@
+{% extends "oscar/customer/baseaccountpage.html" %}
+{% load currency_filters %}
+{% load display_tags %}
+{% load i18n %}
+{% load reviews_tags %}
+
+{% block extra_breadcrumbs %}
+    <li class="text-xyz-charcoal/30">/</li>
+    <li class="text-xyz-charcoal">
+        <a href="{% url 'customer:order-list' %}" class="hover:text-xyz-sage transition-colors">
+            {% trans 'Order history' %}
+        </a>
+    </li>
+{% endblock %}
+
+{% block tabcontent %}
+<div class="space-y-8">
+
+    {# === HEADER Y ESTADO === #}
+    <div class="pb-6 border-b border-xyz-charcoal/10">
+        <h2 class="font-squada text-3xl text-xyz-charcoal flex items-center gap-3 mb-4">
+            <i class="fas fa-receipt text-xyz-clay"></i>
+            {% trans "Order" %} #{{ order.number }}
+        </h2>
+        
+        {% if order.status %}
+        <div class="inline-block px-4 py-2 bg-xyz-sage/10 border border-xyz-sage rounded-full">
+            <span class="font-squada text-sm uppercase tracking-wide text-xyz-sage">{{ order.status }}</span>
+        </div>
+        {% endif %}
+        
+        <p class="text-xs text-xyz-charcoal/50 mt-4 font-mono">
+            {% blocktrans with date=order.date_placed|date:"d/m/Y" %}Placed on {{ date }}{% endblocktrans %}
+        </p>
+    </div>
+
+    {# === ITEMS DE LA ORDEN === #}
+    <div class="space-y-4">
+        <h3 class="font-squada text-xl text-xyz-charcoal">{% trans 'Products' %}</h3>
+        <div class="overflow-x-auto">
+            <table class="w-full text-sm">
+                <thead class="bg-xyz-charcoal/5 border border-xyz-charcoal/10">
+                    <tr>
+                        <th class="px-4 py-3 text-left font-squada uppercase tracking-wide text-xyz-charcoal">{% trans 'Product' %}</th>
+                        <th class="px-4 py-3 text-center font-squada uppercase tracking-wide text-xyz-charcoal">{% trans 'Qty' %}</th>
+                        <th class="px-4 py-3 text-right font-squada uppercase tracking-wide text-xyz-charcoal">{% trans 'Price' %}</th>
+                        <th class="px-4 py-3 text-right font-squada uppercase tracking-wide text-xyz-charcoal">{% trans 'Total' %}</th>
+                        <th class="px-4 py-3 text-center font-squada uppercase tracking-wide text-xyz-charcoal"></th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-xyz-charcoal/10">
+                    {% for line in order.lines.all %}
+                    {% with product=line.product %}
+                    <tr class="hover:bg-xyz-offwhite transition-colors">
+                        <td class="px-4 py-4">
+                            <div>
+                                {% if product %}
+                                    {% if product.is_public %}
+                                    <a href="{{ product.get_absolute_url }}" class="font-squada text-xyz-sage hover:text-xyz-clay underline">
+                                        {{ line.description }}
+                                    </a>
+                                    {% else %}
+                                    <span class="font-squada text-xyz-charcoal">{{ line.description }}</span>
+                                    {% endif %}
+                                {% else %}
+                                    <span class="text-xyz-charcoal/60">{{ line.description }}</span>
+                                {% endif %}
+                            </div>
+                        </td>
+                        <td class="px-4 py-4 text-center text-xyz-charcoal/70">{{ line.quantity }}</td>
+                        <td class="px-4 py-4 text-right text-xyz-charcoal/70">{{ line.line_price_before_discounts_incl_tax|currency:order.currency|safe }}</td>
+                        <td class="px-4 py-4 text-right font-squada text-xyz-charcoal">{{ line.line_price_before_discounts_incl_tax|currency:order.currency|safe }}</td>
+                        <td class="px-4 py-4 text-center">
+                            {% if product and product.is_public %}
+                                <form id="line_form_{{ line.id }}" action="{% url 'customer:order-line' order_number=order.number line_id=line.id %}" method="POST" class="inline">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="action" value="reorder" />
+                                    <button id="reorder_line_{{ line.id }}" class="px-3 py-1 bg-xyz-sage/10 text-xyz-sage hover:bg-xyz-sage hover:text-white text-xs font-bold uppercase transition-all" type="submit">
+                                        {% trans 'Reorder' %}
+                                    </button>
+                                </form>
+                            {% else %}
+                            <span class="text-xs text-xyz-charcoal/40 italic">{% trans 'No longer available' %}</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endwith %}
+
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    {# === RESUMEN DE TOTALES === #}
+    <div class="bg-xyz-charcoal/5 p-6 rounded-lg border border-xyz-charcoal/10 max-w-md ml-auto">
+        <div class="space-y-3">
+            {% with discounts=order.basket_discounts %}
+                {% if discounts %}
+                <div class="flex justify-between text-sm text-xyz-charcoal/70">
+                    <span>{% trans "Subtotal (before discounts)" %}</span>
+                    <span>{{ order.basket_total_before_discounts_incl_tax|currency:order.currency }}</span>
+                </div>
+                {% for discount in discounts %}
+                <div class="flex justify-between text-sm text-xyz-clay">
+                    <span class="flex items-center gap-2">
+                        <i class="fas fa-tag text-xs"></i>
+                        {{ discount.offer_name }}
+                    </span>
+                    <span>-{{ discount.amount|currency:order.currency }}</span>
+                </div>
+                {% endfor %}
+                {% endif %}
+            {% endwith %}
+
+            <div class="border-t border-xyz-charcoal/20 pt-3 mt-3">
+                <div class="flex justify-between text-sm text-xyz-charcoal/70">
+                    <span>{% trans "Subtotal" %}</span>
+                    <span>{{ order.basket_total_incl_tax|currency:order.currency }}</span>
+                </div>
+            </div>
+
+            {% block shipping_totals %}
+            <div class="flex justify-between text-sm text-xyz-charcoal/70">
+                <span>{% trans "Shipping" %}</span>
+                <span>{{ order.shipping_incl_tax|currency:order.currency }}</span>
+            </div>
+            {% endblock %}
+
+            <div class="border-t border-xyz-charcoal/20 pt-3 mt-3 pt-3">
+                <div class="flex justify-between font-squada text-lg text-xyz-charcoal">
+                    <span>{% trans "Order Total" %}</span>
+                    <span>{{ order.total_incl_tax|currency:order.currency }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {# === INFORMACIÓN DE ENVÍO === #}
+    <div class="grid md:grid-cols-2 gap-6">
+        
+        {# Método de envío #}
+        <div class="bg-xyz-offwhite p-6 rounded-lg border border-xyz-charcoal/5">
+            <h3 class="font-squada text-lg text-xyz-charcoal mb-3 flex items-center gap-2">
+                <i class="fas fa-truck text-xyz-clay"></i>
+                {% trans 'Shipping Method' %}
+            </h3>
+            <p class="text-sm text-xyz-charcoal/70">{{ order.shipping_method }}</p>
+        </div>
+
+        {# Dirección de envío #}
+        <div class="bg-xyz-offwhite p-6 rounded-lg border border-xyz-charcoal/5">
+            <h3 class="font-squada text-lg text-xyz-charcoal mb-3 flex items-center gap-2">
+                <i class="fas fa-map-pin text-xyz-sage"></i>
+                {% trans 'Shipping Address' %}
+            </h3>
+            <address class="text-sm text-xyz-charcoal/70 not-italic space-y-1">
+                {% for field in order.shipping_address.active_address_fields %}
+                <div>{{ field }}</div>
+                {% endfor %}
+                {% if order.shipping_address.phone_number %}
+                <div class="pt-2 border-t border-xyz-charcoal/10 mt-2">
+                    <span class="text-xs text-xyz-charcoal/50">{% trans 'Phone' %}:</span>
+                    <span class="font-squada">{{ order.shipping_address.phone_number }}</span>
+                </div>
+                {% endif %}
+            </address>
+        </div>
+    </div>
+
+    {# === ACCIONES === #}
+    <div class="flex gap-3 pt-6 border-t border-xyz-charcoal/10">
+        <form id="order_form_{{ order.id }}" action="{% url 'customer:order' order_number=order.number %}" method="post" class="inline">
+            {% csrf_token %}
+            <input type="hidden" name="order_id" value="{{ order.id }}" />
+            <input type="hidden" name="action" value="reorder" />
+            <button type="submit" class="px-6 py-2 bg-xyz-sage text-white font-squada text-xs uppercase tracking-wide hover:bg-xyz-clay transition-all">
+                <i class="fas fa-shopping-cart mr-2"></i>
+                {% trans 'Reorder All Items' %}
+            </button>
+        </form>
+        
+        <a href="{% url 'customer:order-list' %}" class="px-6 py-2 border-2 border-xyz-charcoal text-xyz-charcoal font-squada text-xs uppercase tracking-wide hover:bg-xyz-charcoal hover:text-white transition-all">
+            {% trans 'Back to Orders' %}
+        </a>
+    </div>
+</div>
+{% endblock tabcontent %}
+</div>

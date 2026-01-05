@@ -1,0 +1,111 @@
+{% extends "oscar/layout.html" %}
+{% load i18n %}
+{% load static %}
+
+{% block title %}
+    {% trans 'Login or register' %} | {{ shop_name }}
+{% endblock %}
+
+{% block layout %}
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 min-h-[70vh]">
+
+    <div class="text-center mb-16 relative">
+        <span class="font-mono text-xs tracking-[0.3em] text-xyz-sage uppercase block mb-2">// SISTEMA DE ACCESO</span>
+        <h1 class="font-squada text-5xl lg:text-6xl text-xyz-charcoal">IDENTIFICACIÓN</h1>
+        <div class="w-24 h-1 bg-xyz-charcoal mx-auto mt-4"></div>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-12 lg:gap-24 items-stretch relative">
+        
+        <div class="hidden md:block absolute left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-xyz-charcoal/20 to-transparent transform -translate-x-1/2"></div>
+
+        <div class="relative flex flex-col">
+            <div class="mb-8 text-center md:text-left">
+                <h2 class="font-squada text-3xl text-xyz-charcoal mb-2 flex items-center gap-3 justify-center md:justify-start">
+                    <i class="fas fa-user-lock text-xyz-sage"></i>
+                    YA SOY CLIENTE
+                </h2>
+                <p class="text-sm font-roboto text-xyz-charcoal/60 font-light">
+                    Ingresa tus credenciales para acceder a tus proyectos y pedidos.
+                </p>
+            </div>
+
+            <div class="bg-white p-8 rounded-xl border border-xyz-charcoal/10 shadow-sm relative group flex-grow">
+                <div class="absolute top-4 bottom-4 left-0 w-1 bg-xyz-charcoal rounded-r transition-all duration-300 group-hover:bg-xyz-sage group-hover:h-[80%] group-hover:top-[10%]"></div>
+
+                <form id="login_form" action="{{ request.get_full_path }}" method="post" class="space-y-6 pl-4">
+                    {% csrf_token %}
+                    
+                    {# Usamos tu partial 'form_fields.html' que ya estilizamos con Tailwind #}
+                    {% include "oscar/partials/form_fields.html" with form=login_form %}
+
+                    <div class="flex items-center justify-between mt-2 pt-4 border-t border-xyz-charcoal/5">
+                        <a href="{% url 'password-reset' %}" class="text-[10px] font-bold text-xyz-charcoal/50 hover:text-xyz-clay uppercase tracking-widest transition-colors">
+                            ¿Olvidaste la contraseña?
+                        </a>
+                    </div>
+
+                    <button name="login_submit" type="submit" value="Log In" class="btn btn-primary w-full shadow-lg" data-loading-text="{% trans 'Logging in...' %}">
+                        INICIAR SESIÓN <i class="fas fa-arrow-right ml-2"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <div class="relative flex flex-col">
+            <div class="mb-8 text-center md:text-left">
+                <h2 class="font-squada text-3xl text-xyz-charcoal mb-2 flex items-center gap-3 justify-center md:justify-start">
+                    <i class="fas fa-user-plus text-xyz-clay"></i>
+                    NUEVO USUARIO
+                </h2>
+                <p class="text-sm font-roboto text-xyz-charcoal/60 font-light">
+                    Crea una cuenta para gestionar tus diseños y agilizar tus compras.
+                </p>
+            </div>
+
+            <div class="bg-xyz-offwhite p-8 rounded-xl border border-xyz-charcoal/10 flex-grow flex flex-col">
+                
+                <div class="mb-8 space-y-4">
+                    <div class="flex items-center gap-4 group">
+                        <div class="w-10 h-10 rounded bg-white border border-xyz-charcoal/10 flex items-center justify-center text-xyz-sage group-hover:border-xyz-sage transition-colors">
+                            <i class="fas fa-history"></i>
+                        </div>
+                        <div>
+                            <span class="block font-squada text-lg text-xyz-charcoal">HISTORIAL</span>
+                            <span class="text-xs text-xyz-charcoal/60">Rastrea tus pedidos y litofanías.</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-4 group">
+                        <div class="w-10 h-10 rounded bg-white border border-xyz-charcoal/10 flex items-center justify-center text-xyz-clay group-hover:border-xyz-clay transition-colors">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <div>
+                            <span class="block font-squada text-lg text-xyz-charcoal">FAVORITOS</span>
+                            <span class="text-xs text-xyz-charcoal/60">Guarda diseños para proyectos futuros.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <form id="register_form" action="{{ request.get_full_path }}" method="post" class="space-y-6 mt-auto">
+                    {% csrf_token %}
+                    
+                    {% include "oscar/partials/form_fields.html" with form=registration_form %}
+
+                    <button name="registration_submit" type="submit" value="Register" class="w-full bg-white text-xyz-charcoal border-2 border-xyz-charcoal font-squada text-sm uppercase tracking-widest py-3 px-6 hover:bg-xyz-charcoal hover:text-white transition-all duration-300 shadow-sm hover:shadow-md" data-loading-text="{% trans 'Registering...' %}">
+                        CREAR CUENTA
+                    </button>
+                </form>
+            </div>
+        </div>
+
+    </div>
+    
+    <div class="text-center mt-16 max-w-2xl mx-auto">
+        <p class="text-[10px] text-xyz-charcoal/40">
+            Al registrarte, aceptas nuestros <a href="/pages/terminos-y-condiciones/" class="underline hover:text-xyz-charcoal">Términos y Condiciones</a> y la <a href="/pages/politica-de-privacidad/" class="underline hover:text-xyz-charcoal">Política de Privacidad</a>.
+            Tus datos personales (fotos, diseños) son tratados con estricta confidencialidad.
+        </p>
+    </div>
+
+</div>
+{% endblock %}

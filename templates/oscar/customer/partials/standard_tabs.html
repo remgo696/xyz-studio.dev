@@ -1,0 +1,39 @@
+{% load i18n %}
+{% load display_tags %}
+
+<a href="{% url 'customer:profile-view' %}" class="block px-4 py-3 text-sm font-squada uppercase tracking-wide text-xyz-charcoal hover:bg-xyz-offwhite border-l-4 border-transparent hover:border-xyz-sage transition-all {% if active_tab == 'profile' %}bg-xyz-offwhite border-xyz-sage font-bold{% endif %}">
+    <i class="fas fa-user text-xyz-sage mr-2"></i>
+    {% trans "Profile" %}
+</a>
+
+<a href="{% url 'customer:order-list' %}" class="block px-4 py-3 text-sm font-squada uppercase tracking-wide text-xyz-charcoal hover:bg-xyz-offwhite border-l-4 border-transparent hover:border-xyz-sage transition-all {% if active_tab == 'orders' %}bg-xyz-offwhite border-xyz-sage font-bold{% endif %}">
+    <i class="fas fa-box text-xyz-clay mr-2"></i>
+    {% trans "Order History" %}
+</a>
+
+<a href="{% url 'customer:address-list' %}" class="block px-4 py-3 text-sm font-squada uppercase tracking-wide text-xyz-charcoal hover:bg-xyz-offwhite border-l-4 border-transparent hover:border-xyz-sage transition-all {% if active_tab == 'addresses' %}bg-xyz-offwhite border-xyz-sage font-bold{% endif %}">
+    <i class="fas fa-map-pin text-xyz-sage mr-2"></i>
+    {% trans "Address Book" %}
+</a>
+
+<a href="{% url 'customer:email-list' %}" class="block px-4 py-3 text-sm font-squada uppercase tracking-wide text-xyz-charcoal hover:bg-xyz-offwhite border-l-4 border-transparent hover:border-xyz-sage transition-all {% if active_tab == 'emails' %}bg-xyz-offwhite border-xyz-sage font-bold{% endif %}">
+    <i class="fas fa-envelope text-xyz-clay mr-2"></i>
+    {% trans "Email History" %}
+</a>
+
+<a href="{% url 'customer:alerts-list' %}" class="block px-4 py-3 text-sm font-squada uppercase tracking-wide text-xyz-charcoal hover:bg-xyz-offwhite border-l-4 border-transparent hover:border-xyz-sage transition-all {% if active_tab == 'alerts' %}bg-xyz-offwhite border-xyz-sage font-bold{% endif %}">
+    <i class="fas fa-bell text-xyz-sage mr-2"></i>
+    {% trans "Product Alerts" %}
+</a>
+
+<a href="{% url 'customer:notifications-inbox' %}" class="block px-4 py-3 text-sm font-squada uppercase tracking-wide text-xyz-charcoal hover:bg-xyz-offwhite border-l-4 border-transparent hover:border-xyz-sage transition-all {% if active_tab == 'notifications' %}bg-xyz-offwhite border-xyz-sage font-bold{% endif %}">
+    <i class="fas fa-comment text-xyz-clay mr-2"></i>
+    {% trans "Notifications" %}
+</a>
+
+{% iffeature 'wishlists' %}
+<a href="{% url 'customer:wishlists-list' %}" class="block px-4 py-3 text-sm font-squada uppercase tracking-wide text-xyz-charcoal hover:bg-xyz-offwhite border-l-4 border-transparent hover:border-xyz-sage transition-all {% if active_tab == 'wishlists' %}bg-xyz-offwhite border-xyz-sage font-bold{% endif %}">
+    <i class="fas fa-heart text-xyz-clay mr-2"></i>
+    {% trans "Wish Lists" %}
+</a>
+{% endiffeature %}

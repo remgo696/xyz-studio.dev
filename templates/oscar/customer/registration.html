@@ -1,0 +1,120 @@
+{% extends "oscar/layout.html" %}
+{% load i18n %}
+{% load static %}
+
+{% block title %}
+    {% trans 'Register' %} | {{ shop_name }}
+{% endblock %}
+
+{% block layout %}
+<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16 min-h-[70vh]">
+
+    {# === HEADER === #}
+    <div class="text-center mb-12">
+        <span class="font-mono text-xs tracking-[0.3em] text-xyz-sage uppercase block mb-2">// NUEVA CUENTA</span>
+        <h1 class="font-squada text-5xl lg:text-6xl text-xyz-charcoal mb-4">REGISTRO</h1>
+        <p class="text-sm text-xyz-charcoal/60 max-w-xl mx-auto">
+            Crea tu cuenta para gestionar pedidos, guardar diseños favoritos y acceder a tu historial de proyectos.
+        </p>
+        <div class="w-24 h-1 bg-xyz-charcoal mx-auto mt-6"></div>
+    </div>
+
+    {# === FORMULARIO DE REGISTRO === #}
+    <div class="max-w-2xl mx-auto">
+        
+        {# Beneficios de crear cuenta #}
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-10">
+            <div class="bg-xyz-offwhite p-4 rounded-lg border border-xyz-charcoal/5 text-center group hover:border-xyz-sage transition-colors">
+                <div class="w-12 h-12 rounded-full bg-white border-2 border-xyz-sage/20 flex items-center justify-center mx-auto mb-3 group-hover:border-xyz-sage transition-colors">
+                    <i class="fas fa-history text-xyz-sage text-lg"></i>
+                </div>
+                <span class="block font-squada text-sm text-xyz-charcoal">HISTORIAL</span>
+                <span class="text-xs text-xyz-charcoal/50">Rastrea tus pedidos</span>
+            </div>
+            
+            <div class="bg-xyz-offwhite p-4 rounded-lg border border-xyz-charcoal/5 text-center group hover:border-xyz-clay transition-colors">
+                <div class="w-12 h-12 rounded-full bg-white border-2 border-xyz-clay/20 flex items-center justify-center mx-auto mb-3 group-hover:border-xyz-clay transition-colors">
+                    <i class="fas fa-heart text-xyz-clay text-lg"></i>
+                </div>
+                <span class="block font-squada text-sm text-xyz-charcoal">FAVORITOS</span>
+                <span class="text-xs text-xyz-charcoal/50">Guarda diseños</span>
+            </div>
+            
+            <div class="bg-xyz-offwhite p-4 rounded-lg border border-xyz-charcoal/5 text-center group hover:border-xyz-sage transition-colors">
+                <div class="w-12 h-12 rounded-full bg-white border-2 border-xyz-sage/20 flex items-center justify-center mx-auto mb-3 group-hover:border-xyz-sage transition-colors">
+                    <i class="fas fa-bolt text-xyz-sage text-lg"></i>
+                </div>
+                <span class="block font-squada text-sm text-xyz-charcoal">CHECKOUT RÁPIDO</span>
+                <span class="text-xs text-xyz-charcoal/50">Compra en 1 clic</span>
+            </div>
+        </div>
+
+        {# Card del formulario #}
+        <div class="bg-white p-8 md:p-10 rounded-xl border-2 border-xyz-charcoal/10 shadow-lg relative overflow-hidden">
+            
+            {# Decoración geométrica #}
+            <div class="absolute top-0 right-0 w-32 h-32 bg-xyz-sage/5 transform rotate-45 translate-x-16 -translate-y-16"></div>
+            <div class="absolute bottom-0 left-0 w-24 h-24 bg-xyz-clay/5 transform rotate-45 -translate-x-12 translate-y-12"></div>
+            
+            <div class="relative">
+                <div class="mb-8 pb-6 border-b border-xyz-charcoal/10">
+                    <h2 class="font-squada text-2xl text-xyz-charcoal flex items-center gap-3">
+                        <i class="fas fa-user-plus text-xyz-clay"></i>
+                        DATOS DE ACCESO
+                    </h2>
+                    <p class="text-xs text-xyz-charcoal/50 mt-2 font-mono">Completa el siguiente formulario para crear tu cuenta</p>
+                </div>
+
+                <form id="register_form" method="post" class="space-y-6">
+                    {% csrf_token %}
+                    
+                    {# Incluir campos del formulario con estilos Tailwind #}
+                    {% include "oscar/partials/form_fields.html" %}
+
+                    <div class="pt-6 border-t border-xyz-charcoal/10 space-y-4">
+                        <button 
+                            name="registration_submit" 
+                            type="submit" 
+                            value="Register" 
+                            class="w-full bg-xyz-charcoal text-white font-squada text-sm uppercase tracking-widest py-4 px-6 hover:bg-xyz-sage transition-all duration-300 shadow-md hover:shadow-xl flex items-center justify-center gap-2" 
+                            data-loading-text="{% trans 'Registering...' %}">
+                            <span>CREAR CUENTA</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
+
+                        {% if cancel_url %}
+                        <div class="text-center">
+                            <a href="{{ cancel_url }}" class="text-xs text-xyz-charcoal/50 hover:text-xyz-clay transition-colors uppercase tracking-widest font-bold">
+                                {% trans "Cancel" %}
+                            </a>
+                        </div>
+                        {% endif %}
+                    </div>
+                </form>
+
+                {# Ya tienes cuenta? #}
+                <div class="mt-8 pt-6 border-t border-xyz-charcoal/10 text-center">
+                    <p class="text-sm text-xyz-charcoal/60">
+                        ¿Ya tienes una cuenta? 
+                        <a href="{% url 'customer:login' %}" class="font-bold text-xyz-sage hover:text-xyz-clay transition-colors ml-1">
+                            Inicia sesión aquí <i class="fas fa-arrow-right text-xs ml-1"></i>
+                        </a>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        {# Nota legal #}
+        <div class="mt-8 text-center">
+            <p class="text-[10px] text-xyz-charcoal/40 max-w-xl mx-auto leading-relaxed">
+                Al registrarte, aceptas nuestros 
+                <a href="/terminos-condiciones/" class="underline hover:text-xyz-charcoal transition-colors">Términos y Condiciones</a> 
+                y la 
+                <a href="/politica-de-privacidad/" class="underline hover:text-xyz-charcoal transition-colors">Política de Privacidad</a>.
+                Tus datos personales (fotos, diseños) son tratados con estricta confidencialidad según la Ley N° 29733.
+            </p>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

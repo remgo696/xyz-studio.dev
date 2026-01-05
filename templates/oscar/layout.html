@@ -1,6 +1,7 @@
 {% load static %}
 {% load tailwind_tags %}
 {% load i18n %}
+{% load category_tags %}
 
 <!DOCTYPE html>
 <html lang="{{ LANGUAGE_CODE|default:"es" }}" class="h-full">
@@ -39,12 +40,14 @@
                     <a href="/catalogue/" class="text-sm font-bold tracking-widest hover:text-xyz-clay transition-colors uppercase border-b-2 border-transparent hover:border-xyz-clay py-1">
                         Catálogo
                     </a>
-                    <a href="/catalogue/category/iluminacion/" class="text-sm font-bold tracking-widest hover:text-xyz-sage transition-colors uppercase border-b-2 border-transparent hover:border-xyz-sage py-1">
-                        Iluminación
-                    </a>
-                    <a href="/catalogue/category/organizacion/" class="text-sm font-bold tracking-widest hover:text-xyz-sage transition-colors uppercase border-b-2 border-transparent hover:border-xyz-sage py-1">
-                        Organización
-                    </a>
+                    {% category_tree as all_categories %}
+                    {% for cat in all_categories %}
+                        {% if cat.depth == 1 %}
+                        <a href="{{ cat.get_absolute_url }}" class="text-sm font-bold tracking-widest hover:text-xyz-sage transition-colors uppercase border-b-2 border-transparent hover:border-xyz-sage py-1">
+                            {{ cat.name }}
+                        </a>
+                        {% endif %}
+                    {% endfor %}
                 </div>
 
                 <div class="flex items-center space-x-6">
