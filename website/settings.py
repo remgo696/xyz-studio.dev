@@ -254,8 +254,13 @@ NPM_BIN_PATH = r"C:\Program Files\nodejs\npm.cmd"  # Ajustar según la ruta de n
 # Los emails se muestran en la terminal en vez de enviarse
 if DEBUG:
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+    EMAIL_FILE_PATH = BASE_DIR / 'tmp' / 'emails'
     OSCAR_FROM_EMAIL = 'noreply@xyzstudio.pe'
     OSCAR_SEND_REGISTRATION_EMAIL = True
+# else:
+    # Aquí irán tus credenciales de AWS SES, Mailgun o SMTP de Gmail en el futuro
+    # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
 
 # =============================================================================
 # INFORMACIÓN DE CONTACTO XYZ STUDIO (desde .env)

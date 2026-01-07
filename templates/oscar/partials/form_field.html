@@ -10,13 +10,13 @@
             {% block label %}
                 {# Solo mostramos label con 'for' si NO es checkbox Y NO es radio #}
                 {% if not nolabel and field.widget_type != 'checkbox' and field.widget_type != 'radioselect' %}
-                    <label for="{{ field.auto_id }}" class="block text-sm font-bold font-squada text-xyz-charcoal mb-2 {% if field.field.required %} required{% endif %}">
+                    <label for="{{ field.auto_id }}" class="block text-base font-medium font-squada text-xyz-charcoal mb-2 {% if field.field.required %} required{% endif %}">
                         {{ field.label|safe }}
                     </label>
                 
                 {# Si ES RadioSelect, mostramos el título sin el atributo 'for' (para evitar el error) #}
                 {% elif field.widget_type == 'radioselect' %}
-                     <label class="block text-sm font-bold font-squada text-xyz-charcoal mb-2 {% if field.field.required %} required{% endif %}">
+                     <label class="block text-base font-medium font-squada text-xyz-charcoal mb-2 {% if field.field.required %} required{% endif %}">
                         {{ field.label|safe }}
                     </label>
                 {% endif %}

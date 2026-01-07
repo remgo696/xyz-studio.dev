@@ -1,0 +1,69 @@
+{% extends "oscar/customer/baseaccountpage.html" %}
+{% load i18n %}
+
+{% block extra_breadcrumbs %}
+    <li class="text-xyz-charcoal/30">/</li>
+    <li class="text-xyz-charcoal">
+        <a href="{% url 'customer:wishlists-list' %}" class="hover:text-xyz-sage transition-colors">
+            {% trans 'Favorites' %}
+        </a>
+    </li>
+{% endblock %}
+
+{% block tabcontent %}
+<div class="space-y-6 max-w-2xl">
+
+    <div class="pb-6 border-b border-xyz-charcoal/10">
+        <h2 class="font-squada text-2xl text-xyz-charcoal flex items-center gap-3">
+            <i class="fas fa-cog text-xyz-sage"></i>
+            {% trans "Wishlist Settings" %}
+        </h2>
+        <p class="text-xs text-xyz-charcoal/50 mt-2 font-mono">{% trans "Configure your wishlist preferences" %}</p>
+    </div>
+
+    <form method="post" data-behaviours="lock" class="space-y-6">
+        {% csrf_token %}
+        {{ shared_emails_formset.management_form }}
+
+        {% if product %}
+        <div class="bg-xyz-sage/10 border-l-4 border-xyz-sage p-5 rounded">
+            <p class="text-sm text-xyz-charcoal">
+                {% blocktrans with title=product.get_title %}
+                    After your wishlist is created, <strong>{{ title }}</strong> will be added.
+                {% endblocktrans %}
+            </p>
+        </div>
+        {% endif %}
+
+        <div class="bg-xyz-offwhite p-6 rounded-lg border border-xyz-charcoal/5">
+            {% include "oscar/partials/form_fields.html" %}
+        </div>
+
+        <div class="bg-white p-6 rounded-lg border border-xyz-charcoal/10">
+            <h3 class="font-squada text-lg text-xyz-charcoal mb-3 flex items-center gap-2">
+                <i class="fas fa-share-alt text-xyz-clay text-sm"></i>
+                {% trans "Share Wishlist" %}
+            </h3>
+            <p class="text-xs text-xyz-charcoal/60 mb-4 leading-relaxed">
+                {% trans "If you want to share your wishlist with others, you can add their email addresses below. The visibility must be set to shared in order for this to work." %}
+            </p>
+            <div class="space-y-4">
+                {% for form in shared_emails_formset %}
+                    {% include "oscar/partials/form_fields.html" with form=form %}
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="flex gap-3 pt-4 border-t border-xyz-charcoal/10">
+            <button class="px-6 py-2 bg-xyz-sage text-white font-squada text-xs uppercase tracking-wide hover:bg-xyz-clay transition-all" type="submit">
+                <i class="fas fa-save mr-2"></i>
+                {% trans "Save" %}
+            </button>
+            <a href="#" onclick="history.go(-1);return false" class="px-6 py-2 border-2 border-xyz-charcoal text-xyz-charcoal font-squada text-xs uppercase tracking-wide hover:bg-xyz-charcoal hover:text-white transition-all">
+                {% trans "Cancel" %}
+            </a>
+        </div>
+    </form>
+
+</div>
+{% endblock tabcontent %}

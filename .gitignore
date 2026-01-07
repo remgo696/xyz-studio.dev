@@ -165,3 +165,6 @@ theme/static_src/node_modules/
 
 # Pipfile.lock (puede causar conflictos, regenerar con pipenv install)
 Pipfile.lock
+
+# Temporary files: emails, etc.
+tmp/

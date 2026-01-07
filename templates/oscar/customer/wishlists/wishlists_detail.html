@@ -1,0 +1,113 @@
+{% extends "oscar/customer/baseaccountpage.html" %}
+{% load image_tags %}
+{% load i18n %}
+{% load widget_tweaks %}
+
+{% block tabcontent %}
+<div class="space-y-6">
+
+    <div class="pb-6 border-b border-xyz-charcoal/10">
+        <h2 class="font-squada text-2xl text-xyz-charcoal flex items-center gap-3">
+            <i class="fas fa-heart text-xyz-clay"></i>
+            {% trans "My Favorites" %}
+        </h2>
+        <p class="text-xs text-xyz-charcoal/50 mt-2 font-mono">{% trans "Manage your saved products" %}</p>
+    </div>
+
+    {% if form.total_form_count %}
+        <form method="post">
+            {{ form.management_form }}
+            {% csrf_token %}
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {% for subform in form %}
+                    {% with line=subform.instance product=subform.instance.product %}
+                    <div class="bg-white rounded-lg border border-xyz-charcoal/10 overflow-hidden hover:border-xyz-sage hover:shadow-lg transition-all group">
+                        
+                        {# Imagen del producto #}
+                        <div class="relative aspect-square bg-xyz-offwhite overflow-hidden">
+                            {% if product %}
+                                {% with image=product.primary_image %}
+                                    {% if image %}
+                                        {% oscar_thumbnail image.original "400x400" upscale=False as thumb %}
+                                        {% if product.is_public %}
+                                            <a href="{{ product.get_absolute_url }}">
+                                                <img src="{{ thumb.url }}" alt="{{ product.get_title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                                            </a>
+                                        {% else %}
+                                            <img src="{{ thumb.url }}" alt="{{ product.get_title }}" class="w-full h-full object-cover opacity-50" />
+                                        {% endif %}
+                                    {% else %}
+                                        <div class="w-full h-full flex items-center justify-center">
+                                            <i class="fas fa-image text-xyz-charcoal/20 text-5xl"></i>
+                                        </div>
+                                    {% endif %}
+                                {% endwith %}
+                            {% endif %}
+                        </div>
+
+                        {# Info del producto #}
+                        <div class="p-4 space-y-3">
+                            <h3 class="font-squada text-base text-xyz-charcoal line-clamp-2">
+                                {% if product and product.is_public %}
+                                    <a href="{{ line.product.get_absolute_url }}" class="hover:text-xyz-sage transition-colors">
+                                        {{ line.get_title }}
+                                    </a>
+                                {% else %}
+                                    <span class="text-xyz-charcoal/40">{{ line.get_title }} ({% trans 'Not available anymore' %})</span>
+                                {% endif %}
+                            </h3>
+
+                            {# Cantidad #}
+                            <div class="flex items-center gap-2">
+                                <label class="text-xs font-squada uppercase text-xyz-charcoal/60">{% trans 'Qty' %}:</label>
+                                {% for field in subform %}
+                                    {% render_field field class="flex-1 px-3 py-2 border border-xyz-charcoal/20 rounded text-sm focus:border-xyz-sage focus:outline-none" %}
+                                    {% for error in field.errors %}
+                                        <span class="text-xs text-red-600">{{ error }}</span>
+                                    {% endfor %}
+                                {% endfor %}
+                            </div>
+
+                            {# Acciones #}
+                            <div class="flex gap-2">
+                                {% if product %}
+                                    <a href="{{ line.product.get_absolute_url }}" class="flex-1 text-center px-3 py-2 bg-xyz-sage text-white text-xs font-bold uppercase hover:bg-xyz-clay transition-all">
+                                        {% trans 'View' %}
+                                    </a>
+                                {% endif %}
+                                <a href="{% url 'customer:wishlists-remove-product' key=wishlist.key line_pk=line.pk %}" 
+                                   class="px-3 py-2 bg-red-100 text-red-700 text-xs font-bold uppercase hover:bg-red-200 transition-all">
+                                    <i class="fas fa-trash"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endwith %}
+                {% endfor %}
+            </div>
+
+            <div class="pt-6 border-t border-xyz-charcoal/10 flex justify-end">
+                <button class="px-6 py-2 bg-xyz-charcoal text-white font-squada text-xs uppercase tracking-wide hover:bg-xyz-sage transition-all" type="submit">
+                    {% trans "Update Quantities" %}
+                </button>
+            </div>
+        </form>
+
+    {% else %}
+        <div class="bg-xyz-offwhite p-12 rounded-lg border-2 border-dashed border-xyz-charcoal/20 text-center">
+            <div class="flex justify-center mb-4">
+                <div class="w-16 h-16 rounded-full bg-xyz-clay/10 flex items-center justify-center">
+                    <i class="fas fa-heart text-xyz-clay text-2xl"></i>
+                </div>
+            </div>
+            <h3 class="font-squada text-lg text-xyz-charcoal mb-2">{% trans "No Favorites Yet" %}</h3>
+            <p class="text-sm text-xyz-charcoal/60 mb-6">{% trans "Your wishlist is empty." %}</p>
+            <a href="{% url 'catalogue:index' %}" class="inline-block px-6 py-2 bg-xyz-sage text-white font-squada text-xs uppercase tracking-wide hover:bg-xyz-clay transition-all">
+                {% trans "Browse Products" %}
+            </a>
+        </div>
+    {% endif %}
+
+</div>
+{% endblock tabcontent %}
