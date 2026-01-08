@@ -27,10 +27,18 @@ class AddToBasketForm(OriginalAddToBasketForm):
             )
 
         # 3. PERSONALIZACIÓN: Colores (Cambio de widget a Radio)
-        elif 'color' in option.code.lower() or 'colour' in option.code.lower():
+        elif 'color' in option.code.lower():
             self.fields[option.code].widget = forms.RadioSelect(attrs={
                 'class': 'color-swatch-list' # Clase para convertir radios en círculos
             })
+        
+        # 4. PERSONALIZACIÓN: Texto personalizado (Límite de 15 caracteres)
+        elif 'texto-personalizado' in option.code.lower():
+            self.fields[option.code].max_length = 15
+            if self.fields[option.code].widget.attrs:
+                self.fields[option.code].widget.attrs['maxlength'] = 15
+            else:
+                self.fields[option.code].widget.attrs = {'maxlength': 15}
 
     def clean(self):
         """
