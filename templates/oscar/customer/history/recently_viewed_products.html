@@ -1,0 +1,11 @@
+{% load i18n %}
+{% load display_tags %}
+
+{% if products %}
+    {# Simplemente iteramos los productos. El contenedor padre en detail.html ya tiene el flex/carrusel #}
+    {% for product in products %}
+        <div class="min-w-[280px] md:min-w-[300px] snap-start">
+            {% include "oscar/catalogue/partials/product.html" %}
+        </div>
+    {% endfor %}
+{% endif %}

@@ -73,10 +73,10 @@
     </nav>
 
     {% include "oscar/partials/shipping_bar.html" %}
-
     <main class="flex-grow w-full">
+        {% block breadcrumbs %}{% endblock %}
         {% if messages %}
-            <div class="max-w-7xl mx-auto px-4 mt-4">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-4">
                 {% for message in messages %}
                     <div class="p-4 mb-2 text-sm border-l-4 border-xyz-sage bg-white shadow-sm flex items-center justify-between">
                         <span>{{ message }}</span>
@@ -86,7 +86,7 @@
             </div>
         {% endif %}
 
-        {% block layout %}{% endblock %}
+        {% block layout %}{% block content %}{% endblock %}{% endblock %}
     </main>
 
     <footer class="bg-xyz-charcoal text-xyz-offwhite mt-auto pt-16 pb-8 border-t-4 border-xyz-sage">
@@ -145,6 +145,6 @@
             </div>
         </div>
     </footer>
-
+{% block extrascripts %}{% endblock %}
 </body>
 </html>

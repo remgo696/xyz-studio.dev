@@ -9,141 +9,162 @@
 {% load image_tags %}
 
 {% block title %}
-    {{ product.get_title }} | Especificaciones
+    {{ product.get_meta_title }}
 {% endblock %}
 
-{% block layout %}
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-
-    <nav class="flex mb-8 text-[10px] font-mono tracking-widest uppercase text-xyz-charcoal/50">
-        <a href="/" class="hover:text-xyz-sage transition-colors">Home</a>
-        <span class="mx-2">/</span>
-        {% with category=product.get_categories.first %}
-            {% if category %}
-                <a href="{{ category.get_absolute_url }}" class="hover:text-xyz-sage transition-colors">{{ category.name }}</a>
-                <span class="mx-2">/</span>
-            {% endif %}
-        {% endwith %}
-        <span class="text-xyz-charcoal font-bold">{{ product.get_title }}</span>
-        <span class="ml-auto">SKU: {{ product.upc|default:"N/A" }}</span>
+{% block breadcrumbs %}
+    <nav aria-label="breadcrumb" class="border-xyz-charcoal/5 bg-xyz-offwhite">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
+            <ol class="flex items-center space-x-2 text-[10px] font-mono tracking-widest uppercase text-xyz-charcoal/50">
+                <li><a href="{{ homepage_url }}" class="hover:text-xyz-charcoal transition-colors">HOME</a></li>
+                <li>/</li>
+                {% with category=product.get_categories.first %}
+                    {% if category %}
+                        <li><a href="{{ category.get_absolute_url }}" class="hover:text-xyz-charcoal transition-colors">{{ category.name }}</a></li>
+                        <li>/</li>
+                    {% endif %}
+                {% endwith %}
+                <li class="text-xyz-charcoal font-bold">{{ product.get_title }}</li>
+            </ol>
+        </div>
     </nav>
+{% endblock %}
 
-    <div class="lg:grid lg:grid-cols-3 lg:gap-x-16 lg:items-start">
+{% block content %}
+<div class="bg-xyz-offwhite min-h-screen">
+    
+    <div class="lg:grid lg:grid-cols-12 gap-0">
         
-        <div class="lg:col-span-2 flex flex-col-reverse">
-            <div class="bg-white p-6 rounded-lg border border-xyz-charcoal/5 shadow-sm mb-8">
-                <h3 class="font-squada text-lg text-xyz-charcoal mb-4 border-b border-xyz-charcoal/10 pb-2">ESPECIFICACIONES TÉCNICAS</h3>
-                <dl class="grid grid-cols-1 gap-x-4 gap-y-4 sm:grid-cols-2">
-                    {% for av in product.attribute_values.all %}
-                        <div class="sm:col-span-1">
-                            <dt class="text-xs font-mono font-medium text-xyz-charcoal/50 uppercase">{{ av.attribute.name }}</dt>
-                            <dd class="mt-1 text-sm font-bold text-xyz-charcoal">{{ av.value_as_html }}</dd>
+        <div class="lg:col-span-7 xl:col-span-8 lg:pl-12 lg:pr-6 lg:py-8">
+            {% with all_images=product.get_all_images %}
+                {% if all_images %}
+                    
+                    <div class="flex overflow-x-auto snap-x snap-mandatory lg:hidden w-full scrollbar-hide">
+                        {% for image in all_images %}
+                            <div class="min-w-full snap-center relative">
+                                {% oscar_thumbnail image.original "800x800" upscale=False as thumb %}
+                                <img src="{{ thumb.url }}" alt="{{ product.get_title }}" class="w-full h-auto object-cover aspect-square">
+                                <div class="absolute bottom-4 right-4 bg-black/50 text-white text-[10px] px-2 py-1 rounded-full font-mono">
+                                    {{ forloop.counter }} / {{ all_images|length }}
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="hidden lg:grid grid-cols-2 gap-2">
+                        {% for image in all_images %}
+                            <div class="relative aspect-square bg-gray-50 group overflow-hidden rounded-sm">
+                                {% oscar_thumbnail image.original "1000x1000" upscale=False as thumb %}
+                                <img src="{{ thumb.url }}" 
+                                     alt="{{ product.get_title }} - Vista {{ forloop.counter }}" 
+                                     class="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105 mix-blend-multiply">
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                {% else %}
+                    <div class="aspect-square bg-gray-50 flex items-center justify-center text-gray-300">
+                        <i class="fas fa-cube text-6xl"></i>
+                    </div>
+                {% endif %}
+            {% endwith %}
+        </div>
+
+        <div class="lg:col-span-5 xl:col-span-4 relative px-6 py-8 lg:pr-12">
+            <div class="lg:sticky lg:top-24">
+                
+                <header class="mb-6">
+                    <h1 class="font-squada text-3xl lg:text-4xl text-xyz-charcoal leading-none mb-2">
+                        {{ product.get_title }}
+                    </h1>
+                    
+                    <div class="flex items-baseline gap-4 mt-2">
+                        {% purchase_info_for_product request product as session %}
+                        {% if session.price.exists %}
+                            <span class="font-squada text-xl text-xyz-charcoal">
+                                {{ session.price.incl_tax|currency:session.price.currency }}
+                            </span>
+                        {% endif %}
+                        <span class="text-xs text-xyz-charcoal/50 font-mono">{{ product.get_product_class.name }}</span>
+                    </div>
+                </header>
+
+                {% if siblings %}
+                <div class="mb-8">
+                    <label class="block text-[10px] font-bold font-mono text-xyz-charcoal/70 uppercase tracking-widest mb-3">
+                        Seleccionar Color
+                    </label>
+                    <div class="flex flex-wrap gap-2">
+                        <div class="w-16 h-16 rounded border-2 border-xyz-charcoal p-0.5 cursor-default">
+                            {% with image=product.primary_image %}
+                                {% oscar_thumbnail image.original "100x100" crop="center" as thumb %}
+                                <img src="{{ thumb.url }}" class="w-full h-full object-cover rounded-sm">
+                            {% endwith %}
                         </div>
-                    {% endfor %}
-                    <div class="sm:col-span-1">
-                        <dt class="text-xs font-mono font-medium text-xyz-charcoal/50 uppercase">Material</dt>
-                        <dd class="mt-1 text-sm font-bold text-xyz-charcoal">PLA Biodegradable</dd>
-                    </div>
-                    <div class="sm:col-span-1">
-                        <dt class="text-xs font-mono font-medium text-xyz-charcoal/50 uppercase">Fabricación</dt>
-                        <dd class="mt-1 text-sm font-bold text-xyz-charcoal">FDM (Capa a Capa)</dd>
-                    </div>
-                </dl>
-            </div>
-            <div class="border-b border-xyz-charcoal/10 pb-6 mb-8 flex flex-col-reverse">
-                <div class="hidden mt-6 w-full max-w-2xl mx-auto sm:block lg:max-w-none">
-                    <div class="grid grid-cols-4 gap-6" aria-orientation="horizontal" role="tablist">
-                        {% for image in product.images.all %}
-                            <button class="relative h-24 bg-white rounded-md flex items-center justify-center text-sm font-medium uppercase text-gray-900 cursor-pointer hover:bg-gray-50 focus:outline-none focus:ring focus:ring-offset-4 focus:ring-opacity-50" role="tab">
-                                <span class="sr-only">{{ product.get_title }} Image {{ forloop.counter }}</span>
-                                <span class="absolute inset-0 rounded-md overflow-hidden">
-                                    {% with image=image %}
-                                        {% oscar_thumbnail image.original "200x200" crop="center" as thumb %}
-                                        <img src="{{ thumb.url }}" alt="" class="w-full h-full object-center object-cover">
-                                    {% endwith %}
-                                </span>
-                            </button>
+                        {% for sib in siblings %}
+                            <a href="{{ sib.get_absolute_url }}" class="w-16 h-16 rounded border border-gray-200 p-0.5 hover:border-xyz-charcoal/50 transition-colors block">
+                                {% with image=sib.primary_image %}
+                                    {% if image %}
+                                        {% oscar_thumbnail image.original "100x100" crop="center" as thumb %}
+                                        <img src="{{ thumb.url }}" class="w-full h-full object-cover rounded-sm opacity-80 hover:opacity-100">
+                                    {% endif %}
+                                {% endwith %}
+                            </a>
                         {% endfor %}
                     </div>
                 </div>
-
-                <div class="w-full aspect-w-1 aspect-h-1 relative bg-gray-100 rounded-lg overflow-hidden shadow-lg border border-xyz-charcoal/5 group">
-                    {% with image=product.primary_image %}
-                        {% oscar_thumbnail image.original "800x800" upscale=False as thumb %}
-                        <img src="{{ thumb.url }}" alt="{{ product.get_title }}" class="w-full h-full object-center object-cover group-hover:scale-105 transition-transform duration-700 ease-tech">
-                    {% endwith %}
-                    
-                    <div class="absolute inset-0 pointer-events-none border-[16px] border-white/30"></div>
-                    <div class="absolute top-4 left-4 text-[10px] font-mono text-xyz-charcoal/40 ">FIG. 01: VISTA ISO</div>
-                </div>
-            </div>
-        </div>
-
-        <div class="lg:col-span-1 mt-10 px-4 sm:px-0 sm:mt-16 lg:mt-0">
-            
-            <div class="border-b border-xyz-charcoal/10 pb-6 mb-8">
-                <h1 class="font-squada text-5xl text-xyz-charcoal tracking-wide mb-2">{{ product.get_title }}</h1>
-                <div class="flex items-baseline justify-between">
-                    {% purchase_info_for_product request product as session %}
-                    {% if session.price.exists %}
-                        <p class="text-4xl font-bold font-squada text-xyz-charcoal">
-                            {{ session.price.incl_tax|currency:session.price.currency }}
-                        </p>
-                    {% else %}
-                        <p class="text-xl text-xyz-charcoal/50">No disponible</p>
-                    {% endif %}
-                    
-                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-xyz-sage/10 text-xyz-sage border border-xyz-sage/20 font-mono uppercase tracking-wider">
-                        {% if session.availability.is_available_to_buy %}
-                            <span class="w-2 h-2 mr-2 bg-xyz-sage rounded-full animate-pulse"></span>
-                            Disponible
-                        {% else %}
-                            Agotado
-                        {% endif %}
-                    </span>
-                </div>
-            </div>
-
-            <div class="bg-xyz-offwhite p-6 rounded-xl border-2 border-xyz-charcoal/10">
-                <h3 class="font-squada text-xl text-xyz-charcoal mb-6 flex items-center gap-2">
-                    <i class="fas fa-sliders-h text-xyz-sage"></i> CONFIGURAR PIEZA
-                </h3>
-
-                {# Aquí inyectamos el formulario que ya modificamos antes #}
-                {# NOTA: El CSS de styles.css se encargará de estilizar los inputs #}
-                {% if not product.is_parent %}
-                    {% include "oscar/catalogue/partials/add_to_basket_form.html" %}
-                {% else %}
-                    {# Si es producto padre, listamos variantes (Simplificado) #}
-                    <div class="alert alert-info">Selecciona una variante abajo para ver opciones.</div>
-                    {% for child in product.children.all %}
-                        <a href="{{ child.get_absolute_url }}" class="block p-2 hover:bg-white border-b">{{ child.get_title }}</a>
-                    {% endfor %}
                 {% endif %}
-            </div>
 
-            <div class="prose prose-sm text-xyz-charcoal/80 font-roboto mb-8">
-                <p>{{ product.description|safe }}</p>
-            </div>
+                <div class="mb-8">
+                    {% if product.is_public %}
+                        {% include "oscar/catalogue/partials/add_to_basket_form.html" %}
+                    {% else %}
+                        <div class="p-4 bg-gray-100 text-sm text-gray-500 font-mono text-center">NO DISPONIBLE</div>
+                    {% endif %}
+                </div>
 
+                <div class="border-t border-xyz-charcoal/10 py-4">
+                    <div class="prose prose-sm text-xyz-charcoal/80 font-roboto text-sm leading-relaxed">
+                        {{ product.description|safe }}
+                    </div>
+                </div>
+
+            </div>
         </div>
+
     </div>
 
-    <div class="mt-24 border-t border-xyz-charcoal/10 pt-16">
-        <div class="text-center mb-12">
-            <span class="font-mono text-xyz-sage tracking-widest uppercase text-xs">Ingeniería del Orden</span>
-            <h2 class="font-squada text-4xl mt-2 text-xyz-charcoal">TU ESPACIO, OPTIMIZADO</h2>
-        </div>
+    <div class="max-w-[1920px] mx-auto px-4 sm:px-6 lg:px-12 py-16 border-t border-xyz-charcoal/10 mt-12">
+        <h2 class="font-squada text-2xl text-xyz-charcoal mb-8">TAMBIÉN TE PUEDE INTERESAR</h2>
         
-        <div class="grid md:grid-cols-2 gap-8">
-            <div class="bg-gray-100 h-64 rounded-lg flex items-center justify-center relative overflow-hidden group">
-                <div class="absolute inset-0 bg-red-900/10 mix-blend-multiply"></div> <span class="relative z-10 font-squada text-2xl text-xyz-charcoal bg-white/80 px-4 py-2 rotate-3">ANTES: RUIDO VISUAL</span>
+        <div class="flex overflow-x-auto gap-6 pb-4 scrollbar-hide snap-x">
+            {# 1. Recomendados Manuales (ProductRecommendation) #}
+            {% with manual_recs=product.sorted_recommended_products %}
+                {% for p in manual_recs %}
+                    <div class="min-w-[280px] md:min-w-[300px] snap-start flex-shrink-0">
+                        {% include "oscar/catalogue/partials/product.html" with product=p %}
+                    </div>
+                {% endfor %}
+            {% endwith %}
+
+            {# 2. Vistos Recientemente (Historial) #}
+            {# Usamos el tag personalizado de Oscar, pero necesitamos extraer la lista en la vista o aquí #}
+            {# Nota: recently_viewed_products imprime HTML directo, no devuelve lista. #}
+            {# Hack visual: Lo renderizamos oculto si no hay data, o confiamos en el tag #}
+            <div class="contents">
+                {% recently_viewed_products current_product=product %}
             </div>
-            <div class="bg-xyz-sage/20 h-64 rounded-lg flex items-center justify-center relative overflow-hidden">
-                <span class="font-squada text-2xl text-xyz-charcoal bg-white px-4 py-2 -rotate-2 shadow-lg">AHORA: ARMONÍA</span>
-            </div>
+
         </div>
     </div>
-
+    <style>
+    .scrollbar-hide::-webkit-scrollbar {
+        display: none;
+    }
+    .scrollbar-hide {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+    </style>
 </div>
 {% endblock %}
