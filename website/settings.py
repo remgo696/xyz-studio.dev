@@ -47,7 +47,9 @@ INSTALLED_APPS = [
     'oscar.apps.analytics.apps.AnalyticsConfig',
     'apps.address.apps.AddressConfig',  # Fork personalizado
     'apps.shipping.apps.ShippingConfig',  # Fork personalizado
-    'oscar.apps.catalogue.apps.CatalogueConfig',
+    'apps.basket.apps.BasketConfig', 
+    'apps.checkout.apps.CheckoutConfig',
+    'apps.catalogue.apps.CatalogueConfig',
     'oscar.apps.catalogue.reviews.apps.CatalogueReviewsConfig',
     'oscar.apps.communication.apps.CommunicationConfig',
     'oscar.apps.partner.apps.PartnerConfig',
@@ -71,10 +73,6 @@ INSTALLED_APPS = [
     'oscar.apps.dashboard.vouchers.apps.VouchersDashboardConfig',
     'oscar.apps.dashboard.communications.apps.CommunicationsDashboardConfig',
     'oscar.apps.dashboard.shipping.apps.ShippingDashboardConfig',
-    # 'oscar.apps.checkout.apps.CheckoutConfig',
-    # 'oscar.apps.basket.apps.BasketConfig', # Original basket app
-    'apps.basket.apps.BasketConfig', # My custom basket app
-    'apps.checkout.apps.CheckoutConfig',
 
     # 3rd-party apps that oscar depends on
     'widget_tweaks',
