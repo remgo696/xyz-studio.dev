@@ -14,6 +14,7 @@
 {% block layout %}
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 min-h-screen">
 
+    {# === CABECERA DE LA PÁGINA DE CATEGORÍA === #}
     <header class="mb-12 border-b border-xyz-charcoal/10 pb-8">
         <nav class="text-[10px] font-mono tracking-widest uppercase text-xyz-charcoal/50 mb-4">
             <a href="/" class="hover:text-xyz-sage transition-colors">HOME</a>
@@ -24,7 +25,7 @@
                 <span class="text-xyz-charcoal font-bold">CATÁLOGO GENERAL</span>
             {% endif %}
         </nav>
-
+        
         <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
             <div>
                 <h1 class="font-squada text-5xl text-xyz-charcoal mb-2">
@@ -42,6 +43,8 @@
             </div>
         </div>
     </header>
+
+    {# === CONTENIDO PRINCIPAL: GRID DE PRODUCTOS Y FILTROS === #}
 
     <div class="lg:grid lg:grid-cols-4 lg:gap-x-12">
         
@@ -109,69 +112,69 @@
 
             {# === FILTRO POR FACETS (Solr) === #}
             {% if has_facets %}
-                <div class="bg-white p-6 rounded-lg border border-xyz-charcoal/5 shadow-sm">
-                    <h3 class="font-squada text-lg text-xyz-charcoal mb-4 flex items-center gap-2">
-                        <i class="fas fa-filter text-xyz-clay text-sm"></i> FILTROS
-                    </h3>
-                    
-                    {% for field, data in facet_data.items %}
-                        {% if data.results %}
-                            <div class="mb-6 last:mb-0">
-                                {# Traducir nombres de campos #}
-                                <h4 class="font-mono text-xs font-bold uppercase tracking-widest text-xyz-charcoal/60 mb-3 border-b border-xyz-charcoal/10 pb-1">
-                                    {% if field == 'product_class' %}Tipo de Producto
-                                    {% elif field == 'price_range' %}Rango de Precio
-                                    {% elif field == 'category' %}Categoría
-                                    {% elif field == 'rating' %}Valoración
-                                    {% else %}{{ field|title }}{% endif %}
-                                </h4>
-                                <ul class="space-y-2">
-                                    {% for item in data.results %}
-                                        {# Solo mostrar si tiene resultados #}
-                                        {% if item.count > 0 %}
-                                        <li>
-                                            {# Determinar si está seleccionado #}
-                                            {% if item.selected %}
-                                                {# Filtro seleccionado - mostrar con estilo activo y link para deseleccionar #}
-                                                <a href="{{ item.deselect_url }}" 
-                                                   class="group flex items-center justify-between text-sm bg-xyz-sage/10 text-xyz-sage font-bold -mx-2 px-2 py-1.5 rounded transition-colors hover:bg-xyz-clay/10 hover:text-xyz-clay">
-                                                    <span class="flex items-center gap-2">
-                                                        <i class="fas fa-check-circle text-xs"></i>
-                                                        {{ item.name|title }}
-                                                    </span>
-                                                    <span class="text-[10px] bg-xyz-sage text-white px-1.5 rounded flex items-center gap-1">
-                                                        {{ item.count }}
-                                                        <i class="fas fa-times text-[8px]"></i>
-                                                    </span>
-                                                </a>
-                                            {% else %}
-                                                {# Filtro no seleccionado #}
-                                                <a href="{{ item.select_url }}" 
-                                                   class="group flex items-center justify-between text-sm text-xyz-charcoal/80 hover:text-xyz-sage transition-colors">
-                                                    <span>{{ item.name|title }}</span>
-                                                    <span class="text-[10px] bg-gray-100 text-gray-500 px-1.5 rounded group-hover:bg-xyz-sage group-hover:text-white transition-colors">
-                                                        {{ item.count }}
-                                                    </span>
-                                                </a>
-                                            {% endif %}
-                                        </li>
+            <div class="bg-white p-6 rounded-lg border border-xyz-charcoal/5 shadow-sm">
+                <h3 class="font-squada text-lg text-xyz-charcoal mb-4 flex items-center gap-2">
+                    <i class="fas fa-filter text-xyz-clay text-sm"></i> FILTROS
+                </h3>
+                
+                {% for field, data in facet_data.items %}
+                    {% if data.results %}
+                        <div class="mb-6 last:mb-0">
+                            {# Traducir nombres de campos #}
+                            <h4 class="font-mono text-xs font-bold uppercase tracking-widest text-xyz-charcoal/60 mb-3 border-b border-xyz-charcoal/10 pb-1">
+                                {% if field == 'product_class' %}Tipo de Producto
+                                {% elif field == 'price_range' %}Rango de Precio
+                                {% elif field == 'category' %}Categoría
+                                {% elif field == 'rating' %}Valoración
+                                {% else %}{{ field|title }}{% endif %}
+                            </h4>
+                            <ul class="space-y-2">
+                                {% for item in data.results %}
+                                    {# Solo mostrar si tiene resultados #}
+                                    {% if item.count > 0 %}
+                                    <li>
+                                        {# Determinar si está seleccionado #}
+                                        {% if item.selected %}
+                                            {# Filtro seleccionado - mostrar con estilo activo y link para deseleccionar #}
+                                            <a href="{{ item.deselect_url }}" 
+                                                class="group flex items-center justify-between text-sm bg-xyz-sage/10 text-xyz-sage font-bold -mx-2 px-2 py-1.5 rounded transition-colors hover:bg-xyz-clay/10 hover:text-xyz-clay">
+                                                <span class="flex items-center gap-2">
+                                                    <i class="fas fa-check-circle text-xs"></i>
+                                                    {{ item.name|title }}
+                                                </span>
+                                                <span class="text-[10px] bg-xyz-sage text-white px-1.5 rounded flex items-center gap-1">
+                                                    {{ item.count }}
+                                                    <i class="fas fa-times text-[8px]"></i>
+                                                </span>
+                                            </a>
+                                        {% else %}
+                                            {# Filtro no seleccionado #}
+                                            <a href="{{ item.select_url }}" 
+                                                class="group flex items-center justify-between text-sm text-xyz-charcoal/80 hover:text-xyz-sage transition-colors">
+                                                <span>{{ item.name|title }}</span>
+                                                <span class="text-[10px] bg-gray-100 text-gray-500 px-1.5 rounded group-hover:bg-xyz-sage group-hover:text-white transition-colors">
+                                                    {{ item.count }}
+                                                </span>
+                                            </a>
                                         {% endif %}
-                                    {% endfor %}
-                                </ul>
-                            </div>
-                        {% endif %}
-                    {% endfor %}
-                    
-                    {# Botón para limpiar todos los filtros si hay alguno seleccionado #}
-                    {% if request.GET.selected_facets %}
-                    <div class="mt-4 pt-4 border-t border-xyz-charcoal/10">
-                        <a href="{% if category %}{{ category.get_absolute_url }}{% else %}{% url 'catalogue:index' %}{% endif %}" 
-                           class="text-xs text-xyz-clay hover:text-xyz-charcoal flex items-center gap-1 transition-colors">
-                            <i class="fas fa-times"></i> Limpiar filtros
-                        </a>
-                    </div>
+                                    </li>
+                                    {% endif %}
+                                {% endfor %}
+                            </ul>
+                        </div>
                     {% endif %}
+                {% endfor %}
+                
+                {# Botón para limpiar todos los filtros si hay alguno seleccionado #}
+                {% if request.GET.selected_facets %}
+                <div class="mt-4 pt-4 border-t border-xyz-charcoal/10">
+                    <a href="{% if category %}{{ category.get_absolute_url }}{% else %}{% url 'catalogue:index' %}{% endif %}" 
+                        class="text-xs text-xyz-clay hover:text-xyz-charcoal flex items-center gap-1 transition-colors">
+                        <i class="fas fa-times"></i> Limpiar filtros
+                    </a>
                 </div>
+                {% endif %}
+            </div>
             {% endif %}
 
             <div class="bg-xyz-charcoal text-xyz-offwhite p-6 rounded-lg text-center relative overflow-hidden">
@@ -210,7 +213,7 @@
                                 {% endwith %}
                                 
                                 <div class="absolute inset-0 border-2 border-xyz-sage opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
-                                    <div class="absolute top-0 right-0 bg-xyz-sage text-white text-[10px] font-mono px-2 py-1">VIEW_ID: {{ real_product.upc|default:"00" }}</div>
+                                    <div class="absolute top-0 right-0 bg-xyz-sage text-white text-[10px] font-mono px-2 py-1">ID: {{ real_product.upc|default:"00" }}</div>
                                 </div>
 
                                 <div class="absolute bottom-4 left-0 right-0 flex justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 translate-y-2 group-hover:translate-y-0">

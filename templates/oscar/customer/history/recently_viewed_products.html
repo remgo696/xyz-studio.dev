@@ -4,7 +4,7 @@
 {% if products %}
     {# Simplemente iteramos los productos. El contenedor padre en detail.html ya tiene el flex/carrusel #}
     {% for product in products %}
-        <div class="min-w-[280px] md:min-w-[300px] snap-start">
+        <div class="min-w-[140px] md:min-w-[150px] snap-start">
             {% include "oscar/catalogue/partials/product.html" %}
         </div>
     {% endfor %}
