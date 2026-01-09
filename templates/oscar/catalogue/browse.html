@@ -58,55 +58,67 @@
                 <h3 class="font-squada text-lg text-xyz-charcoal mb-4 flex items-center gap-2">
                     <i class="fas fa-folder-tree text-xyz-sage text-sm"></i> CATEGORÍAS
                 </h3>
-                <ul class="space-y-2">
-                    {% for cat in all_categories %}
-                        {% if cat.depth == 1 %}
-                        <li>
-                            <a href="{{ cat.get_absolute_url }}" 
-                               class="group flex items-center justify-between text-sm transition-colors
-                                      {% if category and category.pk == cat.pk %}
-                                          text-xyz-sage font-bold bg-xyz-sage/10 -mx-2 px-2 py-1 rounded
-                                      {% else %}
-                                          text-xyz-charcoal/80 hover:text-xyz-sage
-                                      {% endif %}">
-                                <span>{{ cat.name }}</span>
-                                <span class="text-[10px] bg-gray-100 text-gray-500 px-1.5 rounded 
-                                             {% if category and category.pk == cat.pk %}bg-xyz-sage text-white{% else %}group-hover:bg-xyz-sage group-hover:text-white{% endif %} transition-colors">
+                <ul class="space-y-1">
+                {% for cat in all_categories %}
+                    
+                    {# === NIVEL 1: PADRES === #}
+                    {% if cat.depth == 1 %}
+                        <li class="mt-2 first:mt-0">
+                            <a href="{% if category and category.pk == cat.pk %}{% url 'catalogue:index' %}{% else %}{{ cat.get_absolute_url }}{% endif %}" 
+                            class="group flex items-center justify-between text-sm py-1.5 px-2 rounded transition-all duration-200
+                                    {% if category and category.pk == cat.pk %}
+                                        bg-xyz-sage text-white font-bold shadow-sm
+                                    {% else %}
+                                        text-xyz-charcoal/80 hover:bg-xyz-sage/10 hover:text-xyz-sage
+                                    {% endif %}">
+                                
+                                <span class="flex items-center gap-2">
+                                    {% if category and category.pk == cat.pk %}
+                                        <i class="fas fa-check-circle text-xs"></i>
+                                    {% endif %}
+                                    {{ cat.name }}
+                                </span>
+
+                                <span class="text-[10px] px-1.5 py-0.5 rounded transition-colors
+                                            {% if category and category.pk == cat.pk %}
+                                                bg-white/20 text-white
+                                            {% else %}
+                                                bg-gray-100 text-gray-400 group-hover:bg-xyz-sage group-hover:text-white
+                                            {% endif %}">
                                     {{ cat.num_products }}
                                 </span>
                             </a>
-                            {# Subcategorías #}
-                            {% if cat.get_children %}
-                            <ul class="ml-4 mt-2 space-y-1 border-l border-xyz-charcoal/10 pl-3">
-                                {% for subcat in cat.get_children %}
-                                <li>
-                                    <a href="{{ subcat.get_absolute_url }}" 
-                                       class="group flex items-center justify-between text-xs transition-colors
-                                              {% if category and category.pk == subcat.pk %}
-                                                  text-xyz-sage font-bold
-                                              {% else %}
-                                                  text-xyz-charcoal/60 hover:text-xyz-sage
-                                              {% endif %}">
-                                        <span>{{ subcat.name }}</span>
-                                        <span class="text-[9px] bg-gray-100 text-gray-400 px-1 rounded">{{ subcat.num_products }}</span>
-                                    </a>
-                                </li>
-                                {% endfor %}
-                            </ul>
-                            {% endif %}
                         </li>
-                        {% endif %}
-                    {% endfor %}
-                </ul>
-                
-                {# Botón para ver todo si hay categoría seleccionada #}
-                {% if category %}
-                <div class="mt-4 pt-4 border-t border-xyz-charcoal/10">
-                    <a href="{% url 'catalogue:index' %}" class="text-xs text-xyz-clay hover:text-xyz-charcoal flex items-center gap-1 transition-colors">
-                        <i class="fas fa-times"></i> Limpiar categoría
-                    </a>
-                </div>
-                {% endif %}
+                    
+                    {# === NIVEL 2: HIJOS (Indentados) === #}
+                    {% elif cat.depth == 2 %}
+                        <li class="ml-4 border-l-2 {% if category and category.pk == cat.pk %}border-xyz-sage{% else %}border-xyz-charcoal/10{% endif %} pl-3">
+                            
+                            <a href="{% if category and category.pk == cat.pk %}{% url 'catalogue:index' %}{% else %}{{ cat.get_absolute_url }}{% endif %}" 
+                            class="group flex items-center justify-between text-xs py-1 px-2 rounded transition-colors
+                                    {% if category and category.pk == cat.pk %}
+                                        text-xyz-sage font-bold bg-xyz-sage/5
+                                    {% else %}
+                                        text-xyz-charcoal/60 hover:text-xyz-sage hover:bg-gray-50
+                                    {% endif %}">
+                                
+                                <span>{{ cat.name }}</span>
+                                
+                                <span class="text-[9px] px-1 rounded
+                                            {% if category and category.pk == cat.pk %}
+                                                bg-xyz-sage text-white
+                                            {% else %}
+                                                bg-gray-100 text-gray-400 group-hover:text-xyz-sage
+                                            {% endif %}">
+                                    {{ cat.num_products }}
+                                </span>
+                            </a>
+                        </li>
+                    {% endif %}
+
+                {% endfor %}
+            </ul>
+
             </div>
             {% endif %}
 
@@ -277,7 +289,7 @@
             {% else %}
                 <div class="text-center py-24 border-2 border-dashed border-xyz-charcoal/10 rounded-xl">
                     <i class="fas fa-drafting-compass text-4xl text-xyz-charcoal/20 mb-4"></i>
-                    <h3 class="font-squada text-2xl text-xyz-charcoal/50">NO HAY PROTOTIPOS AQUÍ</h3>
+                    <h3 class="font-squada text-2xl text-xyz-charcoal/50">NO HAY PRODUCTOS AQUÍ</h3>
                     <p class="text-sm text-gray-500 mt-2">Intenta ajustar los filtros o explora otra categoría.</p>
                 </div>
             {% endif %}
