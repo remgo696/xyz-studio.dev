@@ -9,7 +9,6 @@ from django.utils.translation import gettext_lazy as _
 import pycountry
 
 from oscar.apps.address.forms import UserAddressForm as CoreUserAddressForm
-# Importación lazy de ShippingAddressForm para evitar circular imports
 
 
 def get_peru_regions_choices():
@@ -120,23 +119,21 @@ class UserAddressForm(PeruAddressFormMixin, CoreUserAddressForm):
     pass
 
 
-# Lazy initialization of ShippingAddressForm to avoid circular imports
-def _get_shipping_address_form_base():
-    """Retorna la clase base de Oscar de forma lazy."""
-    from oscar.apps.checkout.forms import ShippingAddressForm as CoreShippingAddressForm
-    return CoreShippingAddressForm
-
-
-class ShippingAddressForm(PeruAddressFormMixin):
+def __getattr__(name):
     """
-    Formulario de dirección de envío con departamentos de Perú.
-    Hereda dinámicamente de CoreShippingAddressForm para evitar importaciones circulares.
+    Lazy import para ShippingAddressForm para evitar circular imports.
+    Oscar carga checkout.forms que intenta cargar address.forms,
+    pero address.forms no puede importar de checkout.forms directamente.
     """
+    if name == "ShippingAddressForm":
+        from oscar.apps.checkout.forms import ShippingAddressForm as CoreShippingAddressForm
+        
+        class ShippingAddressForm(PeruAddressFormMixin, CoreShippingAddressForm):
+            """
+            Formulario de dirección de envío con departamentos de Perú.
+            """
+            pass
+        
+        return ShippingAddressForm
     
-    def __init__(self, *args, **kwargs):
-        # Obtener la clase base de Oscar de forma lazy
-        CoreShippingAddressForm = _get_shipping_address_form_base()
-        # Inicializar la base de Oscar
-        CoreShippingAddressForm.__init__(self, *args, **kwargs)
-        # Inicializar el mixin
-        super().__init__(*args, **kwargs)
+    raise AttributeError(f"module '{__name__}' has no attribute '{name}'")
