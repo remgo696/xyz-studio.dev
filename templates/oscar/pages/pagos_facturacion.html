@@ -1,0 +1,63 @@
+{% extends "oscar/layout.html" %}
+{% load static %}
+
+{% block title %}Pagos y Facturación | XYZ Studio{% endblock %}
+
+{% block layout %}
+<div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12 text-xyz-charcoal">
+    
+    <div class="mb-12 border-b border-xyz-charcoal/10 pb-6">
+        <a href="/centro-de-ayuda/" class="text-xs font-bold text-xyz-charcoal/40 hover:text-xyz-charcoal mb-4 block transition-colors">
+            <i class="fas fa-arrow-left mr-1"></i> VOLVER AL CENTRO DE DOCUMENTACIÓN
+        </a>
+        <h1 class="font-squada text-4xl lg:text-5xl">PAGOS Y FACTURACIÓN</h1>
+    </div>
+
+    <div class="prose prose-sm text-justify text-xyz-charcoal/80 max-w-none space-y-12">
+        
+        <section>
+            <h3 class="font-bold text-lg text-xyz-charcoal mb-4">1. PROTOCOLO DE PAGO MANUAL</h3>
+            <p>
+                Actualmente operamos mediante verificación manual de transferencias para garantizar un trato personalizado. El proceso es el siguiente:
+            </p>
+            <ol class="list-decimal pl-5 space-y-3 mt-4">
+                <li>Realizas el pedido en la web seleccionando "Coordinación Manual".</li>
+                <li>Haces el depósito/transferencia a nuestras cuentas (BCP, Interbank) o billeteras digitales (Yape, Plin).</li>
+                <li><strong>Paso Crítico:</strong> Envías la constancia de operación a nuestro WhatsApp oficial.</li>
+                <li>Validamos el ingreso y confirmamos el inicio de fabricación.</li>
+            </ol>
+            
+            <div class="bg-xyz-sage/10 p-4 rounded mt-6 border-l-4 border-xyz-sage">
+                <strong class="block text-xyz-charcoal mb-1">¿Olvidaste enviar la constancia?</strong>
+                <p class="text-sm">No te preocupes. Si registramos un pedido sin confirmación de pago, nuestro equipo te contactará proactivamente vía WhatsApp o correo para consultar si deseas proceder con la transacción antes de cancelar la orden.</p>
+            </div>
+        </section>
+
+        <section>
+            <h3 class="font-bold text-lg text-xyz-charcoal mb-4">2. COMPROBANTES DE PAGO (SUNAT)</h3>
+            <p>
+                Como <strong>Persona Natural con Negocio (RUC 10)</strong>, emitimos los siguientes documentos electrónicos:
+            </p>
+            
+            <div class="grid md:grid-cols-2 gap-6 mt-6">
+                <div class="border border-xyz-charcoal/20 p-5 rounded hover:bg-gray-50 transition-colors">
+                    <span class="font-mono text-xs font-bold uppercase tracking-widest text-xyz-sage">Por Defecto</span>
+                    <h4 class="font-squada text-xl mt-2 mb-2">RECIBO POR HONORARIOS</h4>
+                    <p class="text-xs">
+                        Se emite automáticamente para todos los servicios de diseño y manufactura a clientes finales.
+                    </p>
+                </div>
+
+                <div class="border border-xyz-charcoal/20 p-5 rounded hover:bg-gray-50 transition-colors">
+                    <span class="font-mono text-xs font-bold uppercase tracking-widest text-xyz-clay">A Solicitud</span>
+                    <h4 class="font-squada text-xl mt-2 mb-2">FACTURA ELECTRÓNICA</h4>
+                    <p class="text-xs">
+                        Si requieres factura para crédito fiscal, es <strong>obligatorio</strong> que lo indiques al momento de enviar tu constancia de pago, adjuntando tu número de RUC y Razón Social.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+    </div>
+</div>
+{% endblock %}

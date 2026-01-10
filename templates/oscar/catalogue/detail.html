@@ -81,7 +81,7 @@
                     <div class="flex items-baseline gap-4 mt-2">
                         {% purchase_info_for_product request product as session %}
                         {% if session.price.exists %}
-                            <span class="font-squada text-xl text-xyz-charcoal">
+                            <span class="font-squada text-2xl text-xyz-charcoal">
                                 {{ session.price.incl_tax|currency:session.price.currency }}
                             </span>
                         {% endif %}
@@ -92,7 +92,7 @@
                 {% if siblings %}
                 <div class="mb-8">
                     <label class="block text-[10px] font-bold font-mono text-xyz-charcoal/70 uppercase tracking-widest mb-3">
-                        Seleccionar Color
+                        Seleccionar Modelo
                     </label>
                     <div class="flex flex-wrap gap-2">
                         <div class="w-16 h-16 rounded border-2 border-xyz-charcoal p-0.5 cursor-default">
@@ -127,6 +127,18 @@
                     <div class="prose prose-sm text-xyz-charcoal/80 font-roboto text-sm leading-relaxed">
                         {{ product.description|safe }}
                     </div>
+                </div>
+
+                <div class="bg-xyz-offwhite p-6 rounded-lg border border-xyz-charcoal/5 shadow-sm mt-8">
+                    <h3 class="font-squada text-lg text-xyz-charcoal mb-4 border-b border-xyz-charcoal/10 pb-2">ESPECIFICACIONES TÉCNICAS</h3>
+                    <dl class="grid grid-cols-1 gap-x-4 gap-y-4 sm:grid-cols-2">
+                        {% for av in product.attribute_values.all %}
+                            <div class="sm:col-span-1">
+                                <dt class="text-xs font-mono font-medium text-xyz-charcoal/50 uppercase">{{ av.attribute.name }}</dt>
+                                <dd class="mt-1 text-sm font-bold text-xyz-charcoal">{{ av.value_as_html }}</dd>
+                            </div>
+                        {% endfor %}
+                    </dl>
                 </div>
 
             </div>

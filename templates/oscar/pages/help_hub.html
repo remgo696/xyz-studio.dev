@@ -1,0 +1,92 @@
+{% extends "oscar/layout.html" %}
+{% load static %}
+
+{% block title %}Centro de Documentación | XYZ Studio{% endblock %}
+
+{% block layout %}
+<div class="bg-xyz-offwhite min-h-screen pb-20">
+    
+    <div class="bg-xyz-charcoal text-white py-16 px-4 mb-12 relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(#ffffff 1px, transparent 1px); background-size: 20px 20px;"></div>
+        <div class="max-w-7xl mx-auto relative z-10 text-center">
+            <span class="font-mono text-xs tracking-[0.3em] text-xyz-sage uppercase mb-4 block">// SOPORTE TÉCNICO</span>
+            <h1 class="font-squada text-4xl lg:text-5xl">CENTRO DE DOCUMENTACIÓN</h1>
+            <p class="mt-4 text-white/60 font-light max-w-2xl mx-auto">
+                Guías técnicas, especificaciones de manufactura y protocolos administrativos de XYZ Studio.
+            </p>
+        </div>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            
+            <a href="/politica-de-envios/" class="group bg-white p-8 rounded-xl border border-xyz-charcoal/5 hover:border-xyz-sage transition-all duration-300 shadow-sm hover:shadow-md">
+                <div class="w-12 h-12 bg-xyz-offwhite rounded-lg flex items-center justify-center mb-6 text-xyz-charcoal group-hover:bg-xyz-sage group-hover:text-white transition-colors">
+                    <i class="fas fa-truck-fast text-xl"></i>
+                </div>
+                <h3 class="font-squada text-xl text-xyz-charcoal mb-2">LOGÍSTICA Y ENVÍOS</h3>
+                <p class="text-sm text-xyz-charcoal/60 leading-relaxed">
+                    Tiempos de fabricación vs. envío, cobertura en Lima/Provincias y tarifas de courier.
+                </p>
+            </a>
+
+            <a href="/guia-diseno/" class="group bg-white p-8 rounded-xl border border-xyz-charcoal/5 hover:border-xyz-sage transition-all duration-300 shadow-sm hover:shadow-md">
+                <div class="w-12 h-12 bg-xyz-offwhite rounded-lg flex items-center justify-center mb-6 text-xyz-charcoal group-hover:bg-xyz-sage group-hover:text-white transition-colors">
+                    <i class="fas fa-pen-ruler text-xl"></i>
+                </div>
+                <h3 class="font-squada text-xl text-xyz-charcoal mb-2">GUÍA DE DISEÑO</h3>
+                <p class="text-sm text-xyz-charcoal/60 leading-relaxed">
+                    Requisitos para fotos de litofanías, acabados (Estándar vs Premium) y tolerancias.
+                </p>
+            </a>
+
+            <a href="/pagos-facturacion/" class="group bg-white p-8 rounded-xl border border-xyz-charcoal/5 hover:border-xyz-sage transition-all duration-300 shadow-sm hover:shadow-md">
+                <div class="w-12 h-12 bg-xyz-offwhite rounded-lg flex items-center justify-center mb-6 text-xyz-charcoal group-hover:bg-xyz-sage group-hover:text-white transition-colors">
+                    <i class="fas fa-file-invoice-dollar text-xl"></i>
+                </div>
+                <h3 class="font-squada text-xl text-xyz-charcoal mb-2">PAGOS Y FACTURACIÓN</h3>
+                <p class="text-sm text-xyz-charcoal/60 leading-relaxed">
+                    Validación de transferencias, emisión de Recibos por Honorarios y Facturas.
+                </p>
+            </a>
+
+            <a href="/cuidado-pla/" class="group bg-white p-8 rounded-xl border border-xyz-charcoal/5 hover:border-xyz-sage transition-all duration-300 shadow-sm hover:shadow-md">
+                <div class="w-12 h-12 bg-xyz-offwhite rounded-lg flex items-center justify-center mb-6 text-xyz-charcoal group-hover:bg-xyz-sage group-hover:text-white transition-colors">
+                    <i class="fas fa-cube text-xl"></i>
+                </div>
+                <h3 class="font-squada text-xl text-xyz-charcoal mb-2">MATERIALES (PLA)</h3>
+                <p class="text-sm text-xyz-charcoal/60 leading-relaxed">
+                    Ficha técnica del bioplástico PLA, resistencia térmica y cuidados de la pieza.
+                </p>
+            </a>
+
+            <a href="/terminos-y-condiciones/" class="group bg-white p-8 rounded-xl border border-xyz-charcoal/5 hover:border-xyz-sage transition-all duration-300 shadow-sm hover:shadow-md">
+                <div class="w-12 h-12 bg-xyz-offwhite rounded-lg flex items-center justify-center mb-6 text-xyz-charcoal group-hover:bg-xyz-sage group-hover:text-white transition-colors">
+                    <i class="fas fa-scale-balanced text-xl"></i>
+                </div>
+                <h3 class="font-squada text-xl text-xyz-charcoal mb-2">LEGAL Y GARANTÍAS</h3>
+                <p class="text-sm text-xyz-charcoal/60 leading-relaxed">
+                    Términos del servicio, políticas de privacidad y cobertura de garantías.
+                </p>
+            </a>
+
+        </div>
+
+        <div class="mt-16 bg-white border-l-4 border-xyz-sage p-8 rounded-r-xl shadow-sm flex flex-col md:flex-row items-center justify-between gap-6">
+            <div>
+                <h4 class="font-squada text-2xl text-xyz-charcoal mb-2">¿NECESITAS ASISTENCIA DIRECTA?</h4>
+                <p class="text-sm text-xyz-charcoal/70">
+                    Nuestro equipo de ingeniería está disponible para resolver dudas específicas.
+                </p>
+                <div class="mt-4 flex items-center gap-2 text-xs font-mono text-xyz-charcoal/50">
+                    <i class="far fa-clock"></i>
+                    HORARIO: LUNES A SÁBADO (8:00 AM - 8:00 PM)
+                </div>
+            </div>
+            <a href="https://wa.me/{{ shop_whatsapp }}?text=Hola,%20tengo%20una%20consulta%20técnica" target="_blank" class="btn btn-primary px-8 py-4 shadow-lg whitespace-nowrap">
+                <i class="fab fa-whatsapp mr-2 text-lg"></i> CONTACTAR INGENIERO
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,96 @@
+{% extends "oscar/layout.html" %}
+{% load static %}
+
+{% block title %}Guía de Diseño | XYZ Studio{% endblock %}
+
+{% block layout %}
+<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 text-xyz-charcoal">
+    
+    <div class="mb-12 border-b border-xyz-charcoal/10 pb-6">
+        <a href="/centro-de-ayuda/" class="text-xs font-bold text-xyz-charcoal/40 hover:text-xyz-charcoal mb-4 block transition-colors">
+            <i class="fas fa-arrow-left mr-1"></i> VOLVER AL CENTRO DE DOCUMENTACIÓN
+        </a>
+        <h1 class="font-squada text-4xl lg:text-5xl">GUÍA DE PERSONALIZACIÓN</h1>
+    </div>
+
+    <section class="mb-16">
+        <h2 class="font-squada text-2xl text-xyz-charcoal mb-6 flex items-center gap-2">
+            <span class="text-xyz-sage">01.</span> IMÁGENES PARA LITOFANÍAS
+        </h2>
+        <div class="prose prose-sm text-justify text-xyz-charcoal/80 max-w-none">
+            <p class="mb-4">
+                La calidad de tu litofanía depende directamente de la imagen fuente. Al ser un proceso de manufactura que convierte luz en relieve, ten en cuenta:
+            </p>
+            
+            <div class="grid md:grid-cols-2 gap-8 my-8">
+                <div class="bg-gray-50 p-6 rounded-lg border border-xyz-charcoal/5">
+                    <h3 class="font-bold text-xyz-charcoal mb-2"><i class="fas fa-check text-xyz-sage mr-2"></i>RECOMENDADO</h3>
+                    <ul class="list-disc pl-5 space-y-2 text-sm">
+                        <li><strong>Alto Contraste:</strong> Fotos con buena diferencia entre luces y sombras.</li>
+                        <li><strong>Resolución Alta:</strong> Mínimo 1080px en el lado menor.</li>
+                        <li><strong>Relación de Aspecto:</strong> La foto debe coincidir con la forma del producto (ej: Foto cuadrada para marco cuadrado).</li>
+                    </ul>
+                </div>
+                <div class="bg-gray-50 p-6 rounded-lg border border-xyz-charcoal/5">
+                    <h3 class="font-bold text-xyz-charcoal mb-2"><i class="fas fa-times text-xyz-clay mr-2"></i>EVITAR</h3>
+                    <ul class="list-disc pl-5 space-y-2 text-sm">
+                        <li>Capturas de pantalla (baja calidad).</li>
+                        <li>Fotos nocturnas con mucho "ruido" o grano.</li>
+                        <li>Rostros muy pequeños o lejanos.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="bg-xyz-sage/10 p-4 rounded-lg flex items-start gap-3 text-sm">
+                <i class="fas fa-info-circle text-xyz-sage mt-1"></i>
+                <div>
+                    <strong>Nota de Calidad:</strong>
+                    <p>Si detectamos que tu imagen no cumple con los estándares para una impresión óptima o requiere un recorte agresivo, <strong>nos contactaremos contigo vía WhatsApp</strong> antes de fabricar para coordinar un cambio de archivo.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="mb-16">
+        <h2 class="font-squada text-2xl text-xyz-charcoal mb-6 flex items-center gap-2">
+            <span class="text-xyz-sage">02.</span> NIVELES DE ACABADO
+        </h2>
+        <p class="mb-6 text-sm text-xyz-charcoal/80 text-justify">
+            La impresión 3D (FDM) construye objetos capa por capa. Ofrecemos dos terminaciones según tu preferencia estética:
+        </p>
+
+        <div class="grid md:grid-cols-2 gap-8">
+            <div class="border border-xyz-charcoal/10 rounded-lg overflow-hidden">
+                <div class="h-48 bg-gray-200 flex items-center justify-center relative">
+                    <i class="fas fa-layer-group text-4xl text-gray-400"></i>
+                    <span class="absolute bottom-2 right-2 text-[10px] bg-white/80 px-2 rounded">Ref. Visual</span>
+                </div>
+                <div class="p-6">
+                    <h3 class="font-squada text-xl mb-2">ACABADO ESTÁNDAR</h3>
+                    <p class="text-xs text-xyz-charcoal/60 mb-4 font-mono uppercase tracking-widest">Natural / Técnico</p>
+                    <p class="text-sm text-xyz-charcoal/80 leading-relaxed text-justify">
+                        Las "capas" de impresión son visibles al tacto y vista. Este acabado es honesto con el proceso de manufactura y no se considera antiestético; muchos usuarios prefieren esta textura técnica. Es la opción por defecto.
+                    </p>
+                </div>
+            </div>
+
+            <div class="border border-xyz-charcoal/10 rounded-lg overflow-hidden">
+                <div class="h-48 bg-gray-200 flex items-center justify-center relative">
+                    <i class="fas fa-gem text-4xl text-gray-400"></i>
+                    <span class="absolute bottom-2 right-2 text-[10px] bg-white/80 px-2 rounded">Ref. Visual</span>
+                </div>
+                <div class="p-6">
+                    <h3 class="font-squada text-xl mb-2">ACABADO PREMIUM</h3>
+                    <p class="text-xs text-xyz-charcoal/60 mb-4 font-mono uppercase tracking-widest">Post-Procesado Químico</p>
+                    <p class="text-sm text-xyz-charcoal/80 leading-relaxed text-justify">
+                        Aplicamos un tratamiento manual con <strong>acetato de etilo</strong> (vapor smoothing) que funde superficialmente el material, borrando las líneas de las capas. El resultado es liso y brillante, similar a la cerámica.
+                        <br><br>
+                        <em>*No disponible para todos los modelos geométricos complejos.</em>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</div>
+{% endblock %}

@@ -29,6 +29,9 @@ urlpatterns = [
     path('politica-de-privacidad/', TemplateView.as_view(template_name='oscar/pages/privacy_policy.html'), name='politica-privacidad'),
     path('terminos-condiciones/', TemplateView.as_view(template_name='oscar/pages/terminos_condiciones.html'), name='terminos-condiciones'),
     path('cuidado-pla/', TemplateView.as_view(template_name='oscar/pages/cuidado_pla.html'), name='cuidado-pla'),
+    path('centro-de-ayuda/', TemplateView.as_view(template_name='oscar/pages/help_hub.html'), name='centro-de-ayuda'),
+    path('guia-diseno/', TemplateView.as_view(template_name='oscar/pages/guia_diseno.html'), name='guia-diseno'),
+    path('pagos-facturacion/', TemplateView.as_view(template_name='oscar/pages/pagos_facturacion.html'), name='pagos-facturacion'),
     path('', include(apps.get_app_config('oscar').urls[0])),
 ]
 
