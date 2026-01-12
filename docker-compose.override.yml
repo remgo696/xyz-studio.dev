@@ -103,6 +103,10 @@ services:
       - tailwind_css:/app/theme/static/css/dist
       # Excluir node_modules local y usar el del contenedor
       - tailwind_modules:/app/theme/static_src/node_modules
+      # Templates HTML para que Tailwind pueda escanear clases (read-only)
+      - ./templates:/app/templates:ro
+      - ./theme/templates:/app/theme/templates:ro
+      - ./apps:/app/apps:ro
     environment:
       - NODE_ENV=development
     networks:
