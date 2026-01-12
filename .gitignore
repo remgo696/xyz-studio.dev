@@ -168,3 +168,6 @@ Pipfile.lock
 
 # Temporary files: emails, etc.
 tmp/
+
+# Docker
+.env.docker
