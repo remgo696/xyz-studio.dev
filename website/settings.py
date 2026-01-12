@@ -268,7 +268,9 @@ INTERNAL_IPS = [
     "127.0.0.1",
 ]
 
-NPM_BIN_PATH = r"C:\Program Files\nodejs\npm.cmd"  # Ajustar según la ruta de npm en Windows
+# NPM_BIN_PATH no es necesario en Docker - npm está disponible en PATH
+# Para desarrollo local en Windows, descomentar y ajustar la ruta si es necesario
+# NPM_BIN_PATH = r"C:\Program Files\nodejs\npm.cmd"
 
 # Email - Para desarrollo, usamos el backend de consola
 # Los emails se muestran en la terminal en vez de enviarse
