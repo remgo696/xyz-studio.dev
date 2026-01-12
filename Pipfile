@@ -23,6 +23,11 @@ phonenumbers = "*"
 pycountry = "*"
 factory-boy = "*"
 django-environ = "*"
+build123d = {git = "https://github.com/gumyr/build123d"}
+# PostgreSQL driver (para Docker/Producción)
+psycopg2-binary = "*"
+# Production server
+gunicorn = "*"
 
 [dev-packages]
 pylint = "*"

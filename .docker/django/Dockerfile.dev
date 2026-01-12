@@ -1,0 +1,61 @@
+# =============================================================================
+# XYZ Studio - Django Oscar E-commerce
+# Dockerfile para Desarrollo Local
+# =============================================================================
+# Este Dockerfile es más simple que el de producción:
+#   - Single stage para desarrollo rápido
+#   - Incluye herramientas de debugging
+#   - No optimiza para tamaño de imagen
+# =============================================================================
+
+FROM python:3.13-slim AS development
+
+LABEL maintainer="XYZ Studio <dev@xyz-studio.dev>" \
+      environment="development"
+
+# Variables de entorno
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PIP_NO_CACHE_DIR=1 \
+    PIP_DISABLE_PIP_VERSION_CHECK=1 \
+    APP_HOME=/app
+
+WORKDIR ${APP_HOME}
+
+# Instalar dependencias del sistema
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    gcc \
+    g++ \
+    libpq-dev \
+    libffi-dev \
+    git \
+    netcat-openbsd \
+    curl \
+    # Herramientas útiles para debugging
+    vim \
+    htop \
+    && rm -rf /var/lib/apt/lists/*
+
+# Instalar pipenv
+RUN pip install --no-cache-dir pipenv
+
+# Copiar archivos de dependencias
+COPY Pipfile Pipfile.lock ./
+
+# Instalar dependencias (incluyendo dev)
+RUN pipenv install --system --deploy --dev --ignore-pipfile
+
+# Copiar entrypoint de desarrollo
+COPY .docker/django/entrypoint.dev.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
+# Crear directorios necesarios
+RUN mkdir -p ${APP_HOME}/staticfiles ${APP_HOME}/media
+
+# El código se monta como volumen en desarrollo
+WORKDIR ${APP_HOME}
+
+EXPOSE 8000
+
+ENTRYPOINT ["/entrypoint.sh"]
+CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]

@@ -1,0 +1,107 @@
+# =============================================================================
+# XYZ Studio - Django Oscar E-commerce
+# Docker Compose - Production Simulation
+# =============================================================================
+# Este archivo es para SIMULAR el entorno de producción localmente.
+# Características:
+#   - NO incluye db ni solr como servicios (esperan conexión externa)
+#   - Incluye Nginx para servir estáticos
+#   - Usa la imagen de producción (multi-stage)
+#   - Requiere variables de entorno para conexiones externas
+#
+# Uso:
+#   docker compose -f docker-compose.prod.yml up --build
+#
+# Para simular servicios externos, puedes usar los de docker-compose.yml:
+#   docker compose -f docker-compose.yml up db solr -d
+#   docker compose -f docker-compose.prod.yml up --build
+# =============================================================================
+
+name: xyz-studio-prod
+
+services:
+
+  # ---------------------------------------------------------------------------
+  # Web - Django Production Image
+  # ---------------------------------------------------------------------------
+  web:
+    build:
+      context: .
+      dockerfile: .docker/django/Dockerfile
+    image: xyz-studio/django:${TAG:-latest}
+    container_name: xyz-web-prod
+    restart: unless-stopped
+    env_file:
+      - .env.docker
+    environment:
+      - DEBUG=False
+      - DJANGO_SETTINGS_MODULE=website.settings
+      # Conexión a servicios externos (BD y Solr)
+      # Estas variables deben ser configuradas para apuntar a servicios reales
+      - DATABASE_URL=${DATABASE_URL:-postgres://xyz_user:xyz_secret_password@host.docker.internal:5432/xyz_studio}
+      - DATABASE_HOST=${DATABASE_HOST:-host.docker.internal}
+      - DATABASE_PORT=${DATABASE_PORT:-5432}
+      - SOLR_URL=${SOLR_URL:-http://host.docker.internal:8983/solr/xyz_core}
+      - SOLR_HOST=${SOLR_HOST:-host.docker.internal}
+      - SOLR_PORT=${SOLR_PORT:-8983}
+      # Configuración de producción
+      - RUN_MIGRATIONS=${RUN_MIGRATIONS:-true}
+      - COLLECT_STATIC=true
+      - REBUILD_INDEX=${REBUILD_INDEX:-false}
+      # Gunicorn workers
+      - WEB_CONCURRENCY=${WEB_CONCURRENCY:-4}
+    volumes:
+      - static_volume:/app/staticfiles
+      - media_volume:/app/media
+    expose:
+      - "8000"
+    networks:
+      - xyz-prod-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+  # ---------------------------------------------------------------------------
+  # Nginx - Reverse Proxy & Static Files Server
+  # ---------------------------------------------------------------------------
+  nginx:
+    image: nginx:alpine
+    container_name: xyz-nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./.docker/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./.docker/nginx/conf.d:/etc/nginx/conf.d:ro
+      - static_volume:/app/staticfiles:ro
+      - media_volume:/app/media:ro
+    depends_on:
+      web:
+        condition: service_healthy
+    networks:
+      - xyz-prod-network
+    healthcheck:
+      test: ["CMD", "nginx", "-t"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+# =============================================================================
+# NETWORKS
+# =============================================================================
+networks:
+  xyz-prod-network:
+    driver: bridge
+
+# =============================================================================
+# VOLUMES
+# =============================================================================
+volumes:
+  static_volume:
+    name: xyz-static-prod
+  media_volume:
+    name: xyz-media-prod

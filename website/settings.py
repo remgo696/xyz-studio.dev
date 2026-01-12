@@ -142,13 +142,35 @@ WSGI_APPLICATION = 'website.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
+# Soporta tanto DATABASE_URL como variables individuales para Docker
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+if env('DATABASE_URL', default=None):
+    # Usar DATABASE_URL si está definida (formato: postgres://user:pass@host:port/dbname)
+    DATABASES = {
+        'default': env.db('DATABASE_URL')
     }
-}
+elif env('DATABASE_HOST', default=None):
+    # Usar variables individuales (típico en Docker)
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': env('DATABASE_NAME', default='xyz_studio'),
+            'USER': env('DATABASE_USER', default='xyz_user'),
+            'PASSWORD': env('DATABASE_PASSWORD', default=''),
+            'HOST': env('DATABASE_HOST', default='localhost'),
+            'PORT': env('DATABASE_PORT', default='5432'),
+            'CONN_MAX_AGE': env.int('DATABASE_CONN_MAX_AGE', default=60),
+        }
+    }
+else:
+    # Fallback a SQLite para desarrollo local sin Docker
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
+
 
 
 # Password validation
@@ -219,8 +241,8 @@ AUTHENTICATION_BACKENDS = (
 HAYSTACK_CONNECTIONS = {
     'default': {
         'ENGINE': 'haystack.backends.solr_backend.SolrEngine',
-        'URL': 'http://127.0.0.1:8983/solr/sandbox',
-        'ADMIN_URL': 'http://127.0.0.1:8983/solr/admin/cores',
+        'URL': env('SOLR_URL', default='http://127.0.0.1:8983/solr/xyz_core'),
+        'ADMIN_URL': env('SOLR_ADMIN_URL', default='http://127.0.0.1:8983/solr/admin/cores'),
         'INCLUDE_SPELLING': True,
     },
 }

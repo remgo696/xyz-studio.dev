@@ -1,0 +1,126 @@
+# =============================================================================
+# XYZ Studio - Django Oscar E-commerce
+# Docker Compose - Base Configuration
+# =============================================================================
+# Este es el archivo BASE con configuración común.
+# Se combina automáticamente con docker-compose.override.yml en desarrollo.
+# Para producción local: docker compose -f docker-compose.yml -f docker-compose.prod.yml up
+# =============================================================================
+
+name: xyz-studio
+
+# =============================================================================
+# SERVICIOS
+# =============================================================================
+services:
+
+  # ---------------------------------------------------------------------------
+  # Web - Django Application
+  # ---------------------------------------------------------------------------
+  web:
+    build:
+      context: .
+      dockerfile: .docker/django/Dockerfile
+    image: xyz-studio/django:${TAG:-latest}
+    container_name: xyz-web
+    restart: unless-stopped
+    env_file:
+      - .env.docker
+    environment:
+      - DJANGO_SETTINGS_MODULE=website.settings
+    volumes:
+      - static_volume:/app/staticfiles
+      - media_volume:/app/media
+    expose:
+      - "8000"
+    networks:
+      - xyz-network
+
+  # ---------------------------------------------------------------------------
+  # Database - PostgreSQL 16
+  # ---------------------------------------------------------------------------
+  db:
+    image: postgres:16-alpine
+    container_name: xyz-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-xyz_studio}
+      POSTGRES_USER: ${POSTGRES_USER:-xyz_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-xyz_secret_password}
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    expose:
+      - "5432"
+    networks:
+      - xyz-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-xyz_user} -d ${POSTGRES_DB:-xyz_studio}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+  # ---------------------------------------------------------------------------
+  # Search - Apache Solr 6.6.6 (Legacy)
+  # ---------------------------------------------------------------------------
+  solr:
+    image: solr:6.6.6
+    container_name: xyz-solr
+    restart: unless-stopped
+    user: "8983:8983"
+    environment:
+      - SOLR_HEAP=512m
+    volumes:
+      - solr_data:/opt/solr/server/solr/mycores
+    expose:
+      - "8983"
+    networks:
+      - xyz-network
+    # Comando personalizado para crear el core si no existe
+    entrypoint:
+      - bash
+      - -c
+      - |
+        set -e
+        CORE_DIR="/opt/solr/server/solr/mycores/xyz_core"
+        # Crear directorio del core si no existe
+        mkdir -p "$${CORE_DIR}/conf" "$${CORE_DIR}/data"
+        # Copiar configuración base si no existe
+        if [ ! -f "$${CORE_DIR}/conf/solrconfig.xml" ]; then
+          echo "📦 Copiando configuración base para xyz_core..."
+          cp -r /opt/solr/server/solr/configsets/basic_configs/conf/* "$${CORE_DIR}/conf/"
+        fi
+        # Crear core.properties si no existe
+        if [ ! -f "$${CORE_DIR}/core.properties" ]; then
+          echo "name=xyz_core" > "$${CORE_DIR}/core.properties"
+          echo "✅ Core xyz_core configurado"
+        fi
+        # Iniciar Solr (sin ejecutar init scripts adicionales)
+        exec solr -f
+    healthcheck:
+      test: ["CMD-SHELL", "curl -sf http://localhost:8983/solr/xyz_core/admin/ping || exit 1"]
+      interval: 15s
+      timeout: 10s
+      retries: 10
+      start_period: 30s
+
+# =============================================================================
+# NETWORKS
+# =============================================================================
+networks:
+  xyz-network:
+    driver: bridge
+
+# =============================================================================
+# VOLUMES
+# =============================================================================
+volumes:
+  postgres_data:
+    name: xyz-postgres-data
+  solr_data:
+    name: xyz-solr-data
+  static_volume:
+    name: xyz-static
+  media_volume:
+    name: xyz-media

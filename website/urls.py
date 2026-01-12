@@ -20,8 +20,23 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.apps import apps
 from django.views.generic import TemplateView
+from django.http import JsonResponse
+
+
+def health_check(request):
+    """
+    Endpoint de health check para Docker/Kubernetes/AWS ALB.
+    Retorna 200 si la aplicación está respondiendo.
+    """
+    return JsonResponse({
+        'status': 'healthy',
+        'service': 'xyz-studio',
+    })
 
 urlpatterns = [
+    # Health check (DEBE estar antes de Oscar para evitar conflictos)
+    path('health/', health_check, name='health-check'),
+    
     path('admin/', admin.site.urls),
     path('', TemplateView.as_view(template_name='oscar/promotions/home.html'), name='home'),
     path('sobre-xyz/', TemplateView.as_view(template_name='oscar/pages/sobre_xyz.html'), name='sobre-xyz'),

@@ -1,0 +1,134 @@
+# =============================================================================
+# XYZ Studio - Django Oscar E-commerce
+# Docker Compose - Development Override
+# =============================================================================
+# Este archivo se carga AUTOMÁTICAMENTE junto con docker-compose.yml
+# Contiene configuración específica para desarrollo local:
+#   - Bind mounts para código fuente (hot-reload)
+#   - Servicio de Tailwind watcher
+#   - Puertos expuestos para debugging
+#   - Docker Compose Watch para sincronización automática
+# =============================================================================
+
+services:
+
+  # ---------------------------------------------------------------------------
+  # Web - Django Development Server
+  # ---------------------------------------------------------------------------
+  web:
+    build:
+      context: .
+      dockerfile: .docker/django/Dockerfile.dev
+      target: development
+    container_name: xyz-web-dev
+    command: python manage.py runserver 0.0.0.0:8000
+    environment:
+      - DEBUG=True
+      - DJANGO_SETTINGS_MODULE=website.settings
+      - DATABASE_HOST=db
+      - DATABASE_PORT=5432
+      - DATABASE_NAME=${POSTGRES_DB:-xyz_studio}
+      - DATABASE_USER=${POSTGRES_USER:-xyz_user}
+      - DATABASE_PASSWORD=${POSTGRES_PASSWORD:-xyz_secret_password}
+      - SOLR_URL=http://solr:8983/solr/xyz_core
+      - SOLR_HOST=solr
+      - SOLR_PORT=8983
+      # Desactivar migraciones automáticas en dev (las corremos manualmente)
+      - RUN_MIGRATIONS=false
+      - COLLECT_STATIC=false
+    volumes:
+      # Bind mount del código fuente para hot-reload
+      - .:/app:cached
+      # Excluir node_modules y __pycache__ del bind mount
+      - /app/theme/static_src/node_modules
+      - /app/__pycache__
+      # Volumen compartido con tailwind para CSS compilado
+      - tailwind_css:/app/theme/static/css/dist
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+      solr:
+        condition: service_healthy
+    # Docker Compose Watch (Docker Compose v2.22+)
+    develop:
+      watch:
+        # Sincronizar archivos Python (sin rebuild)
+        - path: ./apps
+          action: sync
+          target: /app/apps
+        - path: ./website
+          action: sync
+          target: /app/website
+        # Sincronizar templates HTML
+        - path: ./templates
+          action: sync
+          target: /app/templates
+        - path: ./theme/templates
+          action: sync
+          target: /app/theme/templates
+        # Rebuild si cambian dependencias
+        - path: ./Pipfile.lock
+          action: rebuild
+        - path: ./.docker/django/Dockerfile.dev
+          action: rebuild
+
+  # ---------------------------------------------------------------------------
+  # Database - PostgreSQL (Dev con puerto expuesto)
+  # ---------------------------------------------------------------------------
+  db:
+    ports:
+      - "5432:5432"
+
+  # ---------------------------------------------------------------------------
+  # Search - Solr (Dev con puerto expuesto)
+  # ---------------------------------------------------------------------------
+  solr:
+    ports:
+      - "8983:8983"
+
+  # ---------------------------------------------------------------------------
+  # Tailwind - CSS Watcher Service
+  # ---------------------------------------------------------------------------
+  tailwind:
+    image: node:20-alpine
+    container_name: xyz-tailwind
+    working_dir: /app/theme/static_src
+    command: npm run dev
+    volumes:
+      # Código fuente de Tailwind
+      - ./theme/static_src:/app/theme/static_src:cached
+      # Volumen compartido para CSS compilado
+      - tailwind_css:/app/theme/static/css/dist
+      # Excluir node_modules local y usar el del contenedor
+      - tailwind_modules:/app/theme/static_src/node_modules
+    environment:
+      - NODE_ENV=development
+    networks:
+      - xyz-network
+    # Instalar deps si no existen
+    entrypoint:
+      - sh
+      - -c
+      - |
+        if [ ! -d "node_modules" ] || [ ! -f "node_modules/.package-lock.json" ]; then
+          echo "📦 Instalando dependencias de Node..."
+          npm ci --prefer-offline
+        fi
+        echo "👀 Iniciando watcher de Tailwind CSS..."
+        npm run dev
+    healthcheck:
+      test: ["CMD", "pgrep", "-f", "postcss"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+# =============================================================================
+# VOLUMES ADICIONALES PARA DESARROLLO
+# =============================================================================
+volumes:
+  tailwind_css:
+    name: xyz-tailwind-css
+  tailwind_modules:
+    name: xyz-tailwind-modules
