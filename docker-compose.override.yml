@@ -44,6 +44,8 @@ services:
       - /app/__pycache__
       # Volumen compartido con tailwind para CSS compilado
       - tailwind_css:/app/theme/static/css/dist
+      # Bind mount para media (desarrollo) - archivos locales accesibles en Django
+      - ./media:/app/media:cached
     ports:
       - "8000:8000"
     depends_on:
@@ -87,6 +89,9 @@ services:
   solr:
     ports:
       - "8983:8983"
+    volumes:
+      # Bind mount de la configuración del core para development
+      - ./solr-6.6.6/server/solr/xyz_core:/opt/solr/server/solr/xyz_core:cached
 
   # ---------------------------------------------------------------------------
   # Tailwind - CSS Watcher Service

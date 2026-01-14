@@ -71,8 +71,6 @@ services:
     user: "8983:8983"
     environment:
       - SOLR_HEAP=512m
-    volumes:
-      - solr_data:/opt/solr/server/solr/mycores
     expose:
       - "8983"
     networks:
@@ -83,20 +81,15 @@ services:
       - -c
       - |
         set -e
-        CORE_DIR="/opt/solr/server/solr/mycores/xyz_core"
-        # Crear directorio del core si no existe
-        mkdir -p "$${CORE_DIR}/conf" "$${CORE_DIR}/data"
-        # Copiar configuración base si no existe
-        if [ ! -f "$${CORE_DIR}/conf/solrconfig.xml" ]; then
-          echo "📦 Copiando configuración base para xyz_core..."
-          cp -r /opt/solr/server/solr/configsets/basic_configs/conf/* "$${CORE_DIR}/conf/"
-        fi
+        CORE_DIR="/opt/solr/server/solr/xyz_core"
+        # Crear directorio del core si no existe (solo data, conf viene del mount)
+        mkdir -p "$${CORE_DIR}/data"
         # Crear core.properties si no existe
         if [ ! -f "$${CORE_DIR}/core.properties" ]; then
           echo "name=xyz_core" > "$${CORE_DIR}/core.properties"
           echo "✅ Core xyz_core configurado"
         fi
-        # Iniciar Solr (sin ejecutar init scripts adicionales)
+        # Iniciar Solr
         exec solr -f
     healthcheck:
       test: ["CMD-SHELL", "curl -sf http://localhost:8983/solr/xyz_core/admin/ping || exit 1"]
