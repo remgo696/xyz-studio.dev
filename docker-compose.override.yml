@@ -8,6 +8,7 @@
 #   - Servicio de Tailwind watcher
 #   - Puertos expuestos para debugging
 #   - Docker Compose Watch para sincronización automática
+#   - UID/GID del host para evitar problemas de permisos en WSL
 # =============================================================================
 
 services:
@@ -20,6 +21,10 @@ services:
       context: .
       dockerfile: .docker/django/Dockerfile.dev
       target: development
+      # Pasar UID/GID del host para que archivos creados pertenezcan al usuario
+      args:
+        HOST_UID: ${HOST_UID:-1000}
+        HOST_GID: ${HOST_GID:-1000}
     container_name: xyz-web-dev
     command: python manage.py runserver 0.0.0.0:8000
     environment:

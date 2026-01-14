@@ -56,40 +56,49 @@ logs-tailwind: ## Muestra logs del watcher de Tailwind
 # =============================================================================
 # DJANGO COMMANDS (dentro del contenedor)
 # =============================================================================
+# Usamos -u devuser para que los archivos creados pertenezcan al usuario del host
+DOCKER_EXEC = docker compose exec -u devuser web
 
 shell: ## Abre shell de Django
-	docker compose exec web python manage.py shell
+	$(DOCKER_EXEC) python manage.py shell
 
-bash: ## Abre bash en el contenedor web
+bash: ## Abre bash en el contenedor web (como devuser)
+	$(DOCKER_EXEC) bash
+
+bash-root: ## Abre bash en el contenedor web (como root)
 	docker compose exec web bash
 
 migrate: ## Ejecuta migraciones de Django
-	docker compose exec web python manage.py migrate
+	$(DOCKER_EXEC) python manage.py migrate
 
 makemigrations: ## Crea nuevas migraciones
-	docker compose exec web python manage.py makemigrations
+	$(DOCKER_EXEC) python manage.py makemigrations
 
 createsuperuser: ## Crea un superusuario
-	docker compose exec web python manage.py createsuperuser
+	$(DOCKER_EXEC) python manage.py createsuperuser
 
 collectstatic: ## Recolecta archivos estáticos
-	docker compose exec web python manage.py collectstatic --noinput
+	$(DOCKER_EXEC) python manage.py collectstatic --noinput
 
 rebuild-index: ## Reconstruye índice de búsqueda (Haystack/Solr)
-	docker compose exec web python manage.py rebuild_index --noinput
+	$(DOCKER_EXEC) python manage.py rebuild_index --noinput
 
 update-index: ## Actualiza índice de búsqueda
-	docker compose exec web python manage.py update_index
+	$(DOCKER_EXEC) python manage.py update_index
+
+startapp: ## Crea una nueva app Django (uso: make startapp APP=nombre)
+	@mkdir -p apps/$(APP)
+	$(DOCKER_EXEC) python manage.py startapp $(APP) apps/$(APP)
 
 # =============================================================================
 # TESTING
 # =============================================================================
 
 test: ## Ejecuta tests
-	docker compose exec web python manage.py test
+	$(DOCKER_EXEC) python manage.py test
 
 lint: ## Ejecuta linting con pylint
-	docker compose exec web pylint apps/ --load-plugins pylint_django
+	$(DOCKER_EXEC) pylint apps/ --load-plugins pylint_django
 
 # =============================================================================
 # DATABASE
